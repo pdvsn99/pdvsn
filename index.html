@@ -101,9 +101,9 @@
   }
 
   /* ————— films ————— */
-  .films { display: grid; gap: clamp(36px, 6vw, 56px); margin-top: clamp(28px, 4vw, 44px); }
-  .film h3 { margin: 18px 0 8px; font-family: var(--display); font-weight: 400; font-size: clamp(36px, 5vw, 52px); line-height: .95; letter-spacing: .01em; }
-  .film p { margin: 0; }
+  .films { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(20px, 3vw, 36px); margin-top: clamp(24px, 3vw, 36px); }
+  .film h3 { margin: 16px 0 6px; font-family: var(--display); font-weight: 400; font-size: clamp(30px, 3.4vw, 40px); line-height: .95; letter-spacing: .01em; }
+  .film p { margin: 0; font-size: 17px; line-height: 1.5; }
   .still {
     position: relative;
     display: block;
@@ -128,6 +128,20 @@
   .more { display: inline-block; margin-top: clamp(28px, 4vw, 40px); color: var(--pink); text-decoration: none; }
   .more:hover, .more:focus-visible { text-decoration: underline; }
 
+  /* ————— use the width on laptops ————— */
+  .wide, footer { width: min(1100px, 100%); margin: 0 auto; }
+  .wide .part { width: auto; margin: 0; }
+  .duo { display: grid; grid-template-columns: 1.35fr 1fr; gap: clamp(40px, 6vw, 88px); align-items: start; }
+  .duo .part h2 { font-size: clamp(64px, 8vw, 104px); }
+
+  @media (max-width: 860px) {
+    .duo { grid-template-columns: 1fr; gap: 0; }
+    .wide, footer { width: min(760px, 100%); }
+  }
+  @media (max-width: 600px) {
+    .films { grid-template-columns: 1fr; }
+  }
+
   @media (prefers-reduced-motion: reduce) {
     html { scroll-behavior: auto; }
     .js .on, .js .glow { opacity: 1; animation: none !important; }
@@ -138,7 +152,7 @@
 
   <header class="menu">
     <a class="home" href="#top">Paul Davidson</a>
-    <nav aria-label="Main"><a href="#work">work</a><a href="#films">films</a><a href="#fun">fun</a><a href="/contact">contact</a></nav>
+    <nav aria-label="Main"><a href="#work">work</a><a href="#fun">fun</a><a href="#films">films</a><a href="/contact">contact</a></nav>
   </header>
 
   <section class="wall" id="top">
@@ -157,45 +171,50 @@
     </div>
   </section>
 
-  <section class="part" id="work">
-    <h2>work<span>.</span></h2>
-    <p class="lede">I'm Paul. I like working out why things don't work, and then making them work.</p>
-    <p>I'm based in Edinburgh and spend most of my time untangling complicated problems and finding better ways of doing things. At the moment that's at Octopus Energy, where I've been making it easier for people to get their gas and electricity connected.</p>
-    <p>Before that, I spent three years making videos. Different work, same approach: figure out what needs doing, get the right people together, and get it done.</p>
-  </section>
+  <div class="wide">
+    <div class="duo">
+      <section class="part" id="work">
+        <h2>work<span>.</span></h2>
+        <p class="lede">I'm Paul. I like working out why things don't work, and then making them work.</p>
+        <p>I'm based in Edinburgh and spend most of my time untangling complicated problems and finding better ways of doing things. At the moment that's at Octopus Energy, where I've been making it easier for people to get their gas and electricity connected.</p>
+        <p>Before that, I spent three years making videos. Different work, same approach: figure out what needs doing, get the right people together, and get it done.</p>
+      </section>
 
-  <section class="part" id="films">
-    <h2>films<span>.</span></h2>
-    <p>Short films, made properly.</p>
-    <div class="films">
-      <article class="film">
-        <a class="still" href="https://www.youtube.com/watch?v=3D2MKY4uDA4">
-          <img src="images/sloansy.jpg" alt="Still from Sloansy" width="1400" height="788" loading="lazy">
-          <span class="play">▶ Watch</span>
-        </a>
-        <h3>“Sloansy”</h3>
-        <p>On a Scottish council estate in 1999, Jeanie struggles to raise her infant son alone. When concerned neighbours alert the authorities, she faces the grim reality of losing everything. Just as hope fades, a mysterious man steps in with an offer that could save her or lead her down a dangerous path.</p>
-      </article>
-      <article class="film">
-        <a class="still" href="https://www.youtube.com/watch?v=1Ty29yOT98E">
-          <img src="images/swimming.jpg" alt="Still from Swimming With You" width="1400" height="700" loading="lazy">
-          <span class="play">▶ Watch</span>
-        </a>
-        <h3>Swimming With You</h3>
-        <p>After a hookup goes wrong, Rhys and Lucas find themselves locked out of their car, stuck in awkward silence. As they talk, frustration turns to unexpected connection. When a sharp-witted recovery worker arrives, she sizes them up with a knowing smile, turning their night into something neither of them expected.</p>
-      </article>
+      <section class="part" id="fun">
+        <h2>fun<span>.</span></h2>
+        <p>The things I get up to when I'm not at work.</p>
+        <ul class="rows">
+          <li><a href="https://carbclub.pdvsn.com"><span class="name">Carb Club</span><span class="side">carbclub.pdvsn.com ↗</span><span class="desc">My monthly supper club for lovers of carbs.</span></a></li>
+          <li><a href="https://visits.pdvsn.com"><span class="name">Visits</span><span class="side">visits.pdvsn.com ↗</span><span class="desc">Where I'd send you to eat, drink and do things in Edinburgh.</span></a></li>
+        </ul>
+      </section>
+
     </div>
-    <a class="more mono" href="https://films.pdvsn.com">More at films.pdvsn.com ↗</a>
-  </section>
+    <section class="part" id="films">
+      <h2>films<span>.</span></h2>
+      <p>Short films, made properly.</p>
+      <div class="films">
+        <article class="film">
+          <a class="still" href="https://www.youtube.com/watch?v=3D2MKY4uDA4">
+            <img src="images/sloansy.jpg" alt="Still from Sloansy" width="1400" height="788" loading="lazy">
+            <span class="play">▶ Watch</span>
+          </a>
+          <h3>“Sloansy”</h3>
+          <p>A young mum on a Scottish council estate in 1999, and the stranger who offers her a way out.</p>
+        </article>
+        <article class="film">
+          <a class="still" href="https://www.youtube.com/watch?v=1Ty29yOT98E">
+            <img src="images/swimming.jpg" alt="Still from Swimming With You" width="1400" height="700" loading="lazy">
+            <span class="play">▶ Watch</span>
+          </a>
+          <h3>Swimming With You</h3>
+          <p>Two guys locked out of their car after a hookup goes wrong, and the recovery worker who turns up.</p>
+        </article>
+      </div>
+      <a class="more mono" href="https://films.pdvsn.com">More at films.pdvsn.com ↗</a>
+    </section>
 
-  <section class="part" id="fun">
-    <h2>fun<span>.</span></h2>
-    <p>The things I get up to when I'm not at work.</p>
-    <ul class="rows">
-      <li><a href="https://carbclub.pdvsn.com"><span class="name">Carb Club</span><span class="side">carbclub.pdvsn.com ↗</span><span class="desc">My monthly supper club for lovers of carbs.</span></a></li>
-      <li><a href="https://visits.pdvsn.com"><span class="name">Visits</span><span class="side">visits.pdvsn.com ↗</span><span class="desc">Where I'd send you to eat, drink and do things in Edinburgh.</span></a></li>
-    </ul>
-  </section>
+  </div>
 
   <footer class="mono">
     <span>pdvsn.com</span>
