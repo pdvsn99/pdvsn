@@ -79,6 +79,23 @@
     color: #ffd3df;
     text-shadow: 0 0 2px #fff, 0 0 8px var(--pink), 0 0 18px var(--pink), 0 0 40px var(--pink), 0 0 80px rgba(241,102,139,.8);
   }
+  /* the white line underneath */
+  .tagline {
+    margin: clamp(4px, 1vw, 10px) 0 0;
+    text-align: center;
+    font-family: var(--display);
+    font-size: clamp(20px, 3.6vw, 40px);
+    line-height: 1;
+    letter-spacing: .16em;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+  .tagline .ltr { display: inline-block; }
+  .ltr .on.white {
+    color: #fff7f2;
+    text-shadow: 0 0 2px #fff, 0 0 7px #ffe6ef, 0 0 16px rgba(255,190,210,.8), 0 0 34px rgba(241,102,139,.5);
+  }
+
   /* each letter lights on its own, with its own stutter */
   .js .on, .js .glow { opacity: 0; }
   .js .lit .on { animation: flick 1.1s steps(1, end) both; }
@@ -87,6 +104,7 @@
   .js .lit .l3 { animation-delay: 1.05s; }
   .js .lit .l4 { animation: flick2 1.5s steps(1, end) 1.4s both, buzz 6s steps(1, end) 4s infinite; }
   .js .lit .l5 { animation-delay: 2.1s; animation-name: flick2; }
+  .js .lit .l6 { animation-delay: 2.9s; }
   .js .lit .glow { animation: warm 3s steps(1, end) .2s both; }
   @keyframes flick {
     0% { opacity: 0 } 10% { opacity: .9 } 16% { opacity: 0 } 30% { opacity: 1 } 36% { opacity: .2 } 50% { opacity: 1 } 100% { opacity: 1 }
@@ -232,6 +250,10 @@
         <span class="ltr" data-t="s"><span class="off">s</span><span class="on l4">s</span></span>
         <span class="ltr" data-t="n"><span class="off">n</span><span class="on l5">n</span></span>
       </h1>
+      <!-- ✏️ the white line under the sign: change the words in all three places -->
+      <p class="tagline" aria-label="Filmmaker and thing-doer">
+        <span class="ltr" data-t="Filmmaker &amp; thing-doer"><span class="off">Filmmaker &amp; thing-doer</span><span class="on white l6">Filmmaker &amp; thing-doer</span></span>
+      </p>
     </div>
   </section>
 
