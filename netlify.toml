@@ -17,5 +17,10 @@
 
 [[redirects]]
   from = "/fun"
-  to = "/fun.html"
+  to = "/#fun"
+  status = 301
+
+[[redirects]]
+  from = "/contact"
+  to = "/contact.html"
   status = 200

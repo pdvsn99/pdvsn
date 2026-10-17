@@ -140,35 +140,77 @@
     color: var(--ink-dim);
   }
 
-  /* ————— overview ————— */
-  .about {
-    width: min(640px, 100%);
-    margin: 0 auto;
-    padding: clamp(72px, 12vw, 140px) 16px clamp(56px, 8vw, 96px);
+  /* ————— menu over the wall ————— */
+  .menu {
+    position: absolute; top: 0; left: 0; right: 0;
+    z-index: 2;
+    display: flex; justify-content: space-between;
+    padding: 22px clamp(16px, 4vw, 40px);
   }
-  .about p {
-    margin: 0 0 1.1em;
-    font-family: var(--serif);
-    font-size: clamp(21px, 2.3vw, 27px);
-    line-height: 1.45;
-  }
-  .about p:first-child { font-family: var(--sans); font-size: clamp(34px, 4.6vw, 52px); line-height: 1.05; letter-spacing: -0.02em; }
-  .about a { color: var(--pink); text-decoration: none; border-bottom: 1px solid rgba(241,102,139,.4); }
-  .about a:hover, .about a:focus-visible { border-bottom-color: var(--pink); }
-
-  footer {
-    width: min(640px, 100%);
-    margin: 0 auto;
-    padding: 0 16px 40px;
-    display: flex; flex-wrap: wrap; gap: 12px 28px;
+  .menu nav { display: flex; gap: 24px; }
+  .mono, .menu {
     font-family: var(--mono);
     font-size: 11px;
     letter-spacing: .16em;
     text-transform: uppercase;
+  }
+  .menu, .menu a { color: var(--ink-dim); text-decoration: none; }
+  .menu a:hover, .menu a:focus-visible { color: var(--pink); }
+
+  /* ————— work / fun sections ————— */
+  .part {
+    width: min(760px, 100%);
+    margin: 0 auto;
+    padding: clamp(72px, 11vw, 130px) 16px 0;
+    scroll-margin-top: 0;
+  }
+  .part h2 {
+    margin: 0 0 clamp(24px, 4vw, 40px);
+    font-size: clamp(56px, 9vw, 104px);
+    font-weight: 400;
+    line-height: .9;
+    letter-spacing: -0.035em;
+  }
+  .part h2 span { color: var(--pink); }
+  .intro p {
+    margin: 0 0 1em;
+    font-family: var(--serif);
+    font-size: clamp(20px, 2.2vw, 25px);
+    line-height: 1.45;
+  }
+  .rows { list-style: none; margin: clamp(28px, 4vw, 44px) 0 0; padding: 0; border-top: 1px solid var(--rule); }
+  .rows li {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 4px 20px;
+    align-items: baseline;
+    padding: 16px 0;
+    border-bottom: 1px solid var(--rule);
+  }
+  .rows .name { font-size: clamp(22px, 2.4vw, 28px); letter-spacing: -0.01em; }
+  .rows .name small { color: var(--ink-dim); font-size: .7em; letter-spacing: 0; }
+  .rows .side { color: var(--ink-dim); white-space: nowrap; }
+  .rows .desc { grid-column: 1 / -1; color: var(--ink-dim); font-size: 16px; line-height: 1.45; }
+  .rows a { text-decoration: none; }
+  .rows a.side { color: var(--pink); }
+  .rows a:hover .name, .rows a:focus-visible .name { color: var(--pink); }
+  .rows li.now .name { color: var(--pink); }
+
+  footer {
+    width: min(760px, 100%);
+    margin: 0 auto;
+    padding: clamp(80px, 12vw, 140px) 16px 40px;
+    display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px 28px;
     color: var(--ink-dim);
   }
-  footer a { text-decoration: none; }
-  footer a:hover, footer a:focus-visible { color: var(--pink); }
+  footer a { text-decoration: none; color: var(--pink); }
+  footer a:hover, footer a:focus-visible { text-decoration: underline; }
+
+  @media (max-width: 560px) {
+    .menu > span { display: none; }
+    .menu { justify-content: center; }
+    .rows li { grid-template-columns: 1fr; }
+  }
 
   @media (prefers-reduced-motion: reduce) {
     .js .on, .js .glow { opacity: 1; animation: none !important; }
@@ -178,6 +220,10 @@
 <body>
 
   <section class="wall" id="sign">
+    <header class="menu">
+      <span>Paul Davidson</span>
+      <nav aria-label="Main"><a href="#work">work</a><a href="#fun">fun</a><a href="/contact">contact</a></nav>
+    </header>
     <div class="glow" aria-hidden="true"></div>
     <div class="plate">
       <span class="standoff l" aria-hidden="true"></span><span class="standoff r" aria-hidden="true"></span>
@@ -191,22 +237,42 @@
         <span class="ltr" data-t="n"><span class="off">n</span><span class="on l5">n</span></span>
       </h1>
     </div>
-    <div class="caption" aria-hidden="true">Paul Davidson · Edinburgh</div>
+    <div class="caption" aria-hidden="true">Edinburgh · scroll ↓</div>
   </section>
 
-  <!-- ✏️ ABOUT: these are just draft words. Rewrite them so they sound like you. -->
-  <section class="about">
-    <p>Hi, I'm Paul.</p>
-    <p>I'm a Delivery Lead in Edinburgh. Most of my work comes down to finding the bit of a process that's a pain for everyone and fixing it. Lately that's meant building the way new gas and electricity connections get set up at Octopus Energy.</p>
-    <p>Before that I spent three years making videos, which turns out to be good practice for getting a lot of people pulling in the same direction.</p>
-    <p>Outside work I run <a href="https://carbclub.pdvsn.com">a supper club</a>, I'm opening <a href="https://dessertdock.com">a dessert shop</a>, I make <a href="https://films.pdvsn.com">short films</a>, and I built <a href="https://whosonwhat.com">a rota app</a> so ops teams can ditch the spreadsheet. I also keep <a href="https://visits.pdvsn.com">a list</a> of where to eat in Edinburgh.</p>
+  <!-- ✏️ WORK: draft words, rewrite them so they sound like you. -->
+  <section class="part" id="work">
+    <h2>work<span>.</span></h2>
+    <div class="intro">
+      <p>I'm a Delivery Lead in Edinburgh. Most of my work comes down to finding the bit of a process that's a pain for everyone and fixing it. Lately that's meant building the way new gas and electricity connections get set up at Octopus Energy.</p>
+      <p>Before that I spent three years making videos, which turns out to be good practice for getting a lot of people pulling in the same direction.</p>
+    </div>
+    <ul class="rows">
+      <li class="now"><span class="name">Delivery Lead <small>Octopus Energy</small></span><span class="side mono">2026 —</span></li>
+      <li><span class="name">Smart Experience <small>Octopus Energy</small></span><span class="side mono">2025 — 26</span></li>
+      <li><span class="name">Emergency Data Lead <small>Octopus Energy</small></span><span class="side mono">2025</span></li>
+      <li><span class="name">Emergency Specialist <small>Octopus Energy</small></span><span class="side mono">2023 — 25</span></li>
+      <li><span class="name">Content Producer <small>PD Creative</small></span><span class="side mono">2020 — 23</span></li>
+    </ul>
   </section>
 
-  <!-- ✏️ LINKS: replace YOUR-EMAIL-HERE and the LinkedIn # with your real details. -->
-  <footer>
-    <a href="mailto:YOUR-EMAIL-HERE">Email</a>
-    <a href="#">LinkedIn</a>
-    <a href="/fun">Side projects</a>
+  <section class="part" id="fun">
+    <h2>fun<span>.</span></h2>
+    <div class="intro">
+      <p>The things I make when I'm not at work.</p>
+    </div>
+    <ul class="rows">
+      <li><a href="https://carbclub.pdvsn.com"><span class="name">Carb Club</span></a><a class="side mono" href="https://carbclub.pdvsn.com">carbclub.pdvsn.com ↗</a><span class="desc">My monthly supper club for lovers of carbs.</span></li>
+      <li><a href="https://dessertdock.com"><span class="name">Dessert Dock</span></a><a class="side mono" href="https://dessertdock.com">dessertdock.com ↗</a><span class="desc">An industrial themed dessert shop, launching soon.</span></li>
+      <li><a href="https://films.pdvsn.com"><span class="name">Films</span></a><a class="side mono" href="https://films.pdvsn.com">films.pdvsn.com ↗</a><span class="desc">Short films I've made.</span></li>
+      <li><a href="https://visits.pdvsn.com"><span class="name">Visits</span></a><a class="side mono" href="https://visits.pdvsn.com">visits.pdvsn.com ↗</a><span class="desc">Where I'd send you to eat, drink and do things in Edinburgh.</span></li>
+      <li><a href="https://whosonwhat.com"><span class="name">Who's on What</span></a><a class="side mono" href="https://whosonwhat.com">whosonwhat.com ↗</a><span class="desc">A rota app for office and customer ops teams who are done with spreadsheets.</span></li>
+    </ul>
+  </section>
+
+  <footer class="mono">
+    <span>pdvsn.com</span>
+    <a href="/contact">Get in touch →</a>
   </footer>
 
 <script>
