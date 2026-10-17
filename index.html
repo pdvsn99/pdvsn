@@ -10,13 +10,14 @@
 <style>
   /* ————— the neon sign ————— */
   .wall {
-    min-height: calc(100svh - 50px);
+    min-height: clamp(260px, 46svh, 560px);
     display: grid;
     place-items: center;
-    padding: 60px 16px;
+    padding: 48px 16px 24px;
     overflow-x: clip;
-    /* stop the wires at the top of this section, under the header */
-    clip-path: inset(0 -100vw 0 -100vw);
+    /* stop the wires at the top of this section, under the header,
+       but let the glow fade out over the content below */
+    clip-path: inset(0 -100vw -600px -100vw);
   }
   /* pink light thrown onto the bricks once the sign is on */
   .glow {
@@ -54,9 +55,10 @@
     display: flex;
     margin: 0;
     font-weight: 400;
-    font-family: var(--neon);
-    font-size: clamp(76px, 17vw, 200px);
-    line-height: 1.15;
+    font-family: var(--display);
+    font-size: clamp(96px, 20vw, 220px);
+    line-height: .95;
+    letter-spacing: .02em;
     white-space: nowrap;
   }
   .ltr { position: relative; z-index: 0; }
@@ -192,6 +194,7 @@
   .wide, footer { width: min(1100px, 100%); margin: 0 auto; }
   .wide .part { width: auto; margin: 0; }
   .wide .narrow { max-width: 760px; }
+  #work { padding-top: clamp(28px, 5vw, 64px); }
 
   @media (max-width: 860px) {
     .wide, footer { width: min(760px, 100%); }

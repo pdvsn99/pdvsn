@@ -1,7 +1,6 @@
 /* Shared styles for every page: fonts, colours, the brick wall and the sticky header. */
 
-@font-face { font-family: "Tilt Neon"; src: url("fonts/tilt-neon.woff2") format("woff2"); font-display: block; }
-@font-face { font-family: "Bebas Neue"; src: url("fonts/bebas-neue.woff2") format("woff2"); font-display: swap; }
+@font-face { font-family: "Bebas Neue"; src: url("fonts/bebas-neue.woff2") format("woff2"); font-display: block; }
 @font-face { font-family: "Outfit"; src: url("fonts/outfit-300.woff2") format("woff2"); font-weight: 300; font-display: swap; }
 @font-face { font-family: "Outfit"; src: url("fonts/outfit-400.woff2") format("woff2"); font-weight: 400; font-display: swap; }
 @font-face { font-family: "Outfit"; src: url("fonts/outfit-500.woff2") format("woff2"); font-weight: 500; font-display: swap; }
@@ -16,7 +15,6 @@
   --display: "Bebas Neue", "Arial Narrow", sans-serif;
   --body: "Outfit", "Helvetica Neue", Arial, sans-serif;
   --mono: "Space Mono", ui-monospace, Menlo, monospace;
-  --neon: "Tilt Neon", var(--body);
 }
 
 * { box-sizing: border-box; }
