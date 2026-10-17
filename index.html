@@ -3,12 +3,13 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Paul Davidson — Delivery Lead</title>
-<meta name="description" content="Paul Davidson — Delivery Lead at Octopus Energy in Edinburgh. Making shit happen.">
+<title>Paul Davidson — Delivery &amp; product ops</title>
+<meta name="description" content="Paul Davidson — delivery lead in Edinburgh who turns messy processes into things that just work. Making shit happen.">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><rect width='16' height='16' fill='%23F1668B'/></svg>">
 <style>
   :root {
     --bg: #0d0b0c;
+    --bg-2: #151113;
     --ink: #f3eee9;
     --ink-dim: #8a8381;
     --rule: #2a2627;
@@ -56,6 +57,17 @@
     color: var(--ink-dim);
   }
   .label b { color: var(--pink); font-weight: 400; }
+  .h2 {
+    margin: 0 0 clamp(32px, 5vw, 56px);
+    font-size: clamp(48px, 7vw, 104px);
+    font-weight: 400;
+    line-height: .88;
+    letter-spacing: -0.035em;
+    max-width: 14ch;
+  }
+  .h2 em { color: var(--pink); }
+  /* until you write your own words, these show as dashed "fill me in" notes */
+  .todo { display: block; padding: 8px 10px; border: 1px dashed var(--pink); color: var(--pink); font: 12px/1.5 var(--mono); opacity: .85; }
 
   /* ————— top bar ————— */
   .bar {
@@ -74,240 +86,94 @@
   .bar .icons { display: flex; gap: 14px; padding-left: 20px; border-left: 1px solid var(--rule); }
   .bar .icons svg { width: 16px; height: 16px; display: block; fill: currentColor; }
 
-  /* ============================================================
-     HERO — starts in the dark; the switch floods it pink
-     ============================================================ */
-  .hero {
-    position: relative;
-    min-height: calc(100svh - 58px);
-    display: flex; align-items: center;
-    overflow: hidden;
-    border-bottom: 1px solid var(--rule);
-    --x: 80%; --y: 50%;
-  }
-  .flood {
-    position: absolute; inset: 0;
-    background: var(--pink);
-    clip-path: circle(0 at var(--x) var(--y));
-    transition: clip-path 1.1s cubic-bezier(.7,0,.2,1);
-  }
-  [data-power="on"] .flood { clip-path: circle(150vmax at var(--x) var(--y)); }
-  /* no transitions while the page sets itself up */
-  .hero.instant, .hero.instant * { transition: none !important; }
-  .flicker .flood { animation: flicker .9s steps(1) 1; }
-  @keyframes flicker {
-    0% { opacity: 1 } 8% { opacity: .15 } 14% { opacity: 1 } 22% { opacity: .3 }
-    30% { opacity: 1 } 44% { opacity: .7 } 50% { opacity: 1 }
-  }
-
-  .hero-in {
-    position: relative; z-index: 2;
-    width: min(var(--max), 100%);
-    margin: 0 auto;
-    padding: clamp(40px, 7vw, 90px) var(--gutter);
-    display: grid;
-    grid-template-columns: 1fr auto;
-    gap: clamp(28px, 5vw, 80px);
-    align-items: center;
-  }
-  .status { display: flex; align-items: center; gap: 10px; margin-bottom: clamp(22px, 3vw, 36px); color: var(--ink-dim); transition: color .6s .3s; }
-  .led { width: 8px; height: 8px; border-radius: 50%; background: #3a3436; transition: background .3s; }
-  .st-on { display: none; }
-  [data-power="on"] .st-on { display: inline; }
-  [data-power="on"] .st-off { display: none; }
-  [data-power="on"] .status { color: rgba(13,11,12,.65); }
-  [data-power="on"] .led { background: #0d0b0c; }
-
+  /* ————— hero ————— */
+  .hero { padding: clamp(64px, 10vw, 140px) 0 clamp(56px, 8vw, 110px); border-bottom: 1px solid var(--rule); }
+  .hero .kicker { display: flex; align-items: center; gap: 10px; color: var(--ink-dim); margin-bottom: clamp(24px, 3vw, 40px); }
+  .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--pink); animation: pulse 2.4s ease-in-out infinite; }
+  @keyframes pulse { 0%,100%{opacity:.35} 50%{opacity:1} }
   .hero h1 {
     margin: 0;
-    font-size: clamp(76px, 15vw, 230px);
+    font-size: clamp(76px, 14vw, 210px);
     font-weight: 400;
     line-height: .82;
     letter-spacing: -0.045em;
-    text-transform: uppercase;
-    color: transparent;
-    -webkit-text-stroke: 1px #4a4345;
-    transition: color .5s .45s, -webkit-text-stroke-color .5s .45s;
   }
-  .hero[data-power="on"] h1 { color: #0d0b0c; -webkit-text-stroke-color: #0d0b0c; }
-  .hero .tag {
-    margin: clamp(18px, 2.4vw, 30px) 0 0;
-    font-family: var(--serif);
-    font-style: italic;
-    font-size: clamp(30px, 4.4vw, 64px);
-    line-height: 1;
-    color: #2e2a2b;
-    transition: color .5s .6s;
+  .hero h1 em { color: var(--pink); letter-spacing: -0.02em; }
+  .hero-foot {
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
+    gap: clamp(28px, 5vw, 80px);
+    margin-top: clamp(36px, 5vw, 64px);
+    align-items: end;
   }
-  .hero[data-power="on"] .tag { color: var(--paper); }
-  .hero .role { margin: 22px 0 0; color: #4a4345; font-size: 12px; transition: color .5s .7s; }
-  .hero[data-power="on"] .role { color: #0d0b0c; }
-
-  /* the light switch */
-  .switch-wrap { display: flex; flex-direction: column; align-items: center; gap: 16px; }
-  .switch {
-    appearance: none;
-    border: 0;
-    padding: 0;
-    width: 132px; height: 200px;
-    border-radius: 14px;
-    background: linear-gradient(160deg, #f6f1ec, #d9d2ca);
-    box-shadow: 0 1px 0 #fff inset, 0 -2px 0 rgba(0,0,0,.15) inset, 0 24px 50px rgba(0,0,0,.55), 0 0 0 1px rgba(0,0,0,.4);
-    position: relative;
-    cursor: pointer;
-    transition: transform .2s;
-  }
-  .switch:active { transform: scale(.98); }
-  .switch:focus-visible { outline: 2px solid var(--pink); outline-offset: 6px; }
-  .switch .screw { position: absolute; left: 50%; width: 9px; height: 9px; margin-left: -4.5px; border-radius: 50%; background: radial-gradient(circle at 35% 35%, #fff, #a49a91); overflow: hidden; }
-  .switch .screw::after { content: ""; position: absolute; left: 1px; right: 1px; top: 4px; height: 1px; background: #8a8077; transform: rotate(35deg); }
-  .switch .screw.t { top: 12px; } .switch .screw.b { bottom: 12px; }
-  .switch .rocker {
-    position: absolute; left: 30px; right: 30px; top: 44px; bottom: 44px;
-    border-radius: 8px;
-    background: #e9e3dc;
-    box-shadow: 0 0 0 1px rgba(0,0,0,.18), 0 1px 0 #fff inset;
-    overflow: hidden;
-  }
-  /* the rocker's raised half: bottom while off, top while on */
-  .switch .rocker::before {
-    content: "";
-    position: absolute; left: 0; right: 0; height: 50%;
-    bottom: 0;
-    background: linear-gradient(180deg, #d6cfc7, #f4efea);
-    box-shadow: 0 -6px 10px rgba(0,0,0,.12);
-    transition: all .18s;
-  }
-  [data-power="on"] .switch .rocker::before {
-    bottom: 50%;
-    background: linear-gradient(0deg, #d6cfc7, #f4efea);
-    box-shadow: 0 6px 10px rgba(0,0,0,.12);
-  }
-  .switch .pip {
-    position: absolute; left: 50%; top: 18px; margin-left: -4px;
-    width: 8px; height: 8px; border-radius: 50%;
-    background: #b9b0a7;
-    z-index: 2;
-    transition: background .2s, box-shadow .2s;
-  }
-  [data-power="on"] .switch .pip { background: var(--pink); box-shadow: 0 0 10px var(--pink); }
-  .hint { color: var(--ink-dim); animation: nudge 2s ease-in-out infinite; }
-  @keyframes nudge { 0%,100% { opacity: .35 } 50% { opacity: 1 } }
-  [data-power="on"] .hint { animation: none; color: rgba(13,11,12,.6); }
-
-  /* ————— status ticker ————— */
-  .ticker { overflow: hidden; white-space: nowrap; border-bottom: 1px solid var(--rule); padding: 14px 0; color: var(--ink-dim); }
-  .ticker .track { display: inline-flex; gap: 40px; animation: tick 40s linear infinite; padding-left: 40px; }
-  .ticker b { color: var(--pink); font-weight: 400; }
-  @keyframes tick { to { transform: translateX(-50%); } }
-
-  /* ============================================================
-     JOB SHEET — the Connections case study as a work order
-     ============================================================ */
-  .work { padding: clamp(72px, 10vw, 140px) 0; }
-  .work-grid { display: grid; grid-template-columns: 1fr 1.25fr; gap: clamp(32px, 5vw, 80px); align-items: start; }
-  .work h2 {
+  .hero .pitch {
     margin: 0;
-    font-size: clamp(52px, 7.5vw, 112px);
-    font-weight: 400;
-    line-height: .88;
-    letter-spacing: -0.035em;
-    position: sticky; top: 100px;
-  }
-  .work h2 em { color: var(--pink); }
-  .work h2 small {
-    display: block;
-    margin-top: 26px;
     font-family: var(--serif);
-    font-size: clamp(20px, 1.9vw, 26px);
+    font-size: clamp(22px, 2.3vw, 32px);
     line-height: 1.3;
-    letter-spacing: 0;
-    color: var(--ink-dim);
-    max-width: 26ch;
+    max-width: 30ch;
   }
+  .hero .pitch b { font-weight: 400; color: var(--pink); }
+  .person { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--rule); }
+  .person li { display: flex; gap: 16px; align-items: baseline; padding: 14px 0; border-bottom: 1px solid var(--rule); font-size: clamp(18px, 1.7vw, 22px); }
+  .person .mono { color: var(--pink); min-width: 22px; }
 
-  .ticket {
-    position: relative;
-    background: var(--paper);
-    color: #0d0b0c;
-    padding: clamp(22px, 3vw, 36px);
-    font-family: var(--mono);
-    transform: rotate(1.2deg);
-    box-shadow: 0 30px 60px rgba(0,0,0,.5);
+  /* ————— skills ————— */
+  .skills { padding: clamp(80px, 11vw, 150px) 0; }
+  .skill-grid { display: grid; grid-template-columns: repeat(4, 1fr); border-top: 1px solid var(--rule); }
+  .skill {
+    padding: 26px 22px 28px 0;
+    margin-right: 22px;
+    border-right: 1px solid var(--rule);
+    display: flex; flex-direction: column; gap: 14px;
   }
-  /* perforated top edge */
-  .ticket::before {
-    content: "";
-    position: absolute; left: 0; right: 0; top: -9px; height: 10px;
-    background: radial-gradient(circle at 8px 0, transparent 6px, var(--paper) 6.5px) -8px 0 / 16px 10px repeat-x;
-  }
-  .t-head { display: flex; justify-content: space-between; align-items: start; gap: 16px; padding-bottom: 16px; border-bottom: 2px solid #0d0b0c; }
-  .t-head .big { font-family: var(--sans); font-size: clamp(30px, 3.4vw, 44px); letter-spacing: -0.02em; line-height: .95; text-transform: uppercase; }
-  .t-head .no { text-align: right; font-size: 11px; letter-spacing: .12em; line-height: 1.7; }
-  .t-head .no b { display: block; font-size: 18px; letter-spacing: .04em; color: var(--pink); }
-  dl { margin: 0; }
-  .field { display: grid; grid-template-columns: 150px 1fr; gap: 16px; padding: 14px 0; border-bottom: 1px dashed rgba(13,11,12,.3); font-size: 13px; line-height: 1.55; }
-  .field dt { font-size: 10px; letter-spacing: .16em; text-transform: uppercase; color: rgba(13,11,12,.55); padding-top: 3px; }
-  .field dd { margin: 0; }
-  /* until you write your own words, these show as dashed "fill me in" notes */
-  .todo { display: block; padding: 8px 10px; border: 1px dashed var(--pink); color: #b23c5e; font-size: 12px; }
-  .readings { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 18px; }
-  .reading { border: 2px solid #0d0b0c; padding: 12px; }
-  .reading .n { font-family: var(--sans); font-size: 38px; line-height: 1; letter-spacing: -0.02em; }
-  .reading .mono { display: block; margin-top: 6px; font-size: 9px; color: rgba(13,11,12,.6); }
-  .t-foot { display: flex; justify-content: space-between; align-items: end; margin-top: 22px; font-size: 11px; letter-spacing: .1em; text-transform: uppercase; }
-  .sig { font-family: var(--serif); font-style: italic; font-size: 30px; text-transform: none; letter-spacing: 0; border-bottom: 1px solid #0d0b0c; padding: 0 30px 2px 0; }
-  .stamp {
-    position: absolute;
-    right: 26px; bottom: 74px;
-    padding: 6px 16px;
-    border: 4px solid var(--pink);
-    border-radius: 6px;
-    color: var(--pink);
-    font-family: var(--sans);
-    font-size: 44px;
-    letter-spacing: .06em;
-    line-height: 1;
-    transform: rotate(-14deg);
-    opacity: .9;
-    mix-blend-mode: multiply;
-  }
-  .js .stamp { transform: rotate(-14deg) scale(1.6); opacity: 0; transition: opacity .25s, transform .35s cubic-bezier(.3,1.6,.5,1); }
-  .js .ticket.in .stamp { opacity: .9; transform: rotate(-14deg) scale(1); transition-delay: .6s; }
+  .skill:last-child { border-right: 0; margin-right: 0; }
+  .skill .n { color: var(--pink); }
+  .skill h3 { margin: 0; font-size: clamp(28px, 2.6vw, 38px); font-weight: 400; letter-spacing: -0.02em; line-height: .95; }
+  .skill p { margin: 0; color: var(--ink-dim); font-size: 17px; line-height: 1.45; }
+  .skill .proof { margin-top: auto; padding-top: 8px; color: var(--ink); line-height: 1.6; }
+  .skill .proof::before { content: "proof → "; color: var(--pink); }
 
-  /* ============================================================
-     SUPPLY HISTORY — career as a chart that climbs
-     ============================================================ */
-  .career { padding: 0 0 clamp(72px, 10vw, 140px); }
-  .chart { --months: 84; } /* Jan 2020 → Dec 2026 */
-  .axis, .crow { display: grid; grid-template-columns: 290px 1fr; gap: 24px; }
-  .axis .years { display: grid; grid-template-columns: repeat(7, 1fr); color: var(--ink-dim); }
-  .axis .years span { border-left: 1px solid var(--rule); padding: 0 0 10px 6px; }
-  .crow { padding: 14px 0; border-top: 1px solid var(--rule); align-items: center; }
-  .crow h3 { margin: 0; font-size: 24px; font-weight: 400; letter-spacing: -0.01em; line-height: 1.05; }
-  .crow .who { display: block; margin-top: 5px; color: var(--ink-dim); }
-  .crow.current h3 { color: var(--pink); }
-  .track { position: relative; height: 30px; background: repeating-linear-gradient(90deg, var(--rule) 0 1px, transparent 1px calc(100% / 7)); }
-  .bar-fill {
-    position: absolute; top: 4px; bottom: 4px;
-    left: calc(var(--s) / var(--months) * 100%);
-    width: calc((var(--e) - var(--s)) / var(--months) * 100%);
-    min-width: 6px;
-    background: var(--pink);
-    transform-origin: left;
+  /* ————— case studies ————— */
+  .work { padding: 0 0 clamp(80px, 11vw, 150px); }
+  .case {
+    display: grid;
+    grid-template-columns: 120px 1fr 1.25fr;
+    gap: clamp(20px, 3vw, 48px);
+    padding: clamp(32px, 4vw, 52px) 0;
+    border-top: 1px solid var(--rule);
   }
-  .bar-fill.free { background: transparent; border: 1px solid var(--ink); }
-  .js .bar-fill { transform: scaleX(0); transition: transform 1s var(--ease) .2s; }
-  .js .crow.in .bar-fill { transform: scaleX(1); }
-  .crow.current .bar-fill { animation: charge 1.6s ease-in-out infinite 1.2s; }
-  .crow.current .bar-fill::after { content: "→"; position: absolute; left: calc(100% + 8px); top: 50%; transform: translateY(-50%); color: var(--pink); font-family: var(--mono); font-size: 13px; }
-  @keyframes charge { 0%,100% { box-shadow: 0 0 0 rgba(241,102,139,0) } 50% { box-shadow: 0 0 18px rgba(241,102,139,.8) } }
-  .crow p { grid-column: 2; margin: 8px 0 0; max-width: 60ch; color: var(--ink-dim); font-size: 16px; line-height: 1.45; }
-  .legend { display: flex; flex-wrap: wrap; gap: 10px 26px; margin-top: 26px; color: var(--ink-dim); }
-  .legend i { display: inline-block; width: 18px; height: 8px; margin-right: 8px; background: var(--pink); vertical-align: middle; }
-  .legend i.free { background: transparent; border: 1px solid var(--ink); }
-  .skills { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-top: 44px; }
-  .skills > span:first-child { color: var(--ink-dim); margin-right: 8px; }
+  .case:last-child { border-bottom: 1px solid var(--rule); }
+  .case .num { font-size: clamp(56px, 6vw, 88px); line-height: .8; letter-spacing: -0.04em; color: var(--pink); }
+  .case h3 { margin: 0 0 14px; font-size: clamp(32px, 3.6vw, 54px); font-weight: 400; letter-spacing: -0.025em; line-height: .92; }
+  .case .ctx { color: var(--ink-dim); line-height: 1.7; }
+  .case .ctx a { color: var(--pink); }
+  .steps { margin: 0; display: grid; gap: 0; }
+  .step { display: grid; grid-template-columns: 110px 1fr; gap: 16px; padding: 12px 0; border-bottom: 1px dashed var(--rule); }
+  .step:first-child { padding-top: 0; }
+  .step:last-child { border-bottom: 0; }
+  .step dt { color: var(--ink-dim); padding-top: 4px; }
+  .step dd { margin: 0; font-size: 18px; line-height: 1.45; }
+  .step.result dt { color: var(--pink); }
+
+  /* ————— experience ————— */
+  .exp { padding: 0 0 clamp(80px, 11vw, 150px); }
+  .job {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 4px 24px;
+    padding: 18px 0;
+    border-bottom: 1px solid var(--rule);
+    align-items: baseline;
+  }
+  .job:first-of-type { border-top: 1px solid var(--rule); }
+  .job h3 { margin: 0; font-size: clamp(22px, 2.2vw, 30px); font-weight: 400; letter-spacing: -0.015em; }
+  .job h3 span { color: var(--ink-dim); }
+  .job.current h3 { color: var(--pink); }
+  .job .when { color: var(--ink-dim); white-space: nowrap; }
+  .job p { grid-column: 1 / -1; margin: 4px 0 0; color: var(--ink-dim); font-size: 16px; line-height: 1.45; max-width: 70ch; }
+  .tools { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-top: 36px; }
+  .tools > span:first-child { color: var(--ink-dim); margin-right: 8px; }
   .chip { padding: 8px 14px; border: 1px solid var(--rule); border-radius: 999px; }
 
   /* ============================================================
@@ -332,7 +198,7 @@
   }
   @keyframes buzz { 0%, 92%, 96%, 100% { opacity: 1 } 93%, 95% { opacity: .35 } }
   .after .sub { font-family: var(--serif); font-size: clamp(19px, 1.8vw, 24px); color: var(--ink-dim); margin: 0 auto clamp(40px, 6vw, 64px); max-width: 36ch; }
-  .signs { display: grid; grid-template-columns: repeat(5, 1fr); gap: 14px; text-align: left; }
+  .signs { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; text-align: left; }
   .sign {
     display: flex; flex-direction: column; justify-content: space-between; gap: 30px;
     min-height: 150px;
@@ -352,7 +218,7 @@
   .contact { background: var(--pink); color: #0d0b0c; padding: clamp(72px, 10vw, 140px) 0 28px; }
   .contact .label { color: rgba(13,11,12,.6); border-color: rgba(13,11,12,.25); }
   .contact .label b { color: #0d0b0c; }
-  .contact h2 { margin: 0; font-size: clamp(60px, 11.5vw, 180px); font-weight: 400; line-height: .84; letter-spacing: -0.045em; }
+  .contact h2 { margin: 0; font-size: clamp(56px, 10.5vw, 168px); font-weight: 400; line-height: .86; letter-spacing: -0.045em; }
   .contact h2 em { color: var(--paper); }
   .ctas { display: flex; flex-wrap: wrap; gap: 12px; margin-top: clamp(36px, 5vw, 60px); }
   .btn { display: inline-flex; align-items: center; gap: 10px; padding: 15px 22px; border: 1px solid #0d0b0c; text-decoration: none; transition: background .25s, color .25s, border-color .25s; }
@@ -363,36 +229,28 @@
   /* ————— scroll reveal (only when JS runs) ————— */
   .js .rv { opacity: 0; transform: translateY(24px); transition: opacity .9s var(--ease), transform .9s var(--ease); }
   .js .rv.in { opacity: 1; transform: none; }
-  .js .ticket.rv { transform: translateY(24px) rotate(1.2deg); }
-  .js .ticket.rv.in { transform: rotate(1.2deg); }
 
   /* ————— tablets ————— */
   @media (max-width: 960px) {
-    .work-grid { grid-template-columns: 1fr; }
-    .work h2 { position: static; }
+    .hero-foot { grid-template-columns: 1fr; }
+    .skill-grid { grid-template-columns: 1fr 1fr; }
+    .skill:nth-child(2n) { border-right: 0; margin-right: 0; }
+    .skill { border-bottom: 1px solid var(--rule); }
+    .case { grid-template-columns: 80px 1fr; }
+    .case .steps { grid-column: 2; }
     .signs { grid-template-columns: 1fr 1fr; }
-    .axis, .crow { grid-template-columns: 1fr; gap: 10px; }
-    .axis > span:first-child { display: none; }
-    .crow p { grid-column: 1; margin-top: 0; }
   }
   /* ————— phones ————— */
   @media (max-width: 640px) {
     .bar nav { gap: 14px; }
     .bar .icons { padding-left: 14px; gap: 12px; }
     .bar .logo { font-size: 18px; }
-    .hero { min-height: auto; }
-    .hero-in { grid-template-columns: 1fr; }
-    .switch-wrap { order: -1; flex-direction: row; justify-content: flex-start; gap: 18px; }
-    .switch { width: 84px; height: 128px; border-radius: 10px; }
-    .switch .rocker { left: 20px; right: 20px; top: 26px; bottom: 26px; }
-    .switch .pip { top: 9px; }
-    .switch .screw { display: none; }
-    .field { grid-template-columns: 1fr; gap: 4px; }
-    .readings { grid-template-columns: 1fr; }
-    .stamp { font-size: 32px; bottom: 90px; right: 16px; }
-    .ticket, .js .ticket.rv.in { transform: none; }
-    .js .ticket.rv { transform: translateY(24px); }
-    .axis .years span:nth-child(even) { color: transparent; }
+    .skill-grid { grid-template-columns: 1fr; }
+    .skill { border-right: 0; margin-right: 0; padding-right: 0; }
+    .case { grid-template-columns: 1fr; }
+    .case .steps { grid-column: 1; }
+    .step { grid-template-columns: 1fr; gap: 4px; }
+    .job { grid-template-columns: 1fr; }
     .signs { grid-template-columns: 1fr; }
     .sign { min-height: 0; flex-direction: row; align-items: baseline; }
   }
@@ -401,9 +259,7 @@
   @media (prefers-reduced-motion: reduce) {
     html { scroll-behavior: auto; }
     *, *::before, *::after { animation: none !important; transition: none !important; }
-    .js .rv, .js .ticket.rv { opacity: 1; transform: none; }
-    .js .bar-fill { transform: none; }
-    .js .stamp { opacity: .9; transform: rotate(-14deg); }
+    .js .rv { opacity: 1; transform: none; }
   }
 </style>
 </head>
@@ -427,127 +283,139 @@
   </header>
 
   <!-- ————————————————— HERO ————————————————— -->
-  <!-- Starts "on" so it still works without JavaScript; the script turns the lights off on load. -->
-  <section class="hero" id="top" data-power="on">
-    <div class="flood" aria-hidden="true"></div>
-    <div class="hero-in">
-      <div>
-        <div class="status mono">
-          <span class="led"></span>
-          <span class="st-off">supply: off · it's a bit dark in here</span>
-          <span class="st-on">supply: on · edinburgh · <span id="clock">—</span></span>
-        </div>
-        <h1>Paul<br>Davidson</h1>
-        <p class="tag">Making shit happen.</p>
-        <p class="role mono">Delivery Lead · Octopus Energy</p>
-      </div>
-      <div class="switch-wrap">
-        <button class="switch" id="switch" aria-pressed="true" aria-label="Light switch">
-          <span class="screw t"></span>
-          <span class="rocker"><span class="pip"></span></span>
-          <span class="screw b"></span>
-        </button>
-        <span class="hint mono" id="hint">lights on</span>
+  <section class="hero" id="top">
+    <div class="wrap">
+      <div class="kicker mono rv"><span class="dot"></span>Paul Davidson · Delivery &amp; product ops · Edinburgh</div>
+      <h1 class="rv">Making shit <em>happen.</em></h1>
+      <div class="hero-foot">
+        <p class="pitch rv">I take messy, real-world processes and turn them into <b>things that just work</b> — for the customers going through them and the teams running them.</p>
+        <ul class="person rv" aria-label="The short version">
+          <li><span class="mono">01</span>Designs journeys end to end</li>
+          <li><span class="mono">02</span>Speaks fluent data <em>and</em> people</li>
+          <li><span class="mono">03</span>Ships it, then tells the story well</li>
+        </ul>
       </div>
     </div>
   </section>
 
-  <div class="ticker mono" aria-hidden="true">
-    <div class="track">
-      <span><b>●</b> Delivery Lead</span><span>Octopus Energy</span><span>3+ years</span><span>Connections</span><span>Emergency metering</span><span>SQL &amp; data</span><span>Ex-video producer</span><span>Edinburgh</span>
-      <span><b>●</b> Delivery Lead</span><span>Octopus Energy</span><span>3+ years</span><span>Connections</span><span>Emergency metering</span><span>SQL &amp; data</span><span>Ex-video producer</span><span>Edinburgh</span>
+  <!-- ————————————————— WHAT I'M GOOD AT ————————————————— -->
+  <section class="skills" id="skills">
+    <div class="wrap">
+      <div class="label mono"><span><b>01</b> — What I'm good at</span><span>the transferable bit</span></div>
+      <div class="skill-grid">
+        <div class="skill rv">
+          <span class="n mono">A</span>
+          <h3>Delivery</h3>
+          <p>Taking a fuzzy problem with lots of moving parts and getting it shipped — then making sure it keeps working.</p>
+          <span class="proof mono">Building the Connections journey</span>
+        </div>
+        <div class="skill rv">
+          <span class="n mono">B</span>
+          <h3>Process &amp; product ops</h3>
+          <p>Designing how things should flow, end to end, so customers get a smooth ride and teams aren't firefighting.</p>
+          <span class="proof mono">Who's on What, a rota app I built</span>
+        </div>
+        <div class="skill rv">
+          <span class="n mono">C</span>
+          <h3>Data</h3>
+          <p>Using SQL and analysis to find out what's actually broken, rather than guessing — and to prove when it's fixed.</p>
+          <span class="proof mono">Emergency Data Lead</span>
+        </div>
+        <div class="skill rv">
+          <span class="n mono">D</span>
+          <h3>Storytelling</h3>
+          <p>Three years producing video taught me how to get people bought in, explain the why, and keep everyone on side.</p>
+          <span class="proof mono">Freelance content producer</span>
+        </div>
+      </div>
     </div>
-  </div>
+  </section>
 
-  <!-- ————————————————— JOB SHEET ————————————————— -->
-  <!-- ✏️ CONNECTIONS: replace each pink dashed "todo" note with your own words.
-       Delete the whole <span class="todo">…</span> and type a normal sentence. -->
+  <!-- ————————————————— SELECTED WORK ————————————————— -->
+  <!-- ✏️ CASE STUDIES: replace each pink dashed "todo" note with your own words.
+       Delete the whole <span class="todo">…</span> and type a normal sentence.
+       Numbers make these land: time saved, customers helped, people using it. -->
   <section class="work" id="work">
     <div class="wrap">
-      <div class="label mono"><span><b>01</b> — The job I'm proudest of</span><span>Octopus Energy</span></div>
-      <div class="work-grid">
-        <h2 class="rv">I built the <em>Connections</em> process.
-          <small>From "I need power here" to it actually being on.</small>
-        </h2>
+      <div class="label mono"><span><b>02</b> — Selected work</span><span>problem → fix → result</span></div>
+      <h2 class="h2 rv">Things I've <em>made happen.</em></h2>
 
-        <article class="ticket rv" aria-label="Job sheet: Connections">
-          <div class="t-head">
-            <div class="big">Job sheet</div>
-            <div class="no">Job no.<b>CONN-001</b>Octopus Energy</div>
-          </div>
-          <dl>
-            <div class="field"><dt>Requested by</dt><dd>Customers who need power where there isn't any yet: new electricity and gas supplies, meter moves and supply upgrades.</dd></div>
-            <div class="field"><dt>Assigned to</dt><dd>Paul Davidson</dd></div>
-            <div class="field"><dt>Fault found</dt><dd><span class="todo">✏️ What was broken before? What went wrong for customers or the team?</span></dd></div>
-            <div class="field"><dt>Work carried out</dt><dd><span class="todo">✏️ What did you build or change? Steps, tools, team, data?</span></dd></div>
-            <div class="field"><dt>Result</dt><dd><span class="todo">✏️ What's better now for customers and the team?</span></dd></div>
-          </dl>
-          <!-- ✏️ METER READINGS: swap each "—" for a number and the label for what it measures
-               (e.g. "40%" / "faster connections"). Delete this block if you'd rather not show numbers. -->
-          <div class="readings">
-            <div class="reading"><div class="n">—</div><span class="mono">✏️ a number</span></div>
-            <div class="reading"><div class="n">—</div><span class="mono">✏️ another</span></div>
-            <div class="reading"><div class="n">—</div><span class="mono">✏️ one more</span></div>
-          </div>
-          <div class="t-foot">
-            <span>Signed off</span>
-            <span class="sig">P. Davidson</span>
-          </div>
-          <div class="stamp" aria-hidden="true">DONE</div>
-        </article>
-      </div>
+      <article class="case rv">
+        <div class="num">01</div>
+        <div>
+          <h3>Building a customer journey from scratch</h3>
+          <div class="ctx mono">Connections · Octopus Energy · 2025—26</div>
+        </div>
+        <dl class="steps">
+          <div class="step"><dt class="mono">The problem</dt><dd>Getting a new electricity or gas supply, moving a meter or upgrading a supply is slow and confusing for customers. <span class="todo">✏️ What specifically was broken before?</span></dd></div>
+          <div class="step"><dt class="mono">What I did</dt><dd>Built the end-to-end Connections process. <span class="todo">✏️ How? Mapping the journey, tooling, working with which teams?</span></dd></div>
+          <div class="step result"><dt class="mono">Result</dt><dd><span class="todo">✏️ What changed? A number is gold here.</span></dd></div>
+        </dl>
+      </article>
+
+      <article class="case rv">
+        <div class="num">02</div>
+        <div>
+          <h3>Who's on What</h3>
+          <div class="ctx mono">Side project · product I built<br><a href="https://whosonwhat.com">whosonwhat.com ↗</a></div>
+        </div>
+        <dl class="steps">
+          <div class="step"><dt class="mono">The problem</dt><dd>Office and customer ops teams run their rota on a spreadsheet that nobody quite trusts.</dd></div>
+          <div class="step"><dt class="mono">What I did</dt><dd>Designed and built a rota app made for how ops teams actually work. <span class="todo">✏️ Anything about how you built it?</span></dd></div>
+          <div class="step result"><dt class="mono">Result</dt><dd><span class="todo">✏️ Who uses it? How many teams or people?</span></dd></div>
+        </dl>
+      </article>
+
+      <article class="case rv">
+        <div class="num">03</div>
+        <div>
+          <h3>Bringing data into emergency response</h3>
+          <div class="ctx mono">Emergency metering · Octopus Energy · 2023—25</div>
+        </div>
+        <dl class="steps">
+          <div class="step"><dt class="mono">The problem</dt><dd>When a customer's gas or electricity goes off, every minute counts — and the team needs to know where to look first.</dd></div>
+          <div class="step"><dt class="mono">What I did</dt><dd>Went from handling emergencies on the front line to leading the team's data work. <span class="todo">✏️ What did you build or analyse with SQL?</span></dd></div>
+          <div class="step result"><dt class="mono">Result</dt><dd><span class="todo">✏️ Faster responses? Fewer repeat issues? A number here.</span></dd></div>
+        </dl>
+      </article>
     </div>
   </section>
 
-  <!-- ————————————————— SUPPLY HISTORY ————————————————— -->
-  <!-- Bars count months from Jan 2020: --s is the start, --e is the end.
-       e.g. Oct 2025 = (2025 - 2020) × 12 + 9 = 69 -->
-  <section class="career" id="career">
+  <!-- ————————————————— EXPERIENCE ————————————————— -->
+  <section class="exp" id="experience">
     <div class="wrap">
-      <div class="label mono"><span><b>02</b> — Supply history</span><span>2020 — now</span></div>
-      <div class="chart">
-        <div class="axis mono"><span></span><div class="years"><span>2020</span><span>2021</span><span>2022</span><span>2023</span><span>2024</span><span>2025</span><span>2026</span></div></div>
+      <div class="label mono"><span><b>03</b> — Experience</span><span>2020 — now</span></div>
 
-        <div class="crow current rv">
-          <div><h3>Delivery Lead</h3><span class="who mono">Octopus Energy · Oct 2026 —</span></div>
-          <div class="track"><span class="bar-fill" style="--s:81; --e:83"></span></div>
-        </div>
-        <div class="crow rv">
-          <div><h3>Smart Experience</h3><span class="who mono">Octopus Energy · Oct 2025 — Oct 2026</span></div>
-          <div class="track"><span class="bar-fill" style="--s:69; --e:81"></span></div>
-          <p>Refined and developed the Connections journey for a smoother, more consistent customer experience.</p>
-        </div>
-        <div class="crow rv">
-          <div><h3>Emergency Data Lead</h3><span class="who mono">Octopus Energy · Jan — Oct 2025</span></div>
-          <div class="track"><span class="bar-fill" style="--s:60; --e:69"></span></div>
-          <p>Helped the Emergency Metering team respond fast when customers' supplies were disrupted.</p>
-        </div>
-        <div class="crow rv">
-          <div><h3>Emergency Specialist</h3><span class="who mono">Octopus Energy · May 2023 — Jan 2025</span></div>
-          <div class="track"><span class="bar-fill" style="--s:40; --e:60"></span></div>
-          <p>Triaged emergencies and solved complex problems for customers with no gas or electricity.</p>
-        </div>
-        <div class="crow rv">
-          <div><h3>Digital Energy Specialist</h3><span class="who mono">Octopus Energy · Mar — May 2023</span></div>
-          <div class="track"><span class="bar-fill" style="--s:38; --e:40"></span></div>
-        </div>
-        <div class="crow rv">
-          <div><h3>COVID Supervisor</h3><span class="who mono">PD Creative · Oct 2020 — Feb 2022</span></div>
-          <div class="track"><span class="bar-fill free" style="--s:9; --e:25"></span></div>
-          <p>Kept cast, crew and clients safe on set, from risk assessment to on-set supervision.</p>
-        </div>
-        <div class="crow rv">
-          <div><h3>Content Producer</h3><span class="who mono">PD Creative · Jan 2020 — Mar 2023</span></div>
-          <div class="track"><span class="bar-fill free" style="--s:0; --e:38"></span></div>
-          <p>Found and produced video that told good stories and reached new audiences.</p>
-        </div>
-
-        <div class="legend mono"><span><i></i>Octopus Energy</span><span><i class="free"></i>PD Creative (freelance)</span></div>
+      <div class="job current rv">
+        <h3>Delivery Lead <span>· Octopus Energy</span></h3>
+        <span class="when mono">Oct 2026 — now</span>
       </div>
-      <div class="skills mono rv">
-        <span>Also wired for</span>
+      <div class="job rv">
+        <h3>Smart Experience <span>· Octopus Energy</span></h3>
+        <span class="when mono">2025 — 2026</span>
+        <p>Refined and developed the Connections journey for a smoother, more consistent customer experience.</p>
+      </div>
+      <div class="job rv">
+        <h3>Emergency Data Lead <span>· Octopus Energy</span></h3>
+        <span class="when mono">2025</span>
+        <p>Led data and analysis for the Emergency Metering team, helping them respond fast when supplies were disrupted.</p>
+      </div>
+      <div class="job rv">
+        <h3>Emergency Specialist <span>· Octopus Energy</span></h3>
+        <span class="when mono">2023 — 2025</span>
+        <p>Triaged emergencies and solved complex problems for customers with no gas or electricity.</p>
+      </div>
+      <div class="job rv">
+        <h3>Content Producer <span>· PD Creative (freelance)</span></h3>
+        <span class="when mono">2020 — 2023</span>
+        <p>Found and produced video that told good stories and reached new audiences. Also ran on-set COVID safety, from risk assessment to supervision.</p>
+      </div>
+
+      <div class="tools mono rv">
+        <span>Toolkit</span>
         <span class="chip">SQL &amp; data</span>
         <span class="chip">Customer ops</span>
+        <span class="chip">Process design</span>
         <span class="chip">Video production</span>
       </div>
     </div>
@@ -557,13 +425,12 @@
   <section class="after" id="fun">
     <div class="wrap">
       <h2 class="neon">after hours</h2>
-      <p class="sub">When the lights go off at work, they come on somewhere else.</p>
+      <p class="sub">When the laptop closes, the oven comes on.</p>
       <div class="signs">
         <a class="sign" href="/fun#carbclub"><span class="t">carb club</span><span class="mono">monthly supper club</span></a>
         <a class="sign" href="/fun#dessertdock"><span class="t">dessert dock</span><span class="mono">launching soon</span></a>
         <a class="sign" href="/fun#films"><span class="t">films</span><span class="mono">short films</span></a>
         <a class="sign" href="/fun#visits"><span class="t">visits</span><span class="mono">edinburgh recs</span></a>
-        <a class="sign" href="/fun#whosonwhat"><span class="t">who's on what</span><span class="mono">team rota app</span></a>
       </div>
       <a class="more mono" href="/fun">see all of it →</a>
     </div>
@@ -572,12 +439,11 @@
   <!-- ————————————————— CONTACT ————————————————— -->
   <section class="contact" id="contact">
     <div class="wrap">
-      <div class="label mono"><span><b>03</b> — Contact</span><span>say hi</span></div>
-      <h2>Need something <em>switched on?</em></h2>
+      <div class="label mono"><span><b>04</b> — Contact</span><span>say hi</span></div>
+      <h2>Got something that needs <em>making happen?</em></h2>
       <div class="ctas mono">
         <a class="btn solid" href="mailto:YOUR-EMAIL-HERE">email me →</a>
         <a class="btn" href="#">linkedin</a>
-        <a class="btn" href="#">instagram</a>
       </div>
       <div class="foot mono"><span>pdvsn.com</span><span>© mmxxvi</span></div>
     </div>
@@ -586,45 +452,7 @@
 <script>
   document.documentElement.classList.add("js");
 
-  // ——— the light switch ———
-  const hero = document.getElementById("top");
-  const sw = document.getElementById("switch");
-  const hint = document.getElementById("hint");
-  const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
-
-  function setPower(on) {
-    hero.dataset.power = on ? "on" : "off";
-    sw.setAttribute("aria-pressed", on);
-    hint.textContent = on ? "lights on" : "flick me";
-  }
-  function aimFlood() {
-    // the pink flood spreads out from wherever the switch is
-    const h = hero.getBoundingClientRect(), s = sw.getBoundingClientRect();
-    hero.style.setProperty("--x", (s.left + s.width / 2 - h.left) + "px");
-    hero.style.setProperty("--y", (s.top + s.height / 2 - h.top) + "px");
-  }
-  sw.addEventListener("click", () => {
-    const on = hero.dataset.power !== "on";
-    aimFlood();
-    hero.classList.remove("flicker");
-    if (on) { void hero.offsetWidth; hero.classList.add("flicker"); }
-    setPower(on);
-  });
-  addEventListener("resize", aimFlood);
-  // with reduced motion the lights simply stay on
-  if (!reduce) {
-    hero.classList.add("instant");
-    aimFlood(); setPower(false);
-    requestAnimationFrame(() => requestAnimationFrame(() => hero.classList.remove("instant")));
-  }
-
-  // ——— clock ———
-  const clock = document.getElementById("clock");
-  const fmt = new Intl.DateTimeFormat("en-GB", { timeZone: "Europe/London", hour: "2-digit", minute: "2-digit" });
-  const tick = () => { clock.textContent = fmt.format(new Date()); };
-  tick(); setInterval(tick, 10000);
-
-  // ——— reveal on scroll (also charges the chart bars and stamps the job sheet) ———
+  // fade things in as they scroll into view
   const io = new IntersectionObserver((entries) => {
     entries.forEach((e) => { if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); } });
   }, { rootMargin: "0px 0px -10% 0px" });
