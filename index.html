@@ -3,12 +3,13 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>pdvsn — Paul Davidson</title>
-<meta name="description" content="Paul Davidson — films, food and things I've built, from Edinburgh.">
+<title>Paul Davidson — Delivery Lead</title>
+<meta name="description" content="Paul Davidson — Delivery Lead at Octopus Energy in Edinburgh. Making shit happen.">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><rect width='16' height='16' fill='%23F1668B'/></svg>">
 <style>
   :root {
     --bg: #0d0b0c;
+    --bg-2: #151113;
     --ink: #f3eee9;
     --ink-dim: #8a8381;
     --rule: #2a2627;
@@ -17,6 +18,7 @@
     --serif: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
     --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
     --gutter: clamp(16px, 4vw, 56px);
+    --max: 1180px;
     --ease: cubic-bezier(.2,.7,.2,1);
   }
 
@@ -44,6 +46,7 @@
   }
 
   a { color: inherit; }
+  em { font-family: var(--serif); font-style: italic; font-weight: 400; }
 
   .mono {
     font-family: var(--mono);
@@ -52,89 +55,96 @@
     text-transform: uppercase;
   }
   .dim { color: var(--ink-dim); }
-  em { font-family: var(--serif); font-style: italic; font-weight: 400; }
+  .wrap { width: min(var(--max), 100%); margin: 0 auto; padding: 0 var(--gutter); }
 
-  /* ————— pink spreads flip the palette ————— */
-  .pink {
-    --bg: #F1668B;
-    --ink: #0d0b0c;
-    --ink-dim: rgba(13, 11, 12, .62);
-    --rule: rgba(13, 11, 12, .25);
-    background: var(--bg);
-    color: var(--ink);
+  section { scroll-margin-top: 64px; }
+  .label {
+    display: flex; justify-content: space-between; align-items: baseline;
+    padding-bottom: 14px;
+    margin-bottom: clamp(28px, 4vw, 48px);
+    border-bottom: 1px solid var(--rule);
+    color: var(--ink-dim);
   }
+  .label b { color: var(--pink); font-weight: 400; }
 
   /* ————— top bar ————— */
   .bar {
     position: sticky; top: 0;
     z-index: 20;
-    display: flex; justify-content: space-between; align-items: center;
-    padding: 16px var(--gutter);
     background: rgba(13, 11, 12, .88);
     backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px);
     border-bottom: 1px solid var(--rule);
   }
-  .bar .logo { font-size: 22px; text-decoration: none; letter-spacing: -0.02em; }
+  .bar .wrap { display: flex; justify-content: space-between; align-items: center; height: 60px; }
+  .bar .logo { font-size: 22px; text-decoration: none; letter-spacing: -0.02em; white-space: nowrap; }
   .bar .logo b { color: var(--pink); font-weight: 400; }
-  .bar nav { display: flex; gap: 26px; }
+  .bar nav { display: flex; align-items: center; gap: 26px; }
   .bar nav a { text-decoration: none; color: var(--ink-dim); transition: color .25s; }
   .bar nav a:hover, .bar nav a:focus-visible { color: var(--pink); }
+  .bar .icons { display: flex; gap: 14px; padding-left: 22px; border-left: 1px solid var(--rule); }
+  .bar .icons svg { width: 16px; height: 16px; display: block; fill: currentColor; }
 
-  /* ————— cover ————— */
-  .cover {
-    padding: clamp(48px, 9vw, 120px) var(--gutter) clamp(40px, 6vw, 80px);
-    border-bottom: 1px solid var(--rule);
-  }
-  .cover .kicker { display: flex; justify-content: space-between; margin-bottom: clamp(28px, 5vw, 64px); }
-  .cover h1 {
-    margin: 0;
-    font-size: clamp(62px, 13.5vw, 220px);
-    font-weight: 400;
-    line-height: .86;
-    letter-spacing: -0.035em;
-  }
-  .cover h1 em { color: var(--pink); letter-spacing: -0.02em; }
-  .cover h1 .indent { display: block; padding-left: 12vw; }
-
-  /* contents list */
-  .contents {
+  /* ————— hero ————— */
+  .hero { padding: clamp(56px, 9vw, 120px) 0 clamp(48px, 7vw, 96px); }
+  .hero .wrap {
     display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    margin-top: clamp(40px, 7vw, 96px);
-    border-top: 1px solid var(--rule);
-    scroll-margin-top: 60px;
+    grid-template-columns: 1.35fr 1fr;
+    gap: clamp(28px, 5vw, 72px);
+    align-items: end;
   }
-  .contents a {
-    display: block;
-    padding: 18px 16px 18px 0;
+  .hero .kicker { margin-bottom: 28px; display: flex; align-items: center; gap: 10px; }
+  .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--pink); animation: pulse 2.4s ease-in-out infinite; }
+  @keyframes pulse { 0%,100%{opacity:.35} 50%{opacity:1} }
+  .hero h1 {
+    margin: 0;
+    font-size: clamp(72px, 12vw, 180px);
+    font-weight: 400;
+    line-height: .84;
+    letter-spacing: -0.04em;
+  }
+  .hero .tagline {
+    margin: clamp(18px, 2.5vw, 30px) 0 0;
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: clamp(30px, 4vw, 54px);
+    line-height: 1;
+    color: var(--pink);
+  }
+  .hero .roles {
+    margin: 28px 0 0;
+    padding: 0;
+    list-style: none;
+    display: flex; flex-wrap: wrap; gap: 8px 14px;
+    font-size: clamp(18px, 1.8vw, 24px);
+  }
+  .hero .roles li + li::before { content: "·"; color: var(--pink); margin-right: 14px; }
+  .ctas { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 40px; }
+  .btn {
+    display: inline-flex; align-items: center; gap: 10px;
+    padding: 14px 20px;
+    border: 1px solid var(--ink);
     text-decoration: none;
-    border-right: 1px solid var(--rule);
-    margin-right: 16px;
+    transition: background .25s, color .25s, border-color .25s;
   }
-  .contents a:last-child { border-right: 0; margin-right: 0; }
-  .contents .n { display: block; color: var(--ink-dim); margin-bottom: 10px; }
-  .contents .t { font-size: clamp(20px, 2.2vw, 30px); letter-spacing: -0.01em; text-transform: lowercase; transition: color .25s; }
-  .contents a:hover .t, .contents a:focus-visible .t { color: var(--pink); }
+  .btn.primary { background: var(--pink); border-color: var(--pink); color: var(--bg); }
+  .btn:hover, .btn:focus-visible { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+  .btn .arr { transition: transform .4s var(--ease); }
+  .btn:hover .arr { transform: translate(3px, 2px); }
 
-  /* ————— photo slots ————— */
-  /* Each .ph shows the image in --img. Until that file exists you see
-     stripes plus the filename, so you know what to upload. */
+  /* photo slot: shows images/paul.jpg, or stripes + filename until it exists */
   .ph {
     position: relative;
     margin: 0;
     overflow: hidden;
+    border: 1px solid var(--rule);
     background:
       linear-gradient(135deg, rgba(241,102,139,.16), rgba(241,102,139,.02)),
       repeating-linear-gradient(135deg, rgba(255,255,255,.045) 0 2px, transparent 2px 9px);
-    border: 1px solid var(--rule);
-  }
-  .pink .ph {
-    background: repeating-linear-gradient(135deg, rgba(13,11,12,.10) 0 2px, transparent 2px 9px);
   }
   .ph::before {
     content: attr(data-file);
-    position: absolute; left: 12px; bottom: 10px;
+    position: absolute; left: 12px; top: 12px;
     font: 10px/1 var(--mono);
     letter-spacing: .14em;
     text-transform: uppercase;
@@ -144,180 +154,200 @@
     content: "";
     position: absolute; inset: 0;
     background: var(--img) center / cover no-repeat;
-    transition: transform 1.2s var(--ease);
   }
-  .ph:hover::after { transform: scale(1.03); }
-  .r-wide { aspect-ratio: 16 / 10; }
-  .r-tall { aspect-ratio: 4 / 5; }
-  .r-sq   { aspect-ratio: 1 / 1; }
-  .r-pano { aspect-ratio: 21 / 9; }
+  .portrait { aspect-ratio: 4 / 5; }
+  .now {
+    position: relative;
+    margin: -56px 0 0 -28px;
+    z-index: 2;
+    width: min(300px, 90%);
+    padding: 16px 18px;
+    background: var(--ink);
+    color: var(--bg);
+    transform: rotate(-2deg);
+  }
+  .now .mono { color: rgba(13,11,12,.6); }
+  .now p { margin: 6px 0 0; font-size: 20px; line-height: 1.15; }
 
-  /* ————— spreads ————— */
-  .spread {
+  /* ————— stats strip ————— */
+  .stats {
     display: grid;
-    grid-template-columns: repeat(12, 1fr);
-    column-gap: clamp(14px, 2vw, 28px);
-    row-gap: clamp(20px, 3vw, 40px);
-    padding: clamp(56px, 9vw, 130px) var(--gutter);
+    grid-template-columns: repeat(3, 1fr);
+    border-top: 1px solid var(--rule);
     border-bottom: 1px solid var(--rule);
-    scroll-margin-top: 60px;
   }
-  .num {
-    font-size: clamp(90px, 16vw, 240px);
-    line-height: .8;
-    letter-spacing: -0.05em;
-    color: var(--pink);
+  .stat { padding: 26px 0 26px 24px; border-left: 1px solid var(--rule); }
+  .stat:first-child { border-left: 0; padding-left: 0; }
+  .stat .n { font-size: clamp(44px, 6vw, 84px); line-height: .9; letter-spacing: -0.03em; }
+  .stat .n small { font-size: .45em; color: var(--pink); letter-spacing: 0; }
+  .stat .mono { display: block; margin-top: 10px; color: var(--ink-dim); }
+
+  /* ————— case study ————— */
+  .work { padding: clamp(72px, 10vw, 140px) 0; }
+  .case-title {
+    margin: 0 0 clamp(28px, 4vw, 48px);
+    font-size: clamp(52px, 8vw, 120px);
+    font-weight: 400;
+    line-height: .88;
+    letter-spacing: -0.035em;
+    max-width: 12ch;
   }
-  .pink .num { color: var(--ink); }
-  .title {
-    margin: 0;
-    font-size: clamp(48px, 8vw, 128px);
+  .case-title em { color: var(--pink); }
+  .case-intro {
+    margin: 0 0 clamp(40px, 6vw, 72px);
+    max-width: 46ch;
+    font-family: var(--serif);
+    font-size: clamp(20px, 2vw, 26px);
+    line-height: 1.35;
+    color: var(--ink);
+  }
+  .bwa {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+  }
+  .bwa article {
+    padding: 26px;
+    background: var(--bg-2);
+    border: 1px solid var(--rule);
+    display: flex; flex-direction: column; gap: 14px;
+  }
+  .bwa article.after { background: var(--pink); color: var(--bg); border-color: var(--pink); }
+  .bwa article.after .mono { color: rgba(13,11,12,.6); }
+  .bwa h3 { margin: 0; font-size: 34px; font-weight: 400; letter-spacing: -0.02em; }
+  .bwa p { margin: 0; font-size: 18px; line-height: 1.4; }
+  /* until you write your own words, these show as dashed "fill me in" notes */
+  .todo {
+    display: block;
+    padding: 10px 12px;
+    border: 1px dashed currentColor;
+    opacity: .7;
+    font: 12px/1.5 var(--mono);
+  }
+  .results { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: 14px; }
+  .result { padding: 22px 26px; border: 1px solid var(--rule); }
+  .result .n { font-size: clamp(40px, 5vw, 64px); line-height: .9; letter-spacing: -0.03em; color: var(--pink); }
+  .result .mono { display: block; margin-top: 10px; color: var(--ink-dim); }
+
+  /* ————— career ————— */
+  .career { padding: 0 0 clamp(72px, 10vw, 140px); }
+  .company {
+    display: grid;
+    grid-template-columns: 260px 1fr;
+    gap: 32px;
+    padding: 32px 0;
+    border-bottom: 1px solid var(--rule);
+  }
+  .company:first-of-type { padding-top: 0; }
+  .company h3 { margin: 0 0 8px; font-size: 40px; font-weight: 400; letter-spacing: -0.02em; line-height: .95; }
+  .company .mono { color: var(--ink-dim); line-height: 1.7; }
+  .roles-list { list-style: none; margin: 0; padding: 0; }
+  .role {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 6px 24px;
+    padding: 0 0 26px 26px;
+    position: relative;
+  }
+  .role:last-child { padding-bottom: 0; }
+  /* timeline line + dot */
+  .role::before {
+    content: "";
+    position: absolute; left: 3px; top: 12px; bottom: -12px;
+    width: 1px; background: var(--rule);
+  }
+  .role:last-child::before { display: none; }
+  .role::after {
+    content: "";
+    position: absolute; left: 0; top: 9px;
+    width: 7px; height: 7px; border-radius: 50%;
+    background: var(--bg); border: 1px solid var(--ink-dim);
+  }
+  .role.current::after { background: var(--pink); border-color: var(--pink); }
+  .role h4 { margin: 0; font-size: 26px; font-weight: 400; letter-spacing: -0.01em; }
+  .role.current h4 { color: var(--pink); }
+  .role .when { color: var(--ink-dim); padding-top: 8px; white-space: nowrap; }
+  .role p { grid-column: 1 / -1; margin: 0; max-width: 62ch; color: var(--ink-dim); font-size: 17px; line-height: 1.45; }
+  .skills { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 36px; }
+  .skills span { padding: 8px 14px; border: 1px solid var(--rule); border-radius: 999px; color: var(--ink); }
+
+  /* ————— off the clock (pink) ————— */
+  .fun {
+    background: var(--pink);
+    color: var(--bg);
+    padding: clamp(56px, 8vw, 110px) 0;
+  }
+  .fun .label { color: rgba(13,11,12,.6); border-color: rgba(13,11,12,.25); }
+  .fun .label b { color: var(--bg); }
+  .fun h2 {
+    margin: 0 0 clamp(28px, 4vw, 48px);
+    font-size: clamp(48px, 7vw, 104px);
     font-weight: 400;
     line-height: .88;
     letter-spacing: -0.03em;
-    text-transform: lowercase;
   }
-  .lede {
-    margin: 0;
-    font-family: var(--serif);
-    font-size: clamp(20px, 2vw, 28px);
-    line-height: 1.3;
-    max-width: 30ch;
-  }
-  .text { display: flex; flex-direction: column; gap: 22px; }
-  .visit {
-    display: inline-flex; align-items: center; gap: 10px;
-    align-self: start;
-    padding: 12px 18px;
-    border: 1px solid currentColor;
+  .tiles { display: grid; grid-template-columns: repeat(5, 1fr); border-top: 1px solid rgba(13,11,12,.25); }
+  .tile {
+    display: flex; flex-direction: column; gap: 8px;
+    padding: 20px 18px 22px 0;
+    margin-right: 18px;
+    border-right: 1px solid rgba(13,11,12,.25);
     text-decoration: none;
-    transition: background .25s, color .25s, border-color .25s;
   }
-  .visit:hover, .visit:focus-visible { background: var(--pink); color: var(--bg); border-color: var(--pink); }
-  .pink .visit:hover, .pink .visit:focus-visible { background: var(--ink); color: var(--pink); border-color: var(--ink); }
-  .visit .arr { transition: transform .4s var(--ease); }
-  .visit:hover .arr { transform: translateX(5px); }
+  .tile:last-child { border-right: 0; margin-right: 0; }
+  .tile .t { font-size: clamp(22px, 2.2vw, 30px); letter-spacing: -0.01em; line-height: 1; transition: transform .4s var(--ease); }
+  .tile .mono { color: rgba(13,11,12,.62); line-height: 1.6; }
+  .tile:hover .t, .tile:focus-visible .t { transform: translateX(4px); }
+  .fun .btn { margin-top: clamp(28px, 4vw, 44px); border-color: var(--bg); }
+  .fun .btn:hover, .fun .btn:focus-visible { background: var(--bg); color: var(--pink); }
 
-  /* 01 films — big photo right, two smaller below, offset */
-  .s-films .num  { grid-column: 1 / 5; grid-row: 1; }
-  .s-films .text { grid-column: 1 / 5; grid-row: 2; align-self: end; }
-  .s-films .a    { grid-column: 5 / 13; grid-row: 1 / 3; }
-  .s-films .b    { grid-column: 2 / 6; grid-row: 3; margin-top: 8vw; }
-  .s-films .c    { grid-column: 7 / 12; grid-row: 3; }
-
-  /* 02 visits (pink) — tall photo left, text right, two squares tucked under */
-  .s-visits .a    { grid-column: 1 / 6; grid-row: 1 / 4; }
-  .s-visits .num  { grid-column: 7 / 13; grid-row: 1; text-align: right; }
-  .s-visits .text { grid-column: 7 / 12; grid-row: 2; }
-  .s-visits .b    { grid-column: 7 / 10; grid-row: 3; align-self: end; }
-  .s-visits .c    { grid-column: 10 / 13; grid-row: 3; align-self: end; transform: translateY(6vw); }
-
-  /* 03 carb club — panoramic photo with the title cutting into it */
-  .s-carb .a    { grid-column: 1 / 13; grid-row: 1; }
-  .s-carb .head { grid-column: 1 / 9; grid-row: 2; margin-top: clamp(-120px, -9vw, -40px); position: relative; z-index: 2; display: flex; align-items: end; gap: 20px; }
-  .s-carb .a::before { bottom: auto; top: 12px; }
-  .s-carb .head .title { background: var(--bg); padding: 12px 20px 0 0; }
-  .s-carb .text { grid-column: 9 / 13; grid-row: 2 / 4; padding-top: 24px; }
-  .s-carb .b    { grid-column: 1 / 5; grid-row: 3; }
-  .s-carb .c    { grid-column: 5 / 9; grid-row: 3; margin-top: 5vw; }
-
-  /* 04 who's on what — mirrored: photos left, text right */
-  .s-who .a    { grid-column: 1 / 8; grid-row: 1 / 3; }
-  .s-who .num  { grid-column: 9 / 13; grid-row: 1; text-align: right; }
-  .s-who .text { grid-column: 9 / 13; grid-row: 2; align-self: end; }
-  .s-who .b    { grid-column: 4 / 11; grid-row: 3; }
-
-  /* 05 dessert dock (pink) — with a "launching soon" stamp */
-  .s-dock .num  { grid-column: 1 / 6; grid-row: 1; }
-  .s-dock .text { grid-column: 1 / 6; grid-row: 2; }
-  .s-dock .a    { grid-column: 6 / 13; grid-row: 1 / 3; position: relative; }
-  .s-dock .b    { grid-column: 3 / 8; grid-row: 3; }
-  .stamp {
-    position: absolute;
-    top: -22px; right: -10px;
-    z-index: 3;
-    width: 130px; height: 130px;
-    border-radius: 50%;
-    background: var(--ink);
-    color: var(--pink);
-    display: grid; place-items: center;
-    text-align: center;
-    line-height: 1.5;
-    transform: rotate(12deg);
-  }
-
-  /* ————— about ————— */
-  .about {
-    display: grid;
-    grid-template-columns: repeat(12, 1fr);
-    column-gap: clamp(14px, 2vw, 28px);
-    row-gap: 32px;
-    padding: clamp(56px, 9vw, 130px) var(--gutter);
-    scroll-margin-top: 60px;
-  }
-  .about .label { grid-column: 1 / 13; }
-  .about .ph    { grid-column: 1 / 5; }
-  .about .words { grid-column: 6 / 13; align-self: end; }
-  .about .ph::after { filter: grayscale(1); transition: filter .6s var(--ease), transform 1.2s var(--ease); }
-  .about .ph:hover::after { filter: none; }
-  .about p {
-    margin: 0 0 22px;
-    font-size: clamp(28px, 3.6vw, 52px);
-    line-height: 1.05;
-    letter-spacing: -0.02em;
-  }
-  .about p em { color: var(--pink); }
-
-  /* ————— contact / footer (pink) ————— */
-  .contact {
-    padding: clamp(56px, 9vw, 120px) var(--gutter) 28px;
-    scroll-margin-top: 60px;
-  }
+  /* ————— contact ————— */
+  .contact { padding: clamp(72px, 10vw, 140px) 0 28px; }
   .contact .big {
     display: block;
-    margin-top: 18px;
-    font-size: clamp(64px, 15vw, 240px);
-    line-height: .85;
+    margin: 0;
+    font-size: clamp(56px, 11vw, 170px);
+    font-weight: 400;
+    line-height: .86;
     letter-spacing: -0.04em;
-    text-decoration: none;
   }
-  .contact .big em { transition: letter-spacing .5s var(--ease); }
-  .contact .big:hover em { letter-spacing: .02em; }
-  .links {
-    display: flex; flex-wrap: wrap; gap: 12px 32px;
-    margin-top: clamp(32px, 5vw, 64px);
-  }
-  .links a { text-decoration: none; border-bottom: 1px solid currentColor; padding-bottom: 2px; }
+  .contact .big em { color: var(--pink); }
+  .contact-links { display: flex; flex-wrap: wrap; gap: 12px; margin-top: clamp(32px, 5vw, 56px); }
   .foot {
     display: flex; justify-content: space-between;
-    margin-top: clamp(56px, 8vw, 110px);
+    margin-top: clamp(64px, 9vw, 120px);
     padding-top: 18px;
     border-top: 1px solid var(--rule);
+    color: var(--ink-dim);
   }
 
   /* ————— scroll reveal (only when JS runs) ————— */
-  .js .rv { opacity: 0; transform: translateY(28px); transition: opacity .9s var(--ease), transform .9s var(--ease); }
+  .js .rv { opacity: 0; transform: translateY(24px); transition: opacity .9s var(--ease), transform .9s var(--ease); }
   .js .rv.in { opacity: 1; transform: none; }
-  .js .s-visits .c.rv.in { transform: translateY(6vw); }
 
-  /* ————— phones ————— */
-  @media (max-width: 760px) {
+  /* ————— tablets & phones ————— */
+  @media (max-width: 900px) {
+    .bwa, .results { grid-template-columns: 1fr; }
+    .company { grid-template-columns: 1fr; gap: 20px; }
+    .tiles { grid-template-columns: 1fr 1fr; }
+    .tile { margin-right: 0; padding-right: 0; border-right: 0; border-bottom: 1px solid rgba(13,11,12,.25); }
+  }
+  @media (max-width: 720px) {
     .bar nav { gap: 16px; }
-    .cover .kicker { flex-direction: column; gap: 6px; }
-    .cover h1 .indent { padding-left: 0; }
-    .contents { grid-template-columns: 1fr; }
-    .contents a { border-right: 0; margin-right: 0; border-bottom: 1px solid var(--rule); display: flex; align-items: baseline; gap: 16px; padding: 14px 0; }
-    .contents .n { margin: 0; }
-
-    .spread, .about { grid-template-columns: 1fr; }
-    .spread > *, .about > * { grid-column: 1 / -1 !important; grid-row: auto !important; margin-top: 0 !important; }
-    .s-visits .c, .js .s-visits .c.rv.in { transform: none; }
-    .s-visits .num, .s-who .num { text-align: left; order: 0; }
-    .s-visits .text, .s-who .text { order: 1; }
-    .s-visits .a, .s-who .a { order: 2; }
-    .s-visits .b, .s-visits .c, .s-who .b { order: 3; }
-    .s-carb .head { margin-top: -48px !important; }
-    .stamp { width: 100px; height: 100px; top: -14px; right: 4px; }
+    .bar .icons { padding-left: 14px; gap: 12px; }
+    .bar .logo { font-size: 19px; }
+    .hero .wrap { grid-template-columns: 1fr; }
+    .hero .photo { order: -1; max-width: 360px; }
+    .now { margin: -40px 0 0 12px; }
+    .stats { grid-template-columns: 1fr; }
+    .stat, .stat:first-child { border-left: 0; padding-left: 0; border-top: 1px solid var(--rule); }
+    .stat:first-child { border-top: 0; }
+    .role { grid-template-columns: 1fr; }
+    .role .when { padding-top: 0; }
+    .tiles { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 420px) {
+    .bar .icons { display: none; }
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -329,139 +359,200 @@
 </head>
 <body>
 
+  <!-- ✏️ LINKS: replace the three # below (LinkedIn, Instagram) and
+       YOUR-EMAIL-HERE further down with your real details. -->
   <header class="bar">
-    <a class="logo" href="#top">pdvsn<b>.</b></a>
-    <nav class="mono">
-      <a href="#work">work</a>
-      <a href="#about">about</a>
-      <a href="#contact">contact</a>
-    </nav>
+    <div class="wrap">
+      <a class="logo" href="/">Paul Davidson<b>.</b></a>
+      <nav class="mono" aria-label="Main">
+        <a href="#work">work</a>
+        <a href="/fun">fun</a>
+        <a href="#contact">contact</a>
+        <span class="icons">
+          <a href="#" aria-label="LinkedIn"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.94v5.67H9.36V9h3.41v1.56h.05c.47-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z"/></svg></a>
+          <a href="#" aria-label="Instagram"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.16c3.2 0 3.58.01 4.85.07 1.17.05 1.8.25 2.23.41.56.22.96.48 1.38.9.42.42.68.82.9 1.38.16.42.36 1.06.41 2.23.06 1.27.07 1.65.07 4.85s-.01 3.58-.07 4.85c-.05 1.17-.25 1.8-.41 2.23-.22.56-.48.96-.9 1.38-.42.42-.82.68-1.38.9-.42.16-1.06.36-2.23.41-1.27.06-1.65.07-4.85.07s-3.58-.01-4.85-.07c-1.17-.05-1.8-.25-2.23-.41a3.72 3.72 0 0 1-1.38-.9 3.72 3.72 0 0 1-.9-1.38c-.16-.42-.36-1.06-.41-2.23C2.17 15.58 2.16 15.2 2.16 12s.01-3.58.07-4.85c.05-1.17.25-1.8.41-2.23.22-.56.48-.96.9-1.38.42-.42.82-.68 1.38-.9.42-.16 1.06-.36 2.23-.41C8.42 2.17 8.8 2.16 12 2.16zM12 0C8.74 0 8.33.01 7.05.07 5.78.13 4.9.33 4.14.63c-.79.3-1.46.72-2.13 1.38A5.88 5.88 0 0 0 .63 4.14C.33 4.9.13 5.78.07 7.05.01 8.33 0 8.74 0 12s.01 3.67.07 4.95c.06 1.27.26 2.15.56 2.91.3.79.72 1.46 1.38 2.13a5.88 5.88 0 0 0 2.13 1.38c.76.3 1.64.5 2.91.56C8.33 23.99 8.74 24 12 24s3.67-.01 4.95-.07c1.27-.06 2.15-.26 2.91-.56a5.88 5.88 0 0 0 2.13-1.38 5.88 5.88 0 0 0 1.38-2.13c.3-.76.5-1.64.56-2.91.06-1.28.07-1.69.07-4.95s-.01-3.67-.07-4.95c-.06-1.27-.26-2.15-.56-2.91a5.88 5.88 0 0 0-1.38-2.13A5.88 5.88 0 0 0 19.86.63C19.1.33 18.22.13 16.95.07 15.67.01 15.26 0 12 0zm0 5.84a6.16 6.16 0 1 0 0 12.32 6.16 6.16 0 0 0 0-12.32zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.4-11.85a1.44 1.44 0 1 0 0 2.88 1.44 1.44 0 0 0 0-2.88z"/></svg></a>
+        </span>
+      </nav>
+    </div>
   </header>
 
-  <!-- ————————————————— COVER ————————————————— -->
-  <section class="cover" id="top">
-    <div class="kicker mono dim">
-      <span>Paul Davidson — Edinburgh</span>
-      <span>Portfolio · <span id="clock">—</span></span>
+  <!-- ————————————————— HERO ————————————————— -->
+  <section class="hero" id="top">
+    <div class="wrap">
+      <div class="rv">
+        <div class="kicker mono dim"><span class="dot"></span>Edinburgh · <span id="clock">—</span></div>
+        <h1>Paul<br>Davidson</h1>
+        <p class="tagline">Making shit happen.</p>
+        <ul class="roles">
+          <li>Delivery Lead at Octopus Energy</li>
+          <li>Ex-video producer</li>
+          <li>Supper club host</li>
+        </ul>
+        <div class="ctas mono">
+          <a class="btn primary" href="#work">see the work <span class="arr">↓</span></a>
+          <a class="btn" href="#contact">say hello</a>
+        </div>
+      </div>
+      <!-- ✏️ PHOTO: put a photo of you in the images folder named paul.jpg -->
+      <div class="photo rv">
+        <figure class="ph portrait" data-file="paul.jpg" style="--img:url('images/paul.jpg')"></figure>
+        <div class="now">
+          <span class="mono">Right now</span>
+          <p>Stepping up to Delivery Lead at Octopus Energy.</p>
+        </div>
+      </div>
     </div>
-    <h1>Films, food <em>&amp;</em><span class="indent">things I build.</span></h1>
-
-    <nav class="contents" id="work" aria-label="Contents">
-      <a href="#films"><span class="n mono">01</span><span class="t">films</span></a>
-      <a href="#visits"><span class="n mono">02</span><span class="t">visits</span></a>
-      <a href="#carbclub"><span class="n mono">03</span><span class="t">carb club</span></a>
-      <a href="#whosonwhat"><span class="n mono">04</span><span class="t">who's on what</span></a>
-      <a href="#dessertdock"><span class="n mono">05</span><span class="t">dessert dock</span></a>
-    </nav>
   </section>
 
-  <!-- ✏️ PHOTOS: every striped box shows the filename it wants
-       (e.g. FILMS-1.JPG). Put a photo with that name in the images
-       folder and it appears. -->
-
-  <!-- ————————————————— 01 FILMS ————————————————— -->
-  <section class="spread s-films" id="films">
-    <div class="num rv">01</div>
-    <div class="text rv">
-      <h2 class="title">films</h2>
-      <p class="lede">Short films.</p>
-      <a class="visit mono" href="https://films.pdvsn.com">films.pdvsn.com <span class="arr">→</span></a>
+  <div class="wrap">
+    <div class="stats rv">
+      <div class="stat"><div class="n">3<small>+ yrs</small></div><span class="mono">at Octopus Energy</span></div>
+      <div class="stat"><div class="n">5</div><span class="mono">roles, each one bigger</span></div>
+      <div class="stat"><div class="n">3<small> yrs</small></div><span class="mono">freelance video producer</span></div>
     </div>
-    <figure class="ph r-wide a rv" data-file="films-1.jpg" style="--img:url('images/films-1.jpg')"></figure>
-    <figure class="ph r-tall b rv" data-file="films-2.jpg" style="--img:url('images/films-2.jpg')"></figure>
-    <figure class="ph r-wide c rv" data-file="films-3.jpg" style="--img:url('images/films-3.jpg')"></figure>
+  </div>
+
+  <!-- ————————————————— CASE STUDY ————————————————— -->
+  <!-- ✏️ CONNECTIONS: replace each dashed "todo" note with your own words.
+       Delete the <span class="todo">…</span> and write a normal sentence in its place. -->
+  <section class="work" id="work">
+    <div class="wrap">
+      <div class="label mono rv"><span><b>01</b> — Featured work</span><span>Octopus Energy</span></div>
+      <h2 class="case-title rv">I built the <em>Connections</em> process.</h2>
+      <p class="case-intro rv">New electricity and gas supplies, meter moves and supply upgrades — the whole journey from "I need power here" to it actually being on. I built the process that gets customers there.</p>
+
+      <div class="bwa">
+        <article class="rv">
+          <span class="mono dim">Before</span>
+          <h3>What was broken</h3>
+          <p><span class="todo">✏️ What was it like before you built it? What went wrong for customers or the team?</span></p>
+        </article>
+        <article class="rv">
+          <span class="mono dim">What I did</span>
+          <h3>What I built</h3>
+          <p><span class="todo">✏️ What did you actually build or change? Steps, tools, team, data?</span></p>
+        </article>
+        <article class="after rv">
+          <span class="mono">After</span>
+          <h3>What changed</h3>
+          <p><span class="todo">✏️ What's better now for customers and for the team?</span></p>
+        </article>
+      </div>
+
+      <!-- ✏️ RESULTS: swap each "—" for a number, and the label under it for what it measures.
+           e.g. "40%" / "faster connections". Delete this whole block if you'd rather not show numbers. -->
+      <div class="results">
+        <div class="result rv"><div class="n">—</div><span class="mono">✏️ a number you're proud of</span></div>
+        <div class="result rv"><div class="n">—</div><span class="mono">✏️ another one</span></div>
+        <div class="result rv"><div class="n">—</div><span class="mono">✏️ and one more</span></div>
+      </div>
+    </div>
   </section>
 
-  <!-- ————————————————— 02 VISITS ————————————————— -->
-  <section class="spread s-visits pink" id="visits">
-    <figure class="ph r-tall a rv" data-file="visits-1.jpg" style="--img:url('images/visits-1.jpg')"></figure>
-    <div class="num rv">02</div>
-    <div class="text rv">
-      <h2 class="title">visits</h2>
-      <p class="lede">My recommendations of things to eat, drink and do in Edinburgh.</p>
-      <a class="visit mono" href="https://visits.pdvsn.com">visits.pdvsn.com <span class="arr">→</span></a>
+  <!-- ————————————————— CAREER ————————————————— -->
+  <section class="career" id="career">
+    <div class="wrap">
+      <div class="label mono rv"><span><b>02</b> — Career</span><span>2020 — now</span></div>
+
+      <div class="company rv">
+        <div>
+          <h3>Octopus Energy</h3>
+          <div class="mono">Mar 2023 — now<br>Edinburgh / remote</div>
+        </div>
+        <ul class="roles-list">
+          <li class="role current">
+            <h4>Delivery Lead</h4>
+            <span class="when mono">Oct 2026 — now</span>
+          </li>
+          <li class="role">
+            <h4>Smart Experience</h4>
+            <span class="when mono">Oct 2025 — Oct 2026</span>
+            <p>Refined and developed the Connections journey — new electricity and gas supplies, meter moves and supply upgrades — for a smoother, more consistent customer experience.</p>
+          </li>
+          <li class="role">
+            <h4>Emergency Data Lead</h4>
+            <span class="when mono">Jan 2025 — Oct 2025</span>
+            <p>Helped the Emergency Metering team support customers in critical moments, making sure responses were rapid and effective when supplies were disrupted.</p>
+          </li>
+          <li class="role">
+            <h4>Emergency Specialist</h4>
+            <span class="when mono">May 2023 — Jan 2025</span>
+            <p>Helped customers through critical situations when their gas or electricity supply was disrupted — triaging emergencies and solving complex problems.</p>
+          </li>
+          <li class="role">
+            <h4>Digital Energy Specialist</h4>
+            <span class="when mono">Mar 2023 — May 2023</span>
+          </li>
+        </ul>
+      </div>
+
+      <div class="company rv">
+        <div>
+          <h3>PD Creative</h3>
+          <div class="mono">Jan 2020 — Mar 2023<br>Freelance · Edinburgh</div>
+        </div>
+        <ul class="roles-list">
+          <li class="role">
+            <h4>Content Producer</h4>
+            <span class="when mono">Jan 2020 — Mar 2023</span>
+            <p>Sourced and produced video that told good stories, drove viewership and reached new audiences.</p>
+          </li>
+          <li class="role">
+            <h4>COVID Supervisor</h4>
+            <span class="when mono">Oct 2020 — Feb 2022</span>
+            <p>Kept cast, crew and clients safe on set — from the pre-shoot risk assessment to on-set supervision.</p>
+          </li>
+        </ul>
+      </div>
+
+      <div class="skills mono rv">
+        <span>SQL &amp; data</span>
+        <span>Customer ops</span>
+        <span>Video production</span>
+      </div>
     </div>
-    <figure class="ph r-sq b rv" data-file="visits-2.jpg" style="--img:url('images/visits-2.jpg')"></figure>
-    <figure class="ph r-sq c rv" data-file="visits-3.jpg" style="--img:url('images/visits-3.jpg')"></figure>
   </section>
 
-  <!-- ————————————————— 03 CARB CLUB ————————————————— -->
-  <section class="spread s-carb" id="carbclub">
-    <figure class="ph r-pano a rv" data-file="carbclub-1.jpg" style="--img:url('images/carbclub-1.jpg')"></figure>
-    <div class="head rv">
-      <span class="num">03</span>
-      <h2 class="title">carb club</h2>
-    </div>
-    <div class="text rv">
-      <p class="lede">My monthly supper club for lovers of carbs.</p>
-      <a class="visit mono" href="https://carbclub.pdvsn.com">carbclub.pdvsn.com <span class="arr">→</span></a>
-    </div>
-    <figure class="ph r-sq b rv" data-file="carbclub-2.jpg" style="--img:url('images/carbclub-2.jpg')"></figure>
-    <figure class="ph r-sq c rv" data-file="carbclub-3.jpg" style="--img:url('images/carbclub-3.jpg')"></figure>
-  </section>
-
-  <!-- ————————————————— 04 WHO'S ON WHAT ————————————————— -->
-  <section class="spread s-who" id="whosonwhat">
-    <figure class="ph r-wide a rv" data-file="whosonwhat-1.jpg" style="--img:url('images/whosonwhat-1.jpg')"></figure>
-    <div class="num rv">04</div>
-    <div class="text rv">
-      <h2 class="title">who's on what</h2>
-      <p class="lede">Built for office and customer ops teams to ditch the spreadsheet rota.</p>
-      <a class="visit mono" href="https://whosonwhat.com">whosonwhat.com <span class="arr">→</span></a>
-    </div>
-    <figure class="ph r-pano b rv" data-file="whosonwhat-2.jpg" style="--img:url('images/whosonwhat-2.jpg')"></figure>
-  </section>
-
-  <!-- ————————————————— 05 DESSERT DOCK ————————————————— -->
-  <section class="spread s-dock pink" id="dessertdock">
-    <div class="num rv">05</div>
-    <div class="text rv">
-      <h2 class="title">dessert dock</h2>
-      <p class="lede">Industrial themed dessert shop.</p>
-      <a class="visit mono" href="https://dessertdock.com">dessertdock.com <span class="arr">→</span></a>
-    </div>
-    <div class="a rv">
-      <div class="stamp mono">launching<br>soon</div>
-      <figure class="ph r-wide" data-file="dessertdock-1.jpg" style="--img:url('images/dessertdock-1.jpg')"></figure>
-    </div>
-    <figure class="ph r-wide b rv" data-file="dessertdock-2.jpg" style="--img:url('images/dessertdock-2.jpg')"></figure>
-  </section>
-
-  <!-- ————————————————— ABOUT ————————————————— -->
-  <!-- ✏️ ABOUT: rewrite the words in the <p> tags. Photo of you = images/paul.jpg -->
-  <section class="about" id="about">
-    <div class="label mono dim">About</div>
-    <figure class="ph r-tall rv" data-file="paul.jpg" style="--img:url('images/paul.jpg')"></figure>
-    <div class="words rv">
-      <p>I'm Paul. I make <em>short films</em>, run a <em>supper club</em> for people who love carbs, and build things that fix everyday annoyances.</p>
-      <p class="dim">Based in Edinburgh. Usually eating somewhere.</p>
+  <!-- ————————————————— OFF THE CLOCK ————————————————— -->
+  <section class="fun" id="fun">
+    <div class="wrap">
+      <div class="label mono"><span><b>03</b> — Off the clock</span><span>side projects</span></div>
+      <h2>When I'm not at work, I'm usually <em>feeding people</em>.</h2>
+      <div class="tiles">
+        <a class="tile" href="/fun#carbclub"><span class="t">carb club</span><span class="mono">monthly supper club</span></a>
+        <a class="tile" href="/fun#dessertdock"><span class="t">dessert dock</span><span class="mono">launching soon</span></a>
+        <a class="tile" href="/fun#films"><span class="t">films</span><span class="mono">short films</span></a>
+        <a class="tile" href="/fun#visits"><span class="t">visits</span><span class="mono">edinburgh recs</span></a>
+        <a class="tile" href="/fun#whosonwhat"><span class="t">who's on what</span><span class="mono">team rota app</span></a>
+      </div>
+      <a class="btn mono" href="/fun">all the fun stuff <span class="arr">→</span></a>
     </div>
   </section>
 
   <!-- ————————————————— CONTACT ————————————————— -->
-  <!-- ✏️ CONTACT: replace YOUR-EMAIL-HERE and each # with your real links.
-       Delete any link you don't want. -->
-  <footer class="contact pink" id="contact">
-    <div class="mono">Get in touch</div>
-    <a class="big" href="mailto:YOUR-EMAIL-HERE">say <em>hello</em> →</a>
-    <div class="links mono">
-      <a href="mailto:YOUR-EMAIL-HERE">email</a>
-      <a href="#">instagram</a>
-      <a href="#">linkedin</a>
+  <section class="contact" id="contact">
+    <div class="wrap">
+      <div class="label mono"><span><b>04</b> — Contact</span><span>say hi</span></div>
+      <h2 class="big">Got something that needs <em>making happen</em>?</h2>
+      <div class="contact-links mono">
+        <a class="btn primary" href="mailto:YOUR-EMAIL-HERE">email me <span class="arr">→</span></a>
+        <a class="btn" href="#">linkedin</a>
+        <a class="btn" href="#">instagram</a>
+      </div>
+      <div class="foot mono">
+        <span>pdvsn.com</span>
+        <span>© mmxxvi</span>
+      </div>
     </div>
-    <div class="foot mono">
-      <span>pdvsn.com</span>
-      <span>© mmxxvi</span>
-    </div>
-  </footer>
+  </section>
 
 <script>
   document.documentElement.classList.add("js");
 
-  // Edinburgh local time on the cover
+  // Edinburgh local time in the hero
   const clock = document.getElementById("clock");
   const fmt = new Intl.DateTimeFormat("en-GB", { timeZone: "Europe/London", hour: "2-digit", minute: "2-digit" });
-  const tick = () => { clock.textContent = fmt.format(new Date()) + " edi"; };
+  const tick = () => { clock.textContent = fmt.format(new Date()); };
   tick(); setInterval(tick, 10000);
 
   // fade things in as they scroll into view
