@@ -23,11 +23,16 @@
     src: url("fonts/tilt-neon.woff2") format("woff2");
     font-display: block;
   }
+  @font-face {
+    font-family: "Permanent Marker";
+    src: url("fonts/permanent-marker.woff2") format("woff2");
+  }
 
   * { box-sizing: border-box; }
   body {
     margin: 0;
-    background: var(--bg);
+    /* one continuous brick wall behind the attic and the sign */
+    background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='60'><rect width='120' height='60' fill='%230a0809'/><g fill='%23161113'><rect x='1' y='1' width='57' height='27'/><rect x='61' y='1' width='57' height='27'/><rect x='-29' y='31' width='57' height='27'/><rect x='31' y='31' width='57' height='27'/><rect x='91' y='31' width='57' height='27'/></g></svg>") var(--bg);
     color: var(--ink);
     font-family: var(--sans);
     -webkit-font-smoothing: antialiased;
@@ -41,11 +46,11 @@
     min-height: 100svh;
     display: grid;
     place-items: center;
-    overflow: hidden;
+    overflow-x: clip;
+    z-index: 1;
     padding: 80px 16px;
-    background:
-      radial-gradient(ellipse at 50% 45%, transparent 25%, rgba(0,0,0,.8) 100%),
-      url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='60'><rect width='120' height='60' fill='%230a0809'/><g fill='%23161113'><rect x='1' y='1' width='57' height='27'/><rect x='61' y='1' width='57' height='27'/><rect x='-29' y='31' width='57' height='27'/><rect x='31' y='31' width='57' height='27'/><rect x='91' y='31' width='57' height='27'/></g></svg>");
+    /* side vignette only, so it joins the attic above without a seam */
+    background: linear-gradient(90deg, rgba(0,0,0,.75), transparent 28%, transparent 72%, rgba(0,0,0,.75));
   }
   /* pink light thrown onto the bricks once the sign is on */
   .glow {
@@ -70,7 +75,7 @@
     content: "";
     position: absolute;
     bottom: calc(100% - 14px);
-    height: 100vh;
+    height: var(--reach, 100vh);
     border-left: 1px solid #3a3436;
   }
   .plate::before { left: 12%; }
@@ -140,6 +145,64 @@
     color: var(--ink-dim);
   }
 
+  /* ————— easter egg: scroll up above the sign ————— */
+  /* The page opens scrolled down to the sign. Scroll up and you follow the
+     wires and the sign's power cable to an overloaded extension lead. */
+  .attic { display: none; }
+  .js .attic {
+    display: block;
+    position: relative;
+    z-index: 2; /* the note and plugs sit in front of the wires */
+    height: 90svh;
+    overflow: hidden;
+    background:
+      linear-gradient(to bottom, rgba(0,0,0,.6), transparent 35%),
+      linear-gradient(90deg, rgba(0,0,0,.75), transparent 28%, transparent 72%, rgba(0,0,0,.75));
+  }
+  .ceiling {
+    position: absolute; top: 0; left: 0; right: 0;
+    height: 44px;
+    background: linear-gradient(#1b1618, #100d0e);
+    border-bottom: 1px solid #2a2627;
+    box-shadow: 0 12px 30px rgba(0,0,0,.7);
+  }
+  .lead { position: absolute; top: 120px; left: 0; }
+  .lead svg { display: block; overflow: visible; }
+  .note {
+    position: absolute;
+    left: 350px; top: -6px;
+    width: 180px;
+    padding: 16px 14px 14px;
+    background: #ffe27a;
+    color: #2a2020;
+    font-family: "Permanent Marker", "Comic Sans MS", cursive;
+    font-size: 19px;
+    line-height: 1.15;
+    transform: rotate(5deg);
+    box-shadow: 6px 12px 16px rgba(0,0,0,.55);
+  }
+  .note small { display: block; margin-top: 8px; font-size: 14px; }
+  .note::before {
+    content: "";
+    position: absolute; top: -10px; left: 50%;
+    width: 70px; height: 20px;
+    margin-left: -35px;
+    background: rgba(232,217,168,.85);
+    transform: rotate(-4deg);
+  }
+  /* the sign's own power cable, running up out of the plate */
+  .cable { display: none; }
+  .js .cable {
+    display: block;
+    position: absolute;
+    right: 30%;
+    bottom: calc(100% - 4px);
+    width: 6px;
+    height: var(--cable, 100vh);
+    border-radius: 3px;
+    background: linear-gradient(90deg, #120f10, #2f2729 45%, #120f10);
+  }
+
   /* ————— menu over the wall ————— */
   .menu {
     position: absolute; top: 0; left: 0; right: 0;
@@ -158,6 +221,7 @@
   .menu a:hover, .menu a:focus-visible { color: var(--pink); }
 
   /* ————— work / fun sections ————— */
+  .below { position: relative; z-index: 1; background: var(--bg); box-shadow: 0 -30px 40px var(--bg); }
   .part {
     width: min(760px, 100%);
     margin: 0 auto;
@@ -194,7 +258,6 @@
   .rows a { text-decoration: none; }
   .rows a.side { color: var(--pink); }
   .rows a:hover .name, .rows a:focus-visible .name { color: var(--pink); }
-  .rows li.now .name { color: var(--pink); }
 
   footer {
     width: min(760px, 100%);
@@ -207,6 +270,8 @@
   footer a:hover, footer a:focus-visible { text-decoration: underline; }
 
   @media (max-width: 560px) {
+    .lead svg { width: 256px; height: 72px; }
+    .note { left: 30px; top: 150px; transform: rotate(-4deg); }
     .menu > span { display: none; }
     .menu { justify-content: center; }
     .rows li { grid-template-columns: 1fr; }
@@ -219,6 +284,41 @@
 </head>
 <body>
 
+  <div class="attic" aria-hidden="true">
+    <div class="ceiling"></div>
+    <div class="lead">
+      <svg width="320" height="90" viewBox="0 0 320 90">
+        <!-- cables, drawn under the plugs -->
+        <path d="M70 66 C70 140 10 150 -160 260" stroke="#1c1718" stroke-width="5" fill="none" stroke-linecap="round"/>
+        <path d="M130 66 C130 170 60 200 -40 420" stroke="#2f4a35" stroke-width="4" fill="none" stroke-linecap="round"/>
+        <path d="M250 66 C250 150 330 170 480 260" stroke="#e9e4de" stroke-width="5" fill="none" stroke-linecap="round"/>
+        <path d="M278 -26 C320 -60 390 -20 470 140" stroke="#1c1718" stroke-width="5" fill="none" stroke-linecap="round"/>
+        <!-- the strip -->
+        <rect x="0" y="14" width="320" height="50" rx="10" fill="#e6e0d9" stroke="#b8afa6"/>
+        <rect x="4" y="54" width="312" height="6" rx="3" fill="#cfc7be"/>
+        <rect x="12" y="26" width="26" height="26" rx="4" fill="#d83a3a"/>
+        <rect x="12" y="26" width="26" height="26" rx="4" fill="#ff6b6b" opacity=".5" style="filter: blur(6px)"/>
+        <g fill="#d6cec5"><rect x="48" y="22" width="44" height="34" rx="6"/><rect x="108" y="22" width="44" height="34" rx="6"/><rect x="168" y="22" width="44" height="34" rx="6"/><rect x="228" y="22" width="44" height="34" rx="6"/></g>
+        <!-- plugs -->
+        <rect x="50" y="10" width="40" height="56" rx="7" fill="#f4f0eb" stroke="#c9c0b6"/>
+        <rect x="110" y="10" width="40" height="56" rx="7" fill="#f4f0eb" stroke="#c9c0b6"/>
+        <rect id="sign-plug" x="170" y="10" width="40" height="56" rx="7" fill="#1c1718" stroke="#000"/>
+        <rect x="230" y="10" width="40" height="56" rx="7" fill="#f4f0eb" stroke="#c9c0b6"/>
+        <!-- an adapter on the last socket, because of course -->
+        <rect x="244" y="-18" width="46" height="40" rx="6" fill="#efe9e2" stroke="#c9c0b6"/>
+        <rect x="262" y="-40" width="32" height="34" rx="5" fill="#1c1718"/>
+        <!-- masking tape labels -->
+        <g font-family="ui-monospace, Menlo, monospace" font-size="9" letter-spacing="1" fill="#3a3030" text-anchor="middle">
+          <g transform="rotate(-6 70 86)"><rect x="44" y="78" width="52" height="15" fill="#e8d9a8"/><text x="70" y="89">KETTLE</text></g>
+          <g transform="rotate(5 130 104)"><rect x="96" y="96" width="70" height="15" fill="#e8d9a8"/><text x="131" y="107">FAIRY LIGHTS</text></g>
+          <g transform="rotate(-3 190 84)"><rect x="170" y="76" width="40" height="15" fill="#e8d9a8"/><text x="190" y="87">SIGN</text></g>
+          <g transform="rotate(7 250 84)"><rect x="234" y="76" width="32" height="15" fill="#e8d9a8"/><text x="250" y="87">???</text></g>
+        </g>
+      </svg>
+      <div class="note">Please don't unplug the sign!!<small>(seriously) — P</small></div>
+    </div>
+  </div>
+
   <section class="wall" id="sign">
     <header class="menu">
       <span>Paul Davidson</span>
@@ -227,6 +327,7 @@
     <div class="glow" aria-hidden="true"></div>
     <div class="plate">
       <span class="standoff l" aria-hidden="true"></span><span class="standoff r" aria-hidden="true"></span>
+      <span class="cable" aria-hidden="true"></span>
       <!-- Each letter is stacked three times: the shadow it casts, the unlit glass,
            and the lit tube on top, which flickers on by itself. -->
       <h1 class="neon" aria-label="pdvsn">
@@ -240,6 +341,7 @@
     <div class="caption" aria-hidden="true">Edinburgh · scroll ↓</div>
   </section>
 
+  <div class="below">
   <!-- ✏️ WORK: draft words, rewrite them so they sound like you. -->
   <section class="part" id="work">
     <h2>work<span>.</span></h2>
@@ -247,13 +349,6 @@
       <p>I'm a Delivery Lead in Edinburgh. Most of my work comes down to finding the bit of a process that's a pain for everyone and fixing it. Lately that's meant building the way new gas and electricity connections get set up at Octopus Energy.</p>
       <p>Before that I spent three years making videos, which turns out to be good practice for getting a lot of people pulling in the same direction.</p>
     </div>
-    <ul class="rows">
-      <li class="now"><span class="name">Delivery Lead <small>Octopus Energy</small></span><span class="side mono">2026 —</span></li>
-      <li><span class="name">Smart Experience <small>Octopus Energy</small></span><span class="side mono">2025 — 26</span></li>
-      <li><span class="name">Emergency Data Lead <small>Octopus Energy</small></span><span class="side mono">2025</span></li>
-      <li><span class="name">Emergency Specialist <small>Octopus Energy</small></span><span class="side mono">2023 — 25</span></li>
-      <li><span class="name">Content Producer <small>PD Creative</small></span><span class="side mono">2020 — 23</span></li>
-    </ul>
   </section>
 
   <section class="part" id="fun">
@@ -274,9 +369,36 @@
     <span>pdvsn.com</span>
     <a href="/contact">Get in touch →</a>
   </footer>
+  </div>
 
 <script>
   document.documentElement.classList.add("js");
+
+  // ——— easter egg ———
+  // open the page scrolled past the attic, so the sign is what you see first
+  const attic = document.querySelector(".attic");
+  if ("scrollRestoration" in history) history.scrollRestoration = "manual";
+  if (!location.hash) window.scrollTo(0, attic.offsetHeight);
+
+  // run the wires to the ceiling and the cable into the "SIGN" plug
+  const plate = document.querySelector(".plate");
+  const cable = document.querySelector(".cable");
+  const lead = document.querySelector(".lead");
+  const plug = document.getElementById("sign-plug");
+  const ceiling = document.querySelector(".ceiling");
+  function wireUp() {
+    const p = plate.getBoundingClientRect();
+    plate.style.setProperty("--reach", (p.top - ceiling.getBoundingClientRect().bottom + 14) + "px");
+    const c = cable.getBoundingClientRect();
+    lead.style.left = "0px";
+    const g = plug.getBoundingClientRect();
+    lead.style.left = (c.left + c.width / 2 - (g.left + g.width / 2)) + "px";
+    plate.style.setProperty("--cable", (p.top - plug.getBoundingClientRect().bottom + 6) + "px");
+  }
+  wireUp();
+  addEventListener("resize", wireUp);
+  document.fonts.ready.then(wireUp);
+
   // switch the sign on shortly after the font has loaded
   document.fonts.ready.then(() =>
     setTimeout(() => document.getElementById("sign").classList.add("lit"), 400));
