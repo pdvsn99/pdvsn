@@ -106,11 +106,6 @@
     color: #ffd3df;
     text-shadow: 0 0 2px #fff, 0 0 8px var(--pink), 0 0 18px var(--pink), 0 0 40px var(--pink), 0 0 80px rgba(241,102,139,.8);
   }
-  .ltr .on.white {
-    color: #fff7f2;
-    text-shadow: 0 0 2px #fff, 0 0 8px #ffe8dd, 0 0 18px #ffb8c9, 0 0 40px rgba(241,102,139,.7);
-  }
-
   /* each letter lights on its own, with its own stutter */
   .js .on, .js .glow { opacity: 0; }
   .js .lit .on { animation: flick 1.1s steps(1, end) both; }
@@ -119,7 +114,6 @@
   .js .lit .l3 { animation-delay: 1.05s; }
   .js .lit .l4 { animation: flick2 1.5s steps(1, end) 1.4s both, buzz 6s steps(1, end) 4s infinite; }
   .js .lit .l5 { animation-delay: 2.1s; animation-name: flick2; }
-  .js .lit .l6 { animation-delay: 2.7s; }
   .js .lit .glow { animation: warm 3s steps(1, end) .2s both; }
   @keyframes flick {
     0% { opacity: 0 } 10% { opacity: .9 } 16% { opacity: 0 } 30% { opacity: 1 } 36% { opacity: .2 } 50% { opacity: 1 } 100% { opacity: 1 }
@@ -195,7 +189,6 @@
         <span class="ltr" data-t="v"><span class="off">v</span><span class="on l3">v</span></span>
         <span class="ltr" data-t="s"><span class="off">s</span><span class="on l4">s</span></span>
         <span class="ltr" data-t="n"><span class="off">n</span><span class="on l5">n</span></span>
-        <span class="ltr" data-t="."><span class="off">.</span><span class="on white l6">.</span></span>
       </h1>
     </div>
     <div class="caption" aria-hidden="true">Paul Davidson · Edinburgh</div>

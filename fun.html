@@ -3,458 +3,273 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Off the clock — Paul Davidson</title>
-<meta name="description" content="Paul Davidson off the clock — films, food and side projects, from Edinburgh.">
+<title>after hours — pdvsn</title>
+<meta name="description" content="Paul Davidson after hours: a supper club, a dessert shop, short films, Edinburgh recommendations and a rota app.">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><rect width='16' height='16' fill='%23F1668B'/></svg>">
 <style>
+  @font-face {
+    font-family: "Tilt Neon";
+    src: url("fonts/tilt-neon.woff2") format("woff2");
+    font-display: block;
+  }
+
   :root {
-    --bg: #0d0b0c;
+    --bg: #0a0809;
     --ink: #f3eee9;
     --ink-dim: #8a8381;
-    --rule: #2a2627;
     --pink: #F1668B;
     --sans: "Arial Narrow", "Helvetica Neue", Arial, sans-serif;
     --serif: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
     --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-    --gutter: clamp(16px, 4vw, 56px);
-    --ease: cubic-bezier(.2,.7,.2,1);
+    --neon: "Tilt Neon", var(--sans);
+    --glow-pink: 0 0 2px #fff, 0 0 8px var(--pink), 0 0 18px var(--pink), 0 0 40px var(--pink), 0 0 80px rgba(241,102,139,.8);
+    --glow-white: 0 0 2px #fff, 0 0 8px #ffe8dd, 0 0 18px #ffb8c9, 0 0 40px rgba(241,102,139,.7);
   }
 
   * { box-sizing: border-box; }
-  html { scroll-behavior: smooth; }
   body {
     margin: 0;
-    background: var(--bg);
     color: var(--ink);
     font-family: var(--sans);
-    font-stretch: condensed;
     -webkit-font-smoothing: antialiased;
     overflow-x: hidden;
+    /* one long brick wall for the whole page */
+    background:
+      url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='60'><rect width='120' height='60' fill='%230a0809'/><g fill='%23161113'><rect x='1' y='1' width='57' height='27'/><rect x='61' y='1' width='57' height='27'/><rect x='-29' y='31' width='57' height='27'/><rect x='31' y='31' width='57' height='27'/><rect x='91' y='31' width='57' height='27'/></g></svg>")
+      var(--bg);
   }
-
-  /* film grain over everything */
+  /* darken the edges of the wall */
   body::before {
     content: "";
     position: fixed; inset: 0;
-    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='140' height='140'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 0.6 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)' opacity='0.55'/></svg>");
-    opacity: 0.09;
+    background: radial-gradient(ellipse at 50% 50%, transparent 30%, rgba(0,0,0,.8) 100%);
     pointer-events: none;
-    mix-blend-mode: overlay;
-    z-index: 100;
+    z-index: 0;
   }
-
+  main, .top, footer { position: relative; z-index: 1; }
+  main { overflow: hidden; }
   a { color: inherit; }
+  .mono { font-family: var(--mono); font-size: 11px; letter-spacing: .16em; text-transform: uppercase; }
 
-  .mono {
-    font-family: var(--mono);
-    font-size: 11px;
-    letter-spacing: .14em;
-    text-transform: uppercase;
-  }
-  .dim { color: var(--ink-dim); }
-  em { font-family: var(--serif); font-style: italic; font-weight: 400; }
-
-  /* ————— pink spreads flip the palette ————— */
-  .pink {
-    --bg: #F1668B;
-    --ink: #0d0b0c;
-    --ink-dim: rgba(13, 11, 12, .62);
-    --rule: rgba(13, 11, 12, .25);
-    background: var(--bg);
-    color: var(--ink);
-  }
-
-  /* ————— top bar ————— */
-  .bar {
-    position: sticky; top: 0;
-    z-index: 20;
-    display: flex; justify-content: space-between; align-items: center;
-    padding: 16px var(--gutter);
-    background: rgba(13, 11, 12, .88);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-    border-bottom: 1px solid var(--rule);
-  }
-  .bar .logo { font-size: 22px; text-decoration: none; letter-spacing: -0.02em; }
-  .bar .logo b { color: var(--pink); font-weight: 400; }
-  .bar nav { display: flex; gap: 26px; }
-  .bar nav a { text-decoration: none; color: var(--ink-dim); transition: color .25s; }
-  .bar nav a:hover, .bar nav a:focus-visible { color: var(--pink); }
-
-  /* ————— cover ————— */
-  .cover {
-    padding: clamp(48px, 9vw, 120px) var(--gutter) clamp(40px, 6vw, 80px);
-    border-bottom: 1px solid var(--rule);
-  }
-  .cover .kicker { display: flex; justify-content: space-between; margin-bottom: clamp(28px, 5vw, 64px); }
-  .cover h1 {
-    margin: 0;
-    font-size: clamp(62px, 13.5vw, 220px);
-    font-weight: 400;
-    line-height: .86;
-    letter-spacing: -0.035em;
-  }
-  .cover h1 em { color: var(--pink); letter-spacing: -0.02em; }
-  .cover h1 .indent { display: block; padding-left: 12vw; }
-
-  /* contents list */
-  .contents {
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    margin-top: clamp(40px, 7vw, 96px);
-    border-top: 1px solid var(--rule);
-    scroll-margin-top: 60px;
-  }
-  .contents a {
-    display: block;
-    padding: 18px 16px 18px 0;
-    text-decoration: none;
-    border-right: 1px solid var(--rule);
-    margin-right: 16px;
-  }
-  .contents a:last-child { border-right: 0; margin-right: 0; }
-  .contents .n { display: block; color: var(--ink-dim); margin-bottom: 10px; }
-  .contents .t { font-size: clamp(20px, 2.2vw, 30px); letter-spacing: -0.01em; text-transform: lowercase; transition: color .25s; }
-  .contents a:hover .t, .contents a:focus-visible .t { color: var(--pink); }
-
-  /* ————— photo slots ————— */
-  /* Each .ph shows the image in --img. Until that file exists you see
-     stripes plus the filename, so you know what to upload. */
-  .ph {
-    position: relative;
-    margin: 0;
-    overflow: hidden;
-    background:
-      linear-gradient(135deg, rgba(241,102,139,.16), rgba(241,102,139,.02)),
-      repeating-linear-gradient(135deg, rgba(255,255,255,.045) 0 2px, transparent 2px 9px);
-    border: 1px solid var(--rule);
-  }
-  .pink .ph {
-    background: repeating-linear-gradient(135deg, rgba(13,11,12,.10) 0 2px, transparent 2px 9px);
-  }
-  .ph::before {
-    content: attr(data-file);
-    position: absolute; left: 12px; bottom: 10px;
-    font: 10px/1 var(--mono);
-    letter-spacing: .14em;
-    text-transform: uppercase;
+  .top {
+    display: flex; justify-content: space-between;
+    padding: 20px clamp(16px, 4vw, 40px);
     color: var(--ink-dim);
   }
-  .ph::after {
-    content: "";
-    position: absolute; inset: 0;
-    background: var(--img) center / cover no-repeat;
-    transition: transform 1.2s var(--ease);
-  }
-  .ph:hover::after { transform: scale(1.03); }
-  .r-wide { aspect-ratio: 16 / 10; }
-  .r-tall { aspect-ratio: 4 / 5; }
-  .r-sq   { aspect-ratio: 1 / 1; }
-  .r-pano { aspect-ratio: 21 / 9; }
+  .top a { text-decoration: none; }
+  .top a:hover, .top a:focus-visible { color: var(--pink); }
 
-  /* ————— spreads ————— */
-  .spread {
-    display: grid;
-    grid-template-columns: repeat(12, 1fr);
-    column-gap: clamp(14px, 2vw, 28px);
-    row-gap: clamp(20px, 3vw, 40px);
-    padding: clamp(56px, 9vw, 130px) var(--gutter);
-    border-bottom: 1px solid var(--rule);
-    scroll-margin-top: 60px;
-  }
-  .num {
-    font-size: clamp(90px, 16vw, 240px);
-    line-height: .8;
-    letter-spacing: -0.05em;
-    color: var(--pink);
-  }
-  .pink .num { color: var(--ink); }
-  .title {
-    margin: 0;
-    font-size: clamp(48px, 8vw, 128px);
+  /* ————— neon lettering (shared) ————— */
+  .word {
+    position: relative;
+    display: inline-block;
+    z-index: 0;
+    font-family: var(--neon);
     font-weight: 400;
-    line-height: .88;
-    letter-spacing: -0.03em;
-    text-transform: lowercase;
+    line-height: 1.1;
+    white-space: nowrap;
   }
-  .lede {
-    margin: 0;
-    font-family: var(--serif);
-    font-size: clamp(20px, 2vw, 28px);
-    line-height: 1.3;
-    max-width: 30ch;
+  /* the shadow the tubes cast on the wall */
+  .word::before {
+    content: attr(data-t);
+    position: absolute; left: 0; top: 0;
+    z-index: -1;
+    color: rgba(0,0,0,.85);
+    transform: translate(.04em, .07em);
+    filter: blur(5px);
   }
-  .text { display: flex; flex-direction: column; gap: 22px; }
-  .visit {
-    display: inline-flex; align-items: center; gap: 10px;
-    align-self: start;
-    padding: 12px 18px;
-    border: 1px solid currentColor;
-    text-decoration: none;
-    transition: background .25s, color .25s, border-color .25s;
+  .word .off { color: #3a3134; text-shadow: 0 1px 0 rgba(255,255,255,.07), 0 -1px 0 rgba(0,0,0,.6); }
+  .word .on { position: absolute; left: 0; top: 0; color: #ffd3df; text-shadow: var(--glow-pink); }
+  .word.white .on { color: #fff7f2; text-shadow: var(--glow-white); }
+
+  /* each sign stays off until it scrolls into view, then stutters on */
+  .js .word .on, .js .glow { opacity: 0; }
+  .js .lit .word .on { animation: flick 1.1s steps(1, end) .15s both; }
+  .js .lit .word + .word .on { animation: flick2 1.6s steps(1, end) .6s both; }
+  .js .lit .glow { animation: flick 1.1s steps(1, end) .15s both; }
+  .js .lit.faulty .word .on { animation: flick2 1.6s steps(1, end) .15s both, buzz 7s steps(1, end) 3s infinite; }
+  @keyframes flick {
+    0% { opacity: 0 } 10% { opacity: .9 } 16% { opacity: 0 } 30% { opacity: 1 } 36% { opacity: .2 } 50% { opacity: 1 } 100% { opacity: 1 }
   }
-  .visit:hover, .visit:focus-visible { background: var(--pink); color: var(--bg); border-color: var(--pink); }
-  .pink .visit:hover, .pink .visit:focus-visible { background: var(--ink); color: var(--pink); border-color: var(--ink); }
-  .visit .arr { transition: transform .4s var(--ease); }
-  .visit:hover .arr { transform: translateX(5px); }
+  @keyframes flick2 {
+    0% { opacity: 0 } 8% { opacity: .6 } 12% { opacity: 0 } 34% { opacity: 0 } 38% { opacity: 1 } 44% { opacity: 0 } 60% { opacity: 1 } 100% { opacity: 1 }
+  }
+  @keyframes buzz {
+    0% { opacity: 1 } 90% { opacity: .3 } 91.5% { opacity: 1 } 93% { opacity: .5 } 94% { opacity: 1 } 100% { opacity: 1 }
+  }
 
-  /* 01 films — big photo right, two smaller below, offset */
-  .s-films .num  { grid-column: 1 / 5; grid-row: 1; }
-  .s-films .text { grid-column: 1 / 5; grid-row: 2; align-self: end; }
-  .s-films .a    { grid-column: 5 / 13; grid-row: 1 / 3; }
-  .s-films .b    { grid-column: 2 / 6; grid-row: 3; margin-top: 8vw; }
-  .s-films .c    { grid-column: 7 / 12; grid-row: 3; }
-
-  /* 02 visits (pink) — tall photo left, text right, two squares tucked under */
-  .s-visits .a    { grid-column: 1 / 6; grid-row: 1 / 4; }
-  .s-visits .num  { grid-column: 7 / 13; grid-row: 1; text-align: right; }
-  .s-visits .text { grid-column: 7 / 12; grid-row: 2; }
-  .s-visits .b    { grid-column: 7 / 10; grid-row: 3; align-self: end; }
-  .s-visits .c    { grid-column: 10 / 13; grid-row: 3; align-self: end; transform: translateY(6vw); }
-
-  /* 03 carb club — panoramic photo with the title cutting into it */
-  .s-carb .a    { grid-column: 1 / 13; grid-row: 1; }
-  .s-carb .head { grid-column: 1 / 9; grid-row: 2; margin-top: clamp(-120px, -9vw, -40px); position: relative; z-index: 2; display: flex; align-items: end; gap: 20px; }
-  .s-carb .a::before { bottom: auto; top: 12px; }
-  .s-carb .head .title { background: var(--bg); padding: 12px 20px 0 0; }
-  .s-carb .text { grid-column: 9 / 13; grid-row: 2 / 4; padding-top: 24px; }
-  .s-carb .b    { grid-column: 1 / 5; grid-row: 3; }
-  .s-carb .c    { grid-column: 5 / 9; grid-row: 3; margin-top: 5vw; }
-
-  /* 04 who's on what — mirrored: photos left, text right */
-  .s-who .a    { grid-column: 1 / 8; grid-row: 1 / 3; }
-  .s-who .num  { grid-column: 9 / 13; grid-row: 1; text-align: right; }
-  .s-who .text { grid-column: 9 / 13; grid-row: 2; align-self: end; }
-  .s-who .b    { grid-column: 4 / 11; grid-row: 3; }
-
-  /* 05 dessert dock (pink) — with a "launching soon" stamp */
-  .s-dock .num  { grid-column: 1 / 6; grid-row: 1; }
-  .s-dock .text { grid-column: 1 / 6; grid-row: 2; }
-  .s-dock .a    { grid-column: 6 / 13; grid-row: 1 / 3; position: relative; }
-  .s-dock .b    { grid-column: 3 / 8; grid-row: 3; }
-  .stamp {
+  .glow {
     position: absolute;
-    top: -22px; right: -10px;
-    z-index: 3;
-    width: 130px; height: 130px;
-    border-radius: 50%;
-    background: var(--ink);
-    color: var(--pink);
-    display: grid; place-items: center;
-    text-align: center;
-    line-height: 1.5;
-    transform: rotate(12deg);
+    left: 50%; top: 50%;
+    width: 140%; height: 220%;
+    transform: translate(-50%, -50%);
+    background: radial-gradient(ellipse at center, rgba(241,102,139,.28), rgba(241,102,139,.07) 45%, transparent 70%);
+    pointer-events: none;
+    z-index: -2;
   }
 
-  /* ————— about ————— */
-  .about {
+  /* ————— header sign on a plate ————— */
+  .hero {
+    position: relative;
     display: grid;
-    grid-template-columns: repeat(12, 1fr);
-    column-gap: clamp(14px, 2vw, 28px);
-    row-gap: 32px;
-    padding: clamp(56px, 9vw, 130px) var(--gutter);
-    scroll-margin-top: 60px;
+    place-items: center;
+    padding: clamp(90px, 14vw, 170px) 16px clamp(40px, 6vw, 70px);
+    text-align: center;
   }
-  .about .label { grid-column: 1 / 13; }
-  .about .ph    { grid-column: 1 / 5; }
-  .about .words { grid-column: 6 / 13; align-self: end; }
-  .about .ph::after { filter: grayscale(1); transition: filter .6s var(--ease), transform 1.2s var(--ease); }
-  .about .ph:hover::after { filter: none; }
-  .about p {
-    margin: 0 0 22px;
-    font-size: clamp(28px, 3.6vw, 52px);
-    line-height: 1.05;
-    letter-spacing: -0.02em;
+  .plate {
+    position: relative;
+    padding: clamp(10px, 2vw, 22px) clamp(24px, 4.5vw, 56px) clamp(14px, 2.4vw, 28px);
+    border-radius: clamp(14px, 2vw, 22px);
+    border: 1px solid rgba(255,255,255,.08);
+    background: linear-gradient(160deg, rgba(255,255,255,.05), rgba(255,255,255,.012));
+    box-shadow: 0 1px 0 rgba(255,255,255,.06) inset, 22px 34px 40px rgba(0,0,0,.65);
   }
-  .about p em { color: var(--pink); }
+  .plate::before, .plate::after {
+    content: "";
+    position: absolute;
+    bottom: calc(100% - 14px);
+    height: 100vh;
+    border-left: 1px solid #3a3436;
+  }
+  .plate::before { left: 12%; }
+  .plate::after { right: 12%; }
+  .standoff { position: absolute; top: 10px; width: 9px; height: 9px; border-radius: 50%; background: radial-gradient(circle at 35% 35%, #8a8381, #2a2627); }
+  .standoff.l { left: calc(12% - 4px); }
+  .standoff.r { right: calc(12% - 5px); }
+  .hero h1 { margin: 0; font-size: clamp(54px, 11vw, 150px); display: flex; gap: .25em; }
+  .hero p {
+    margin: clamp(28px, 4vw, 44px) 0 0;
+    font-family: var(--serif);
+    font-size: clamp(19px, 2vw, 24px);
+    color: var(--ink-dim);
+  }
 
-  /* ————— contact / footer (pink) ————— */
-  .contact {
-    padding: clamp(56px, 9vw, 120px) var(--gutter) 28px;
-    scroll-margin-top: 60px;
+  /* ————— one sign per project ————— */
+  .projects { width: min(1100px, 100%); margin: 0 auto; padding: 0 clamp(16px, 4vw, 40px) clamp(60px, 8vw, 100px); }
+  .project {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: clamp(60px, 9vw, 120px) 0;
   }
-  .contact .big {
-    display: block;
+  .project:nth-child(even) { align-items: flex-end; text-align: right; }
+  .project .word { font-size: clamp(54px, 10vw, 136px); }
+  .project .glow { width: 90%; height: 100%; }
+  .project:nth-child(odd) .glow { left: 30%; }
+  .project:nth-child(even) .glow { left: 70%; }
+  .project .what { margin: 18px 0 0; color: var(--ink-dim); }
+  .project p {
+    margin: 10px 0 0;
+    max-width: 34ch;
+    font-family: var(--serif);
+    font-size: clamp(19px, 2vw, 24px);
+    line-height: 1.4;
+  }
+  .project a.go {
     margin-top: 18px;
-    font-size: clamp(64px, 15vw, 240px);
-    line-height: .85;
-    letter-spacing: -0.04em;
+    color: var(--pink);
     text-decoration: none;
+    border-bottom: 1px solid rgba(241,102,139,.4);
+    padding-bottom: 2px;
   }
-  .contact .big em { transition: letter-spacing .5s var(--ease); }
-  .contact .big:hover em { letter-spacing: .02em; }
-  .links {
-    display: flex; flex-wrap: wrap; gap: 12px 32px;
-    margin-top: clamp(32px, 5vw, 64px);
+  .project a.go:hover, .project a.go:focus-visible { border-bottom-color: var(--pink); }
+
+  footer {
+    display: flex; justify-content: center; flex-wrap: wrap; gap: 12px 28px;
+    padding: 0 16px 48px;
+    color: var(--ink-dim);
   }
-  .links a { text-decoration: none; border-bottom: 1px solid currentColor; padding-bottom: 2px; }
-  .foot {
-    display: flex; justify-content: space-between;
-    margin-top: clamp(56px, 8vw, 110px);
-    padding-top: 18px;
-    border-top: 1px solid var(--rule);
+  footer a { text-decoration: none; }
+  footer a:hover, footer a:focus-visible { color: var(--pink); }
+
+  @media (max-width: 640px) {
+    .project, .project:nth-child(even) { align-items: center; text-align: center; }
+    .project .glow, .project:nth-child(odd) .glow, .project:nth-child(even) .glow { left: 50%; width: 130%; }
   }
-
-  /* ————— scroll reveal (only when JS runs) ————— */
-  .js .rv { opacity: 0; transform: translateY(28px); transition: opacity .9s var(--ease), transform .9s var(--ease); }
-  .js .rv.in { opacity: 1; transform: none; }
-  .js .s-visits .c.rv.in { transform: translateY(6vw); }
-
-  /* ————— phones ————— */
-  @media (max-width: 760px) {
-    .bar nav { gap: 16px; }
-    .cover .kicker { flex-direction: column; gap: 6px; }
-    .cover h1 .indent { padding-left: 0; }
-    .contents { grid-template-columns: 1fr; }
-    .contents a { border-right: 0; margin-right: 0; border-bottom: 1px solid var(--rule); display: flex; align-items: baseline; gap: 16px; padding: 14px 0; }
-    .contents .n { margin: 0; }
-
-    .spread, .about { grid-template-columns: 1fr; }
-    .spread > *, .about > * { grid-column: 1 / -1 !important; grid-row: auto !important; margin-top: 0 !important; }
-    .s-visits .c, .js .s-visits .c.rv.in { transform: none; }
-    .s-visits .num, .s-who .num { text-align: left; order: 0; }
-    .s-visits .text, .s-who .text { order: 1; }
-    .s-visits .a, .s-who .a { order: 2; }
-    .s-visits .b, .s-visits .c, .s-who .b { order: 3; }
-    .s-carb .head { margin-top: -48px !important; }
-    .stamp { width: 100px; height: 100px; top: -14px; right: 4px; }
-  }
-
   @media (prefers-reduced-motion: reduce) {
-    html { scroll-behavior: auto; }
-    *, *::before, *::after { animation: none !important; transition: none !important; }
-    .js .rv { opacity: 1; transform: none; }
+    .js .word .on, .js .glow { opacity: 1; animation: none !important; }
   }
 </style>
 </head>
 <body>
 
-  <header class="bar">
-    <a class="logo" href="/">Paul Davidson<b>.</b></a>
-    <nav class="mono">
-      <a href="/#work">work</a>
-      <a href="/fun" aria-current="page" style="color:var(--pink)">fun</a>
-      <a href="/#contact">contact</a>
-    </nav>
-  </header>
+  <div class="top mono">
+    <a href="/">← pdvsn</a>
+    <span>Paul Davidson</span>
+  </div>
 
-  <!-- ————————————————— COVER ————————————————— -->
-  <section class="cover" id="top">
-    <div class="kicker mono dim">
-      <span>Paul Davidson — Edinburgh</span>
-      <span>Off the clock · <span id="clock">—</span></span>
-    </div>
-    <h1>Off the <em>clock</em>.<span class="indent">Films, food &amp; side projects.</span></h1>
+  <main>
+    <section class="hero sign">
+      <div class="glow" aria-hidden="true"></div>
+      <div class="plate">
+        <span class="standoff l" aria-hidden="true"></span><span class="standoff r" aria-hidden="true"></span>
+        <h1 aria-label="after hours">
+          <span class="word" data-t="after" aria-hidden="true"><span class="off">after</span><span class="on">after</span></span>
+          <span class="word white" data-t="hours" aria-hidden="true"><span class="off">hours</span><span class="on">hours</span></span>
+        </h1>
+      </div>
+      <p>The things I make when I'm not at work.</p>
+    </section>
 
-    <nav class="contents" id="work" aria-label="Contents">
-      <a href="#films"><span class="n mono">01</span><span class="t">films</span></a>
-      <a href="#visits"><span class="n mono">02</span><span class="t">visits</span></a>
-      <a href="#carbclub"><span class="n mono">03</span><span class="t">carb club</span></a>
-      <a href="#whosonwhat"><span class="n mono">04</span><span class="t">who's on what</span></a>
-      <a href="#dessertdock"><span class="n mono">05</span><span class="t">dessert dock</span></a>
-    </nav>
-  </section>
+    <!-- Each project is its own sign. Add class "white" to a .word for a white tube,
+         or "faulty" to a .project to make it buzz now and then. -->
+    <div class="projects">
+      <section class="project sign" id="carbclub">
+        <div class="glow" aria-hidden="true"></div>
+        <h2 style="margin:0" aria-label="carb club"><span class="word" data-t="carb club" aria-hidden="true"><span class="off">carb club</span><span class="on">carb club</span></span></h2>
+        <span class="what mono">Supper club · monthly</span>
+        <p>My monthly supper club for lovers of carbs.</p>
+        <a class="go mono" href="https://carbclub.pdvsn.com">carbclub.pdvsn.com ↗</a>
+      </section>
 
-  <!-- ✏️ PHOTOS: every striped box shows the filename it wants
-       (e.g. FILMS-1.JPG). Put a photo with that name in the images
-       folder and it appears. -->
+      <section class="project sign faulty" id="dessertdock">
+        <div class="glow" aria-hidden="true"></div>
+        <h2 style="margin:0" aria-label="dessert dock"><span class="word white" data-t="dessert dock" aria-hidden="true"><span class="off">dessert dock</span><span class="on">dessert dock</span></span></h2>
+        <span class="what mono">Dessert shop · launching soon</span>
+        <p>An industrial themed dessert shop.</p>
+        <a class="go mono" href="https://dessertdock.com">dessertdock.com ↗</a>
+      </section>
 
-  <!-- ————————————————— 01 FILMS ————————————————— -->
-  <section class="spread s-films" id="films">
-    <div class="num rv">01</div>
-    <div class="text rv">
-      <h2 class="title">films</h2>
-      <p class="lede">Short films.</p>
-      <a class="visit mono" href="https://films.pdvsn.com">films.pdvsn.com <span class="arr">→</span></a>
-    </div>
-    <figure class="ph r-wide a rv" data-file="films-1.jpg" style="--img:url('images/films-1.jpg')"></figure>
-    <figure class="ph r-tall b rv" data-file="films-2.jpg" style="--img:url('images/films-2.jpg')"></figure>
-    <figure class="ph r-wide c rv" data-file="films-3.jpg" style="--img:url('images/films-3.jpg')"></figure>
-  </section>
+      <section class="project sign" id="films">
+        <div class="glow" aria-hidden="true"></div>
+        <h2 style="margin:0" aria-label="films"><span class="word" data-t="films" aria-hidden="true"><span class="off">films</span><span class="on">films</span></span></h2>
+        <span class="what mono">Short films</span>
+        <p>Short films I've made.</p>
+        <a class="go mono" href="https://films.pdvsn.com">films.pdvsn.com ↗</a>
+      </section>
 
-  <!-- ————————————————— 02 VISITS ————————————————— -->
-  <section class="spread s-visits pink" id="visits">
-    <figure class="ph r-tall a rv" data-file="visits-1.jpg" style="--img:url('images/visits-1.jpg')"></figure>
-    <div class="num rv">02</div>
-    <div class="text rv">
-      <h2 class="title">visits</h2>
-      <p class="lede">My recommendations of things to eat, drink and do in Edinburgh.</p>
-      <a class="visit mono" href="https://visits.pdvsn.com">visits.pdvsn.com <span class="arr">→</span></a>
-    </div>
-    <figure class="ph r-sq b rv" data-file="visits-2.jpg" style="--img:url('images/visits-2.jpg')"></figure>
-    <figure class="ph r-sq c rv" data-file="visits-3.jpg" style="--img:url('images/visits-3.jpg')"></figure>
-  </section>
+      <section class="project sign" id="visits">
+        <div class="glow" aria-hidden="true"></div>
+        <h2 style="margin:0" aria-label="visits"><span class="word white" data-t="visits" aria-hidden="true"><span class="off">visits</span><span class="on">visits</span></span></h2>
+        <span class="what mono">Edinburgh recommendations</span>
+        <p>Where I'd send you to eat, drink and do things in Edinburgh.</p>
+        <a class="go mono" href="https://visits.pdvsn.com">visits.pdvsn.com ↗</a>
+      </section>
 
-  <!-- ————————————————— 03 CARB CLUB ————————————————— -->
-  <section class="spread s-carb" id="carbclub">
-    <figure class="ph r-pano a rv" data-file="carbclub-1.jpg" style="--img:url('images/carbclub-1.jpg')"></figure>
-    <div class="head rv">
-      <span class="num">03</span>
-      <h2 class="title">carb club</h2>
+      <section class="project sign" id="whosonwhat">
+        <div class="glow" aria-hidden="true"></div>
+        <h2 style="margin:0" aria-label="who's on what"><span class="word" data-t="who's on what" aria-hidden="true"><span class="off">who's on what</span><span class="on">who's on what</span></span></h2>
+        <span class="what mono">Rota app</span>
+        <p>Built for office and customer ops teams to ditch the spreadsheet rota.</p>
+        <a class="go mono" href="https://whosonwhat.com">whosonwhat.com ↗</a>
+      </section>
     </div>
-    <div class="text rv">
-      <p class="lede">My monthly supper club for lovers of carbs.</p>
-      <a class="visit mono" href="https://carbclub.pdvsn.com">carbclub.pdvsn.com <span class="arr">→</span></a>
-    </div>
-    <figure class="ph r-sq b rv" data-file="carbclub-2.jpg" style="--img:url('images/carbclub-2.jpg')"></figure>
-    <figure class="ph r-sq c rv" data-file="carbclub-3.jpg" style="--img:url('images/carbclub-3.jpg')"></figure>
-  </section>
+  </main>
 
-  <!-- ————————————————— 04 WHO'S ON WHAT ————————————————— -->
-  <section class="spread s-who" id="whosonwhat">
-    <figure class="ph r-wide a rv" data-file="whosonwhat-1.jpg" style="--img:url('images/whosonwhat-1.jpg')"></figure>
-    <div class="num rv">04</div>
-    <div class="text rv">
-      <h2 class="title">who's on what</h2>
-      <p class="lede">Built for office and customer ops teams to ditch the spreadsheet rota.</p>
-      <a class="visit mono" href="https://whosonwhat.com">whosonwhat.com <span class="arr">→</span></a>
-    </div>
-    <figure class="ph r-pano b rv" data-file="whosonwhat-2.jpg" style="--img:url('images/whosonwhat-2.jpg')"></figure>
-  </section>
-
-  <!-- ————————————————— 05 DESSERT DOCK ————————————————— -->
-  <section class="spread s-dock pink" id="dessertdock">
-    <div class="num rv">05</div>
-    <div class="text rv">
-      <h2 class="title">dessert dock</h2>
-      <p class="lede">Industrial themed dessert shop.</p>
-      <a class="visit mono" href="https://dessertdock.com">dessertdock.com <span class="arr">→</span></a>
-    </div>
-    <div class="a rv">
-      <div class="stamp mono">launching<br>soon</div>
-      <figure class="ph r-wide" data-file="dessertdock-1.jpg" style="--img:url('images/dessertdock-1.jpg')"></figure>
-    </div>
-    <figure class="ph r-wide b rv" data-file="dessertdock-2.jpg" style="--img:url('images/dessertdock-2.jpg')"></figure>
-  </section>
-
-  <!-- ————————————————— CONTACT ————————————————— -->
-  <footer class="contact pink" id="contact">
-    <div class="mono">That's the fun stuff</div>
-    <a class="big" href="/">back to <em>work</em> →</a>
-    <div class="links mono">
-      <a href="/#career">career</a>
-      <a href="/#contact">get in touch</a>
-    </div>
-    <div class="foot mono">
-      <span>pdvsn.com</span>
-      <span>© mmxxvi</span>
-    </div>
+  <footer class="mono">
+    <a href="/">← back to pdvsn</a>
   </footer>
 
 <script>
   document.documentElement.classList.add("js");
-
-  // Edinburgh local time on the cover
-  const clock = document.getElementById("clock");
-  const fmt = new Intl.DateTimeFormat("en-GB", { timeZone: "Europe/London", hour: "2-digit", minute: "2-digit" });
-  const tick = () => { clock.textContent = fmt.format(new Date()) + " edi"; };
-  tick(); setInterval(tick, 10000);
-
-  // fade things in as they scroll into view
-  const io = new IntersectionObserver((entries) => {
-    entries.forEach((e) => { if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); } });
-  }, { rootMargin: "0px 0px -8% 0px" });
-  document.querySelectorAll(".rv").forEach((el) => io.observe(el));
+  // light each sign once the font is ready and the sign is well into view
+  document.fonts.ready.then(() => {
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((e) => { if (e.isIntersecting) { e.target.classList.add("lit"); io.unobserve(e.target); } });
+    }, { rootMargin: "0px 0px -30% 0px" });
+    document.querySelectorAll(".sign").forEach((el) => io.observe(el));
+  });
 </script>
 </body>
 </html>
