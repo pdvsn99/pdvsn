@@ -259,22 +259,29 @@
   document.body.classList.remove("no-js");
 
   // ——— the stills that fade in and out behind the words ———
-  // ✏️ add or remove pictures here (the first one is also set in the page above)
+  // ✏️ add or remove pictures here (the first one is also set in the page above).
+  // The % after a picture says which part to keep when a narrow screen crops it:
+  // 0% is the left edge, 50% the middle, 100% the right edge.
   const HERO = [
-    "images/hero-sloansy-1.jpg", "images/hero-ange-2.jpg", "images/hero-swimming-1.jpg", "images/hero-bad-1.jpg",
-    "images/hero-sloansy-2.jpg", "images/hero-ange-4.jpg", "images/hero-swimming-3.jpg", "images/hero-bad-3.jpg",
+    ["images/hero-sloansy-1.jpg", "50%"],
+    ["images/hero-ange-1.jpg", "50%"],
+    ["images/hero-swimming-3.jpg", "72%"],
+    ["images/hero-bad-3.jpg", "50%"],
+    ["images/hero-sloansy-2.jpg", "50%"],
+    ["images/hero-ange-5.jpg", "50%"],
   ];
   const heroBg = document.getElementById("hero-bg");
   let heroSlide = heroBg.firstElementChild, heroIdx = 0;
   if (!matchMedia("(prefers-reduced-motion: reduce)").matches) {
     setInterval(() => {
-      const src = HERO[(heroIdx + 1) % HERO.length];
+      const [src, focus] = HERO[(heroIdx + 1) % HERO.length];
       const pic = new Image();
       pic.onload = () => {   // only swap once the next still has arrived
         heroIdx = (heroIdx + 1) % HERO.length;
         const next = document.createElement("div");
         next.className = "hero-slide";
         next.style.backgroundImage = "url('" + src + "')";
+        next.style.backgroundPosition = focus + " center";
         heroBg.appendChild(next);
         requestAnimationFrame(() => requestAnimationFrame(() => next.classList.add("visible")));
         const old = heroSlide; heroSlide = next;
