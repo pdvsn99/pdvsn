@@ -4,48 +4,19 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>pdvsn — Paul Davidson</title>
-<meta name="description" content="Paul Davidson. Delivery lead in Edinburgh. Also runs a supper club.">
+<meta name="description" content="Paul Davidson. I like working out why things don't work, and then making them work.">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><rect width='16' height='16' fill='%23F1668B'/></svg>">
+<link rel="stylesheet" href="site.css">
 <style>
-  :root {
-    --bg: #0a0809;
-    --ink: #f3eee9;
-    --ink-dim: #8a8381;
-    --rule: #2a2627;
-    --pink: #F1668B;
-    --sans: "Arial Narrow", "Helvetica Neue", Arial, sans-serif;
-    --serif: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
-    --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-  }
-
-  @font-face {
-    font-family: "Tilt Neon";
-    src: url("fonts/tilt-neon.woff2") format("woff2");
-    font-display: block;
-  }
-
-  * { box-sizing: border-box; }
-  body {
-    margin: 0;
-    background: var(--bg);
-    color: var(--ink);
-    font-family: var(--sans);
-    -webkit-font-smoothing: antialiased;
-    overflow-x: hidden;
-  }
-  a { color: inherit; }
-
-  /* ————— the wall ————— */
+  /* ————— the neon sign ————— */
   .wall {
-    position: relative;
-    min-height: 100svh;
+    min-height: calc(100svh - 50px);
     display: grid;
     place-items: center;
-    overflow: hidden;
-    padding: 80px 16px;
-    background:
-      radial-gradient(ellipse at 50% 45%, transparent 25%, rgba(0,0,0,.8) 100%),
-      url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='60'><rect width='120' height='60' fill='%230a0809'/><g fill='%23161113'><rect x='1' y='1' width='57' height='27'/><rect x='61' y='1' width='57' height='27'/><rect x='-29' y='31' width='57' height='27'/><rect x='31' y='31' width='57' height='27'/><rect x='91' y='31' width='57' height='27'/></g></svg>");
+    padding: 60px 16px;
+    overflow-x: clip;
+    /* stop the wires at the top of this section, under the header */
+    clip-path: inset(0 -100vw 0 -100vw);
   }
   /* pink light thrown onto the bricks once the sign is on */
   .glow {
@@ -57,7 +28,7 @@
     pointer-events: none;
   }
 
-  /* ————— the sign: clear acrylic plate on two wires ————— */
+  /* clear acrylic plate on two wires */
   .plate {
     position: relative;
     padding: clamp(14px, 2.4vw, 30px) clamp(26px, 5vw, 64px) clamp(18px, 3vw, 38px);
@@ -83,7 +54,7 @@
     display: flex;
     margin: 0;
     font-weight: 400;
-    font-family: "Tilt Neon", var(--sans);
+    font-family: var(--neon);
     font-size: clamp(76px, 17vw, 200px);
     line-height: 1.15;
     white-space: nowrap;
@@ -129,89 +100,48 @@
     66% { opacity: .7 } 80% { opacity: .85 } 92% { opacity: 1 } 100% { opacity: 1 }
   }
 
-  /* ————— menu over the wall ————— */
-  .menu {
-    position: absolute; top: 0; left: 0; right: 0;
-    z-index: 2;
-    display: flex; justify-content: space-between;
-    padding: 22px clamp(16px, 4vw, 40px);
+  /* ————— films ————— */
+  .films { display: grid; gap: clamp(36px, 6vw, 56px); margin-top: clamp(28px, 4vw, 44px); }
+  .film h3 { margin: 18px 0 8px; font-family: var(--display); font-weight: 400; font-size: clamp(36px, 5vw, 52px); line-height: .95; letter-spacing: .01em; }
+  .film p { margin: 0; }
+  .still {
+    position: relative;
+    display: block;
+    overflow: hidden;
+    border-radius: 4px;
+    box-shadow: 0 24px 40px rgba(0,0,0,.6);
   }
-  .menu nav { display: flex; gap: 24px; }
-  .mono, .menu {
-    font-family: var(--mono);
-    font-size: 11px;
-    letter-spacing: .16em;
-    text-transform: uppercase;
+  .still img { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; object-fit: cover; transition: transform .8s cubic-bezier(.2,.7,.2,1); }
+  .still:hover img, .still:focus-visible img { transform: scale(1.03); }
+  .still .play {
+    position: absolute; left: 16px; bottom: 16px;
+    padding: 9px 14px;
+    background: rgba(10,8,9,.75);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    border-radius: 999px;
+    color: var(--ink);
+    font-family: var(--mono); font-size: 11px; letter-spacing: .14em; text-transform: uppercase;
+    transition: background .2s, color .2s;
   }
-  .menu, .menu a { color: var(--ink-dim); text-decoration: none; }
-  .menu a:hover, .menu a:focus-visible { color: var(--pink); }
-
-  /* ————— work / fun sections ————— */
-  .part {
-    width: min(760px, 100%);
-    margin: 0 auto;
-    padding: clamp(72px, 11vw, 130px) 16px 0;
-    scroll-margin-top: 0;
-  }
-  .part h2 {
-    margin: 0 0 clamp(24px, 4vw, 40px);
-    font-size: clamp(56px, 9vw, 104px);
-    font-weight: 400;
-    line-height: .9;
-    letter-spacing: -0.035em;
-  }
-  .part h2 span { color: var(--pink); }
-  .intro p {
-    margin: 0 0 1em;
-    font-family: var(--serif);
-    font-size: clamp(20px, 2.2vw, 25px);
-    line-height: 1.45;
-  }
-  .rows { list-style: none; margin: clamp(28px, 4vw, 44px) 0 0; padding: 0; border-top: 1px solid var(--rule); }
-  .rows li {
-    display: grid;
-    grid-template-columns: 1fr auto;
-    gap: 4px 20px;
-    align-items: baseline;
-    padding: 16px 0;
-    border-bottom: 1px solid var(--rule);
-  }
-  .rows .name { font-size: clamp(22px, 2.4vw, 28px); letter-spacing: -0.01em; }
-  .rows .name small { color: var(--ink-dim); font-size: .7em; letter-spacing: 0; }
-  .rows .side { color: var(--ink-dim); white-space: nowrap; }
-  .rows .desc { grid-column: 1 / -1; color: var(--ink-dim); font-size: 16px; line-height: 1.45; }
-  .rows a { text-decoration: none; }
-  .rows a.side { color: var(--pink); }
-  .rows a:hover .name, .rows a:focus-visible .name { color: var(--pink); }
-
-  footer {
-    width: min(760px, 100%);
-    margin: 0 auto;
-    padding: clamp(80px, 12vw, 140px) 16px 40px;
-    display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px 28px;
-    color: var(--ink-dim);
-  }
-  footer a { text-decoration: none; color: var(--pink); }
-  footer a:hover, footer a:focus-visible { text-decoration: underline; }
-
-  @media (max-width: 560px) {
-    .menu > span { display: none; }
-    .menu { justify-content: center; }
-    .rows li { grid-template-columns: 1fr; }
-  }
+  .still:hover .play, .still:focus-visible .play { background: var(--pink); color: var(--bg); }
+  .more { display: inline-block; margin-top: clamp(28px, 4vw, 40px); color: var(--pink); text-decoration: none; }
+  .more:hover, .more:focus-visible { text-decoration: underline; }
 
   @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
     .js .on, .js .glow { opacity: 1; animation: none !important; }
   }
 </style>
 </head>
 <body>
 
-  <section class="wall" id="sign">
-    <header class="menu">
-      <span>Paul Davidson</span>
-      <nav aria-label="Main"><a href="#work">work</a><a href="#fun">fun</a><a href="/contact">contact</a></nav>
-    </header>
+  <header class="menu">
+    <a class="home" href="#top">Paul Davidson</a>
+    <nav aria-label="Main"><a href="#work">work</a><a href="#films">films</a><a href="#fun">fun</a><a href="/contact">contact</a></nav>
+  </header>
+
+  <section class="wall" id="top">
     <div class="glow" aria-hidden="true"></div>
     <div class="plate">
       <span class="standoff l" aria-hidden="true"></span><span class="standoff r" aria-hidden="true"></span>
@@ -227,26 +157,43 @@
     </div>
   </section>
 
-  <!-- ✏️ WORK: draft words, rewrite them so they sound like you. -->
   <section class="part" id="work">
     <h2>work<span>.</span></h2>
-    <div class="intro">
-      <p>I'm a Delivery Lead in Edinburgh. Most of my work comes down to finding the bit of a process that's a pain for everyone and fixing it. Lately that's meant building the way new gas and electricity connections get set up at Octopus Energy.</p>
-      <p>Before that I spent three years making videos, which turns out to be good practice for getting a lot of people pulling in the same direction.</p>
+    <p class="lede">I'm Paul. I like working out why things don't work, and then making them work.</p>
+    <p>I'm based in Edinburgh and spend most of my time untangling complicated problems and finding better ways of doing things. At the moment that's at Octopus Energy, where I've been making it easier for people to get their gas and electricity connected.</p>
+    <p>Before that, I spent three years making videos. Different work, same approach: figure out what needs doing, get the right people together, and get it done.</p>
+  </section>
+
+  <section class="part" id="films">
+    <h2>films<span>.</span></h2>
+    <p>Short films, made properly.</p>
+    <div class="films">
+      <article class="film">
+        <a class="still" href="https://www.youtube.com/watch?v=3D2MKY4uDA4">
+          <img src="images/sloansy.jpg" alt="Still from Sloansy" width="1400" height="788" loading="lazy">
+          <span class="play">▶ Watch</span>
+        </a>
+        <h3>“Sloansy”</h3>
+        <p>On a Scottish council estate in 1999, Jeanie struggles to raise her infant son alone. When concerned neighbours alert the authorities, she faces the grim reality of losing everything. Just as hope fades, a mysterious man steps in with an offer that could save her or lead her down a dangerous path.</p>
+      </article>
+      <article class="film">
+        <a class="still" href="https://www.youtube.com/watch?v=1Ty29yOT98E">
+          <img src="images/swimming.jpg" alt="Still from Swimming With You" width="1400" height="700" loading="lazy">
+          <span class="play">▶ Watch</span>
+        </a>
+        <h3>Swimming With You</h3>
+        <p>After a hookup goes wrong, Rhys and Lucas find themselves locked out of their car, stuck in awkward silence. As they talk, frustration turns to unexpected connection. When a sharp-witted recovery worker arrives, she sizes them up with a knowing smile, turning their night into something neither of them expected.</p>
+      </article>
     </div>
+    <a class="more mono" href="https://films.pdvsn.com">More at films.pdvsn.com ↗</a>
   </section>
 
   <section class="part" id="fun">
     <h2>fun<span>.</span></h2>
-    <div class="intro">
-      <p>The things I make when I'm not at work.</p>
-    </div>
+    <p>The things I get up to when I'm not at work.</p>
     <ul class="rows">
-      <li><a href="https://carbclub.pdvsn.com"><span class="name">Carb Club</span></a><a class="side mono" href="https://carbclub.pdvsn.com">carbclub.pdvsn.com ↗</a><span class="desc">My monthly supper club for lovers of carbs.</span></li>
-      <li><a href="https://dessertdock.com"><span class="name">Dessert Dock</span></a><a class="side mono" href="https://dessertdock.com">dessertdock.com ↗</a><span class="desc">An industrial themed dessert shop, launching soon.</span></li>
-      <li><a href="https://films.pdvsn.com"><span class="name">Films</span></a><a class="side mono" href="https://films.pdvsn.com">films.pdvsn.com ↗</a><span class="desc">Short films I've made.</span></li>
-      <li><a href="https://visits.pdvsn.com"><span class="name">Visits</span></a><a class="side mono" href="https://visits.pdvsn.com">visits.pdvsn.com ↗</a><span class="desc">Where I'd send you to eat, drink and do things in Edinburgh.</span></li>
-      <li><a href="https://whosonwhat.com"><span class="name">Who's on What</span></a><a class="side mono" href="https://whosonwhat.com">whosonwhat.com ↗</a><span class="desc">A rota app for office and customer ops teams who are done with spreadsheets.</span></li>
+      <li><a href="https://carbclub.pdvsn.com"><span class="name">Carb Club</span><span class="side">carbclub.pdvsn.com ↗</span><span class="desc">My monthly supper club for lovers of carbs.</span></a></li>
+      <li><a href="https://visits.pdvsn.com"><span class="name">Visits</span><span class="side">visits.pdvsn.com ↗</span><span class="desc">Where I'd send you to eat, drink and do things in Edinburgh.</span></a></li>
     </ul>
   </section>
 
@@ -259,7 +206,7 @@
   document.documentElement.classList.add("js");
   // switch the sign on shortly after the font has loaded
   document.fonts.ready.then(() =>
-    setTimeout(() => document.getElementById("sign").classList.add("lit"), 400));
+    setTimeout(() => document.getElementById("top").classList.add("lit"), 400));
 </script>
 </body>
 </html>

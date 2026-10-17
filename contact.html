@@ -6,93 +6,31 @@
 <title>contact — pdvsn</title>
 <meta name="description" content="Get in touch with Paul Davidson.">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><rect width='16' height='16' fill='%23F1668B'/></svg>">
+<link rel="stylesheet" href="site.css">
 <style>
-  :root {
-    --bg: #0a0809;
-    --ink: #f3eee9;
-    --ink-dim: #8a8381;
-    --rule: #2a2627;
-    --pink: #F1668B;
-    --sans: "Arial Narrow", "Helvetica Neue", Arial, sans-serif;
-    --serif: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
-    --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-  }
-  * { box-sizing: border-box; }
-  body {
-    margin: 0;
-    min-height: 100svh;
-    display: flex; flex-direction: column;
-    background: var(--bg);
-    color: var(--ink);
-    font-family: var(--sans);
-    -webkit-font-smoothing: antialiased;
-  }
-  a { color: inherit; }
-  .mono { font-family: var(--mono); font-size: 11px; letter-spacing: .16em; text-transform: uppercase; }
-
-  .menu {
-    display: flex; justify-content: space-between;
-    padding: 22px clamp(16px, 4vw, 40px);
-    color: var(--ink-dim);
-  }
-  .menu nav { display: flex; gap: 24px; }
-  .menu a { color: var(--ink-dim); text-decoration: none; }
-  .menu a:hover, .menu a:focus-visible, .menu a[aria-current] { color: var(--pink); }
-
-  main {
-    flex: 1;
-    width: min(760px, 100%);
-    margin: 0 auto;
-    padding: clamp(60px, 12vw, 140px) 16px;
-  }
-  h1 {
-    margin: 0 0 clamp(24px, 4vw, 40px);
-    font-size: clamp(64px, 12vw, 140px);
-    font-weight: 400;
-    line-height: .88;
-    letter-spacing: -0.04em;
-  }
-  h1 span { color: var(--pink); }
-  p {
-    margin: 0 0 clamp(36px, 6vw, 60px);
-    font-family: var(--serif);
-    font-size: clamp(20px, 2.2vw, 25px);
-    line-height: 1.45;
-    color: var(--ink-dim);
-  }
-  .links { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--rule); }
-  .links li { border-bottom: 1px solid var(--rule); }
-  .links a {
-    display: flex; justify-content: space-between; align-items: baseline; gap: 20px;
-    padding: 20px 0;
-    text-decoration: none;
-  }
-  .links .big { font-size: clamp(28px, 4vw, 44px); letter-spacing: -0.02em; transition: color .2s; }
-  .links .mono { color: var(--ink-dim); }
-  .links a:hover .big, .links a:focus-visible .big { color: var(--pink); }
-
-  @media (max-width: 560px) {
-    .menu > span { display: none; }
-    .menu { justify-content: center; }
-    .links a { flex-direction: column; gap: 6px; }
-  }
+  .links a { padding: 22px 0; }
+  .links .side { color: var(--ink-dim); text-transform: none; letter-spacing: .04em; font-size: 13px; }
 </style>
 </head>
 <body>
-  <header class="menu mono">
-    <span><a href="/">Paul Davidson</a></span>
-    <nav aria-label="Main"><a href="/#work">work</a><a href="/#fun">fun</a><a href="/contact" aria-current="page">contact</a></nav>
+  <header class="menu">
+    <a class="home" href="/">Paul Davidson</a>
+    <nav aria-label="Main"><a href="/#work">work</a><a href="/#films">films</a><a href="/#fun">fun</a><a href="/contact" aria-current="page">contact</a></nav>
   </header>
 
-  <main>
-    <h1>say hello<span>.</span></h1>
+  <main class="part">
+    <h1 class="page-title">say hello<span>.</span></h1>
     <p>Work, food, films or anything else. I'm always up for a chat.</p>
 
     <!-- ✏️ LINKS: replace YOUR-EMAIL-HERE (twice) and the LinkedIn # with your real details. -->
-    <ul class="links">
-      <li><a href="mailto:YOUR-EMAIL-HERE"><span class="big">Email</span><span class="mono">YOUR-EMAIL-HERE</span></a></li>
-      <li><a href="#"><span class="big">LinkedIn</span><span class="mono">linkedin.com/in/…</span></a></li>
+    <ul class="rows links">
+      <li><a href="mailto:YOUR-EMAIL-HERE"><span class="name">Email</span><span class="side">YOUR-EMAIL-HERE</span></a></li>
+      <li><a href="#"><span class="name">LinkedIn</span><span class="side">linkedin.com/in/…</span></a></li>
     </ul>
   </main>
+
+  <footer class="mono">
+    <a href="/">← back to pdvsn</a>
+  </footer>
 </body>
 </html>
