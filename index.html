@@ -37,7 +37,6 @@
   .hero-words > * { opacity: 0; animation: rise .9s ease forwards; }
   .hero-words > :nth-child(2) { animation-delay: .2s; }
   .hero-words > :nth-child(3) { animation-delay: .4s; }
-  .hero-words > :nth-child(4) { animation-delay: .6s; }
   @keyframes rise { from { opacity: 0; transform: translateY(22px); } to { opacity: 1; transform: none; } }
   .hero h1 {
     margin: 16px 0 24px;
@@ -69,10 +68,8 @@
     padding: clamp(56px, 8vw, 96px) var(--gutter) 0;
     scroll-margin-top: 0;
   }
-  .film-head { display: flex; align-items: baseline; gap: 20px; margin-bottom: 18px; }
-  .film-head .label { flex-shrink: 0; }
   .film-title {
-    margin: 0;
+    margin: 0 0 12px;
     font-family: var(--serif);
     font-style: italic;
     font-weight: 300;
@@ -121,8 +118,8 @@
   .no-js .arrow, .no-js .dots { display: none; }
 
   .film-info { display: flex; justify-content: space-between; align-items: flex-start; gap: 48px; margin-top: 22px; }
-  .film-info p { margin: 0 0 18px; max-width: 62ch; font-size: 15px; line-height: 1.85; color: #a39d98; }
-  .credits { list-style: none; display: flex; flex-wrap: wrap; gap: 6px 28px; margin: 0; padding: 0; font-size: 13px; letter-spacing: .04em; color: var(--ink-dim); }
+  .film-info p { margin: 0; max-width: 62ch; font-size: 15px; line-height: 1.85; color: #a39d98; }
+  .credits { list-style: none; display: flex; flex-wrap: wrap; gap: 6px 28px; margin: 0 0 20px; padding: 0; font-size: 13px; letter-spacing: .04em; color: var(--ink-dim); }
   .credits b { font-weight: 400; color: var(--ink); }
   .film-info .btn { margin-top: 4px; }
 
@@ -152,10 +149,9 @@
 
   <section class="hero" id="top">
     <!-- ✏️ the stills that fade behind the words are listed in the script at the bottom -->
-    <div class="hero-bg" id="hero-bg" aria-hidden="true"><div class="hero-slide visible" style="background-image: url('images/hero-sloansy-1.jpg')"></div></div>
+    <div class="hero-bg" id="hero-bg" aria-hidden="true"><div class="hero-slide visible" style="background-image: url('images/hero-sloansy-1.jpg'); background-position: 60% center"></div></div>
     <div class="hero-shade" aria-hidden="true"></div>
     <div class="hero-words">
-      <p class="label">pdvsn</p>
       <h1>Stories worth<br><em>putting on screen.</em></h1>
       <p class="sub">Short films, made properly. If you've got an idea, let's make something.</p>
       <a class="btn" href="mailto:paul@pdvsn.com">get in touch</a>
@@ -169,7 +165,8 @@
     <!-- ✏️ To add a film, copy one <article> block (and the <div class="sep"> before it).
          Every <img> inside "track" is one still; add or remove them freely. -->
     <article class="film">
-      <div class="film-head"><span class="label">01</span><h2 class="film-title">Sloansy</h2></div>
+      <h2 class="film-title">Sloansy</h2>
+      <ul class="credits"><li>writer / director <b>Cameron Bisset</b></li><li>producer <b>Paul Davidson</b></li><li>cinematographer <b>Sean McDonald</b></li></ul>
       <div class="gallery">
         <div class="track" tabindex="0" aria-label="Stills from Sloansy">
           <img src="images/sloansy-1.jpg" alt="Still from Sloansy" loading="lazy">
@@ -180,7 +177,6 @@
       <div class="film-info">
         <div>
           <p>On a Scottish council estate in 1999, Jeanie struggles to raise her infant son alone. When concerned neighbours alert the authorities, she faces the grim reality of losing everything. Just as hope fades, a mysterious man steps in with an offer that could save her or lead her down a dangerous path.</p>
-          <ul class="credits"><li>writer / director <b>Cameron Bisset</b></li><li>producer <b>Paul Davidson</b></li><li>cinematographer <b>Sean McDonald</b></li></ul>
         </div>
         <a class="btn" href="https://www.youtube.com/watch?v=3D2MKY4uDA4">watch on youtube</a>
       </div>
@@ -189,7 +185,8 @@
     <div class="sep" aria-hidden="true"><i></i></div>
 
     <article class="film">
-      <div class="film-head"><span class="label">02</span><h2 class="film-title">Swimming With You</h2></div>
+      <h2 class="film-title">Swimming With You</h2>
+      <ul class="credits"><li>writer / director <b>Holly Lawrenson Evans</b></li><li>writer / producer <b>Paul Davidson</b></li><li>cinematographer <b>Chester Briscall-Harvey</b></li></ul>
       <div class="gallery">
         <div class="track" tabindex="0" aria-label="Stills from Swimming With You">
           <img src="images/swimming-1.jpg" alt="Still from Swimming With You" loading="lazy">
@@ -200,7 +197,6 @@
       <div class="film-info">
         <div>
           <p>After a hookup goes wrong, Rhys and Lucas find themselves locked out of their car, stuck in awkward silence. As they talk, frustration turns to unexpected connection. When a sharp-witted recovery worker arrives, she sizes them up with a knowing smile, turning their night into something neither of them expected.</p>
-          <ul class="credits"><li>writer / director <b>Holly Lawrenson Evans</b></li><li>writer / producer <b>Paul Davidson</b></li><li>cinematographer <b>Chester Briscall-Harvey</b></li></ul>
         </div>
         <a class="btn" href="https://www.youtube.com/watch?v=1Ty29yOT98E">watch on youtube</a>
       </div>
@@ -209,7 +205,8 @@
     <div class="sep" aria-hidden="true"><i></i></div>
 
     <article class="film">
-      <div class="film-head"><span class="label">03</span><h2 class="film-title">Ange the Ganj</h2></div>
+      <h2 class="film-title">Ange the Ganj</h2>
+      <ul class="credits"><li>writer / director <b>Elías Nader</b></li><li>cinematographer <b>Chester Briscall-Harvey</b></li><li>producer <b>Paul Davidson</b></li></ul>
       <div class="gallery">
         <div class="track" tabindex="0" aria-label="Stills from Ange the Ganj">
           <img src="images/ange-1.jpg" alt="Still from Ange the Ganj" loading="lazy">
@@ -222,7 +219,6 @@
       <div class="film-info">
         <div>
           <p>Joe turns up to buy a pound of weed from Angela, a tea-making, biscuit-offering gran who grows the best strain in town. Then the police knock on the door.</p>
-          <ul class="credits"><li>writer / director <b>Elías Nader</b></li><li>cinematographer <b>Chester Briscall-Harvey</b></li><li>producer <b>Paul Davidson</b></li></ul>
         </div>
         <a class="btn" href="https://vimeo.com/378201220">watch on vimeo</a>
       </div>
@@ -231,7 +227,8 @@
     <div class="sep" aria-hidden="true"><i></i></div>
 
     <article class="film">
-      <div class="film-head"><span class="label">04</span><h2 class="film-title">Bad Investment</h2></div>
+      <h2 class="film-title">Bad Investment</h2>
+      <ul class="credits"><li>director <b>Paul Davidson</b></li><li>cinematographer <b>Nathan Pearson</b></li><li>producer <b>Paul Davidson</b></li></ul>
       <div class="gallery">
         <div class="track" tabindex="0" aria-label="Stills from Bad Investment">
           <img src="images/bad-1.jpg" alt="Still from Bad Investment" loading="lazy">
@@ -243,7 +240,6 @@
       <div class="film-info">
         <div>
           <p>Garth's next taxi pick-up is Reece, the business partner who threw him out of the company and kept his fourteen grand. Garth wants it back, by Monday morning.</p>
-          <ul class="credits"><li>director <b>Paul Davidson</b></li><li>cinematographer <b>Nathan Pearson</b></li><li>producer <b>Paul Davidson</b></li></ul>
         </div>
         <a class="btn" href="https://vimeo.com/270186488">watch on vimeo</a>
       </div>
@@ -263,11 +259,18 @@
   // The % after a picture says which part to keep when a narrow screen crops it:
   // 0% is the left edge, 50% the middle, 100% the right edge.
   const HERO = [
-    ["images/hero-sloansy-1.jpg", "50%"],
+    ["images/hero-sloansy-1.jpg", "60%"],
     ["images/hero-ange-1.jpg", "50%"],
-    ["images/hero-swimming-3.jpg", "72%"],
-    ["images/hero-bad-3.jpg", "50%"],
+    ["images/hero-swimming-1.jpg", "33%"],
+    ["images/hero-bad-1.jpg", "23%"],
     ["images/hero-sloansy-2.jpg", "50%"],
+    ["images/hero-ange-2.jpg", "34%"],
+    ["images/hero-swimming-2.jpg", "50%"],
+    ["images/hero-sloansy-3.jpg", "58%"],
+    ["images/hero-ange-3.jpg", "45%"],
+    ["images/hero-swimming-3.jpg", "72%"],
+    ["images/hero-ange-4.jpg", "66%"],
+    ["images/hero-bad-4.jpg", "47%"],
     ["images/hero-ange-5.jpg", "50%"],
   ];
   const heroBg = document.getElementById("hero-bg");
