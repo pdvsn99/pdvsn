@@ -9,14 +9,13 @@
 <link rel="preload" href="images/hero-sloansy-1.jpg" as="image">
 <link rel="stylesheet" href="site.css">
 <style>
-  /* ————— opening screen: film stills behind, neon sign in front ————— */
+  /* ————— opening screen: film stills, with the headline bottom left ————— */
   .hero {
     position: relative;
     height: 100svh;
     min-height: 560px;
-    display: grid;
-    place-items: center;
-    padding: 80px 16px 40px;
+    display: flex;
+    align-items: flex-end;
     overflow: hidden;
   }
   .hero-bg, .hero-slide, .hero-shade { position: absolute; inset: 0; }
@@ -28,116 +27,28 @@
   }
   .hero-slide.visible { opacity: 1; animation: drift 9s ease-out both; }
   @keyframes drift { from { transform: scale(1.07); } to { transform: scale(1); } }
-  /* darken the stills so the sign is the brightest thing in the room */
+  /* darken the bottom and left so the words read over any still */
   .hero-shade {
     background:
-      radial-gradient(ellipse at center, rgba(16,16,16,.55), rgba(16,16,16,.3) 70%),
-      linear-gradient(to top, var(--bg) 0%, rgba(16,16,16,0) 35%),
-      linear-gradient(to bottom, rgba(16,16,16,.6) 0%, rgba(16,16,16,0) 25%);
+      linear-gradient(to top, var(--bg) 0%, rgba(16,16,16,.5) 45%, rgba(16,16,16,.15) 100%),
+      linear-gradient(to right, rgba(16,16,16,.55) 0%, transparent 65%);
   }
-  /* pink light thrown onto the picture once the sign is on */
-  .glow {
-    position: absolute;
-    left: 50%; top: 50%;
-    width: min(1300px, 170vw); height: min(800px, 110vw);
-    transform: translate(-50%, -50%);
-    background: radial-gradient(ellipse at center, rgba(241,102,139,.3), rgba(241,102,139,.08) 45%, transparent 70%);
-    mix-blend-mode: screen;
-    pointer-events: none;
-  }
-
-  /* clear acrylic plate on two wires */
-  .plate {
-    position: relative;
-    padding: clamp(14px, 2.4vw, 30px) clamp(26px, 5vw, 64px) clamp(18px, 3vw, 38px);
-    border-radius: clamp(14px, 2vw, 24px);
-    border: 1px solid rgba(255,255,255,.1);
-    background: linear-gradient(160deg, rgba(255,255,255,.07), rgba(255,255,255,.015));
-    backdrop-filter: blur(3px);
-    -webkit-backdrop-filter: blur(3px);
-    box-shadow: 0 1px 0 rgba(255,255,255,.08) inset, 22px 34px 50px rgba(0,0,0,.6);
-  }
-  .plate::before, .plate::after {
-    content: "";
-    position: absolute;
-    bottom: calc(100% - 14px);
-    height: 100vh;
-    border-left: 1px solid rgba(255,255,255,.22);
-  }
-  .plate::before { left: 12%; }
-  .plate::after { right: 12%; }
-  .standoff { position: absolute; top: 10px; width: 9px; height: 9px; border-radius: 50%; background: radial-gradient(circle at 35% 35%, #8a8381, #2a2627); }
-  .standoff.l { left: calc(12% - 4px); }
-  .standoff.r { right: calc(12% - 5px); }
-
-  .neon {
-    display: flex;
-    margin: 0;
-    font-weight: 400;
-    font-family: var(--neon);
-    font-size: clamp(96px, 20vw, 220px);
+  .hero-words { position: relative; padding: 0 var(--gutter) clamp(56px, 9vh, 80px); max-width: 820px; }
+  .hero-words > * { opacity: 0; animation: rise .9s ease forwards; }
+  .hero-words > :nth-child(2) { animation-delay: .2s; }
+  .hero-words > :nth-child(3) { animation-delay: .4s; }
+  .hero-words > :nth-child(4) { animation-delay: .6s; }
+  @keyframes rise { from { opacity: 0; transform: translateY(22px); } to { opacity: 1; transform: none; } }
+  .hero h1 {
+    margin: 16px 0 24px;
+    font-family: var(--serif);
+    font-weight: 300;
+    font-size: clamp(48px, 8vw, 112px);
     line-height: .95;
-    letter-spacing: .02em;
-    white-space: nowrap;
+    letter-spacing: -.02em;
   }
-  .ltr { position: relative; z-index: 0; }
-  /* the shadow each letter casts on the plate */
-  .ltr::before {
-    content: attr(data-t);
-    position: absolute; left: 0; top: 0;
-    z-index: -1;
-    color: rgba(0,0,0,.8);
-    transform: translate(.04em, .07em);
-    filter: blur(5px);
-  }
-  /* unlit glass */
-  .ltr .off { color: rgba(70,58,62,.75); text-shadow: 0 1px 0 rgba(255,255,255,.08), 0 -1px 0 rgba(0,0,0,.6); }
-  /* lit tube, stacked exactly on top */
-  .ltr .on {
-    position: absolute; left: 0; top: 0;
-    color: #ffd3df;
-    text-shadow: 0 0 2px #fff, 0 0 8px var(--pink), 0 0 18px var(--pink), 0 0 40px var(--pink), 0 0 80px rgba(241,102,139,.8);
-  }
-  /* the white line underneath */
-  .tagline {
-    margin: clamp(4px, 1vw, 10px) 0 0;
-    text-align: center;
-    font-family: var(--neon);
-    font-size: clamp(20px, 3.6vw, 40px);
-    line-height: 1;
-    letter-spacing: .16em;
-    text-transform: uppercase;
-    white-space: nowrap;
-  }
-  .tagline .ltr { display: inline-block; }
-  .ltr .on.white {
-    color: #fff7f2;
-    text-shadow: 0 0 2px #fff, 0 0 7px #ffe6ef, 0 0 16px rgba(255,190,210,.8), 0 0 34px rgba(241,102,139,.5);
-  }
-
-  /* each letter lights on its own, with its own stutter */
-  .js .on, .js .glow { opacity: 0; }
-  .js .lit .on { animation: flick 1.1s steps(1, end) both; }
-  .js .lit .l1 { animation-delay: .2s; }
-  .js .lit .l2 { animation-delay: .65s; animation-name: flick2; }
-  .js .lit .l3 { animation-delay: 1.05s; }
-  .js .lit .l4 { animation: flick2 1.5s steps(1, end) 1.4s both, buzz 6s steps(1, end) 4s infinite; }
-  .js .lit .l5 { animation-delay: 2.1s; animation-name: flick2; }
-  .js .lit .l6 { animation-delay: 2.9s; }
-  .js .lit .glow { animation: warm 3s steps(1, end) .2s both; }
-  @keyframes flick {
-    0% { opacity: 0 } 10% { opacity: .9 } 16% { opacity: 0 } 30% { opacity: 1 } 36% { opacity: .2 } 50% { opacity: 1 } 100% { opacity: 1 }
-  }
-  @keyframes flick2 {
-    0% { opacity: 0 } 8% { opacity: .6 } 12% { opacity: 0 } 34% { opacity: 0 } 38% { opacity: 1 } 44% { opacity: 0 } 60% { opacity: 1 } 100% { opacity: 1 }
-  }
-  @keyframes buzz {
-    0% { opacity: 1 } 90% { opacity: .3 } 91.5% { opacity: 1 } 93% { opacity: .5 } 94% { opacity: 1 } 100% { opacity: 1 }
-  }
-  @keyframes warm {
-    0% { opacity: 0 } 8% { opacity: .25 } 14% { opacity: 0 } 25% { opacity: .3 } 40% { opacity: .45 } 52% { opacity: .55 }
-    66% { opacity: .7 } 80% { opacity: .85 } 92% { opacity: 1 } 100% { opacity: 1 }
-  }
+  .hero h1 em { color: #fff; }
+  .hero .sub { margin: 0 0 32px; max-width: 42ch; font-size: 16px; line-height: 1.75; color: rgba(221,216,210,.7); }
 
   /* "films" with a line, bottom right, nudging you down */
   .scroll {
@@ -158,18 +69,6 @@
     padding: clamp(56px, 8vw, 96px) var(--gutter) 0;
     scroll-margin-top: 0;
   }
-  .intro { margin-bottom: clamp(64px, 10vw, 112px); }
-  .intro h1 {
-    margin: 0 0 24px;
-    font-family: var(--serif);
-    font-weight: 300;
-    font-size: clamp(44px, 7vw, 92px);
-    line-height: .98;
-    letter-spacing: -.02em;
-  }
-  .intro h1 em { color: #fff; }
-  .intro .sub { margin: 0 0 32px; max-width: 44ch; font-size: 16px; line-height: 1.75; color: rgba(221,216,210,.65); }
-
   .film-head { display: flex; align-items: baseline; gap: 20px; margin-bottom: 18px; }
   .film-head .label { flex-shrink: 0; }
   .film-title {
@@ -240,7 +139,7 @@
   @media (prefers-reduced-motion: reduce) {
     html { scroll-behavior: auto; }
     .hero-slide.visible { animation: none; }
-    .js .on, .js .glow { opacity: 1; animation: none !important; }
+    .hero-words > * { opacity: 1; animation: none; }
   }
 </style>
 </head>
@@ -252,36 +151,20 @@
   </header>
 
   <section class="hero" id="top">
-    <!-- ✏️ the stills that fade behind the sign are listed in the script at the bottom -->
+    <!-- ✏️ the stills that fade behind the words are listed in the script at the bottom -->
     <div class="hero-bg" id="hero-bg" aria-hidden="true"><div class="hero-slide visible" style="background-image: url('images/hero-sloansy-1.jpg')"></div></div>
     <div class="hero-shade" aria-hidden="true"></div>
-    <div class="glow" aria-hidden="true"></div>
-    <div class="plate">
-      <span class="standoff l" aria-hidden="true"></span><span class="standoff r" aria-hidden="true"></span>
-      <!-- Each letter is stacked three times: the shadow it casts, the unlit glass,
-           and the lit tube on top, which flickers on by itself. -->
-      <p class="neon" role="img" aria-label="pdvsn">
-        <span class="ltr" data-t="p"><span class="off">p</span><span class="on l1">p</span></span>
-        <span class="ltr" data-t="d"><span class="off">d</span><span class="on l2">d</span></span>
-        <span class="ltr" data-t="v"><span class="off">v</span><span class="on l3">v</span></span>
-        <span class="ltr" data-t="s"><span class="off">s</span><span class="on l4">s</span></span>
-        <span class="ltr" data-t="n"><span class="off">n</span><span class="on l5">n</span></span>
-      </p>
-      <!-- ✏️ the white line under the sign: change the words in all three places -->
-      <p class="tagline" aria-label="Filmmaker and thing-doer">
-        <span class="ltr" data-t="Filmmaker &amp; thing-doer"><span class="off">Filmmaker &amp; thing-doer</span><span class="on white l6">Filmmaker &amp; thing-doer</span></span>
-      </p>
+    <div class="hero-words">
+      <p class="label">pdvsn</p>
+      <h1>Stories worth<br><em>putting on screen.</em></h1>
+      <p class="sub">Short films, made properly. If you've got an idea, let's make something.</p>
+      <a class="btn" href="mailto:paul@pdvsn.com">get in touch</a>
     </div>
     <a class="scroll" href="#films"><span>films</span></a>
   </section>
 
   <main class="films" id="films">
-    <div class="intro">
-      <p class="label rule-label">films</p>
-      <h1>Stories worth<br><em>putting on screen.</em></h1>
-      <p class="sub">Short films, made properly. If you've got an idea, let's make something.</p>
-      <a class="btn" href="mailto:paul@pdvsn.com">get in touch</a>
-    </div>
+    <p class="label rule-label">films</p>
 
     <!-- ✏️ To add a film, copy one <article> block (and the <div class="sep"> before it).
          Every <img> inside "track" is one still; add or remove them freely. -->
@@ -373,10 +256,9 @@
   </footer>
 
 <script>
-  document.documentElement.classList.add("js");
   document.body.classList.remove("no-js");
 
-  // ——— the stills that fade in and out behind the sign ———
+  // ——— the stills that fade in and out behind the words ———
   // ✏️ add or remove pictures here (the first one is also set in the page above)
   const HERO = [
     "images/hero-sloansy-1.jpg", "images/hero-ange-2.jpg", "images/hero-swimming-1.jpg", "images/hero-bad-1.jpg",
@@ -443,9 +325,6 @@
     update();
   });
 
-  // switch the sign on shortly after the font has loaded
-  document.fonts.ready.then(() =>
-    setTimeout(() => document.getElementById("top").classList.add("lit"), 400));
 </script>
 </body>
 </html>
