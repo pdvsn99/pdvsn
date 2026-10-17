@@ -3,554 +3,224 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Paul Davidson — Delivery &amp; product ops</title>
-<meta name="description" content="Paul Davidson — delivery lead in Edinburgh who turns messy processes into things that just work. Making shit happen.">
+<title>pdvsn — Paul Davidson</title>
+<meta name="description" content="Paul Davidson. Delivery lead in Edinburgh. Also runs a supper club.">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><rect width='16' height='16' fill='%23F1668B'/></svg>">
 <style>
   :root {
-    --bg: #0d0b0c;
-    --bg-2: #151113;
+    --bg: #0a0809;
     --ink: #f3eee9;
     --ink-dim: #8a8381;
     --rule: #2a2627;
     --pink: #F1668B;
-    --paper: #f3eee9;
     --sans: "Arial Narrow", "Helvetica Neue", Arial, sans-serif;
     --serif: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
     --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-    --gutter: clamp(16px, 4vw, 56px);
-    --max: 1200px;
-    --ease: cubic-bezier(.2,.7,.2,1);
   }
 
   * { box-sizing: border-box; }
-  html { scroll-behavior: smooth; }
   body {
     margin: 0;
     background: var(--bg);
     color: var(--ink);
     font-family: var(--sans);
-    font-stretch: condensed;
     -webkit-font-smoothing: antialiased;
     overflow-x: hidden;
   }
-  body::before {
-    content: "";
-    position: fixed; inset: 0;
-    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='140' height='140'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 0.6 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)' opacity='0.55'/></svg>");
-    opacity: 0.09;
-    pointer-events: none;
-    mix-blend-mode: overlay;
-    z-index: 100;
-  }
-
   a { color: inherit; }
-  em { font-family: var(--serif); font-style: italic; font-weight: 400; }
-  .mono { font-family: var(--mono); font-size: 11px; letter-spacing: .14em; text-transform: uppercase; }
-  .wrap { width: min(var(--max), 100%); margin: 0 auto; padding: 0 var(--gutter); }
-  section { scroll-margin-top: 60px; }
-  .label {
-    display: flex; justify-content: space-between;
-    padding-bottom: 14px;
-    margin-bottom: clamp(32px, 5vw, 56px);
-    border-bottom: 1px solid var(--rule);
-    color: var(--ink-dim);
-  }
-  .label b { color: var(--pink); font-weight: 400; }
-  .h2 {
-    margin: 0 0 clamp(32px, 5vw, 56px);
-    font-size: clamp(48px, 7vw, 104px);
-    font-weight: 400;
-    line-height: .88;
-    letter-spacing: -0.035em;
-    max-width: 14ch;
-  }
-  .h2 em { color: var(--pink); }
-  /* until you write your own words, these show as dashed "fill me in" notes */
-  .todo { display: block; padding: 8px 10px; border: 1px dashed var(--pink); color: var(--pink); font: 12px/1.5 var(--mono); opacity: .85; }
 
-  /* ————— top bar ————— */
-  .bar {
-    position: sticky; top: 0; z-index: 30;
-    background: rgba(13, 11, 12, .9);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-    border-bottom: 1px solid var(--rule);
-  }
-  .bar .wrap { display: flex; justify-content: space-between; align-items: center; height: 58px; }
-  .bar .logo { font-size: 21px; text-decoration: none; letter-spacing: -0.02em; white-space: nowrap; }
-  .bar .logo b { color: var(--pink); font-weight: 400; }
-  .bar nav { display: flex; align-items: center; gap: 24px; }
-  .bar nav a { text-decoration: none; color: var(--ink-dim); transition: color .25s; }
-  .bar nav a:hover, .bar nav a:focus-visible { color: var(--pink); }
-  .bar .icons { display: flex; gap: 14px; padding-left: 20px; border-left: 1px solid var(--rule); }
-  .bar .icons svg { width: 16px; height: 16px; display: block; fill: currentColor; }
-
-  /* ————— hero ————— */
-  .hero { padding: clamp(64px, 10vw, 140px) 0 clamp(56px, 8vw, 110px); border-bottom: 1px solid var(--rule); }
-  .hero .kicker { display: flex; align-items: center; gap: 10px; color: var(--ink-dim); margin-bottom: clamp(24px, 3vw, 40px); }
-  .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--pink); animation: pulse 2.4s ease-in-out infinite; }
-  @keyframes pulse { 0%,100%{opacity:.35} 50%{opacity:1} }
-  .hero h1 {
-    margin: 0;
-    font-size: clamp(76px, 14vw, 210px);
-    font-weight: 400;
-    line-height: .82;
-    letter-spacing: -0.045em;
-  }
-  .hero h1 em { color: var(--pink); letter-spacing: -0.02em; }
-  .hero-foot {
-    display: grid;
-    grid-template-columns: 1.1fr 1fr;
-    gap: clamp(28px, 5vw, 80px);
-    margin-top: clamp(36px, 5vw, 64px);
-    align-items: end;
-  }
-  .hero .pitch {
-    margin: 0;
-    font-family: var(--serif);
-    font-size: clamp(22px, 2.3vw, 32px);
-    line-height: 1.3;
-    max-width: 30ch;
-  }
-  .hero .pitch b { font-weight: 400; color: var(--pink); }
-  .person { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--rule); }
-  .person li { display: flex; gap: 16px; align-items: baseline; padding: 14px 0; border-bottom: 1px solid var(--rule); font-size: clamp(18px, 1.7vw, 22px); }
-  .person .mono { color: var(--pink); min-width: 22px; }
-
-  /* ————— skills ————— */
-  .skills { padding: clamp(80px, 11vw, 150px) 0; }
-  .skill-grid { display: grid; grid-template-columns: repeat(4, 1fr); border-top: 1px solid var(--rule); }
-  .skill {
-    padding: 26px 22px 28px 0;
-    margin-right: 22px;
-    border-right: 1px solid var(--rule);
-    display: flex; flex-direction: column; gap: 14px;
-  }
-  .skill:last-child { border-right: 0; margin-right: 0; }
-  .skill .n { color: var(--pink); }
-  .skill h3 { margin: 0; font-size: clamp(28px, 2.6vw, 38px); font-weight: 400; letter-spacing: -0.02em; line-height: .95; }
-  .skill p { margin: 0; color: var(--ink-dim); font-size: 17px; line-height: 1.45; }
-  .skill .proof { margin-top: auto; padding-top: 8px; color: var(--ink); line-height: 1.6; }
-  .skill .proof::before { content: "proof → "; color: var(--pink); }
-
-  /* ————— case studies ————— */
-  .work { padding: 0 0 clamp(80px, 11vw, 150px); }
-  .case {
-    display: grid;
-    grid-template-columns: 120px 1fr 1.25fr;
-    gap: clamp(20px, 3vw, 48px);
-    padding: clamp(32px, 4vw, 52px) 0;
-    border-top: 1px solid var(--rule);
-  }
-  .case:last-child { border-bottom: 1px solid var(--rule); }
-  .case .num { font-size: clamp(56px, 6vw, 88px); line-height: .8; letter-spacing: -0.04em; color: var(--pink); }
-  .case h3 { margin: 0 0 14px; font-size: clamp(32px, 3.6vw, 54px); font-weight: 400; letter-spacing: -0.025em; line-height: .92; }
-  .case .ctx { color: var(--ink-dim); line-height: 1.7; }
-  .case .ctx a { color: var(--pink); }
-  .steps { margin: 0; display: grid; gap: 0; }
-  .step { display: grid; grid-template-columns: 110px 1fr; gap: 16px; padding: 12px 0; border-bottom: 1px dashed var(--rule); }
-  .step:first-child { padding-top: 0; }
-  .step:last-child { border-bottom: 0; }
-  .step dt { color: var(--ink-dim); padding-top: 4px; }
-  .step dd { margin: 0; font-size: 18px; line-height: 1.45; }
-  .step.result dt { color: var(--pink); }
-
-  /* ————— experience ————— */
-  .exp { padding: 0 0 clamp(80px, 11vw, 150px); }
-  .job {
-    display: grid;
-    grid-template-columns: 1fr auto;
-    gap: 4px 24px;
-    padding: 18px 0;
-    border-bottom: 1px solid var(--rule);
-    align-items: baseline;
-  }
-  .job:first-of-type { border-top: 1px solid var(--rule); }
-  .job h3 { margin: 0; font-size: clamp(22px, 2.2vw, 30px); font-weight: 400; letter-spacing: -0.015em; }
-  .job h3 span { color: var(--ink-dim); }
-  .job.current h3 { color: var(--pink); }
-  .job .when { color: var(--ink-dim); white-space: nowrap; }
-  .job p { grid-column: 1 / -1; margin: 4px 0 0; color: var(--ink-dim); font-size: 16px; line-height: 1.45; max-width: 70ch; }
-  .tools { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-top: 36px; }
-  .tools > span:first-child { color: var(--ink-dim); margin-right: 8px; }
-  .chip { padding: 8px 14px; border: 1px solid var(--rule); border-radius: 999px; }
-
-  /* ============================================================
-     AFTER HOURS — a neon sign hung on a brick wall.
-     Unlit until it scrolls into view, then it flickers on.
-     ============================================================ */
-  .after {
+  /* ————— the wall ————— */
+  .wall {
     position: relative;
+    min-height: 100svh;
+    display: grid;
+    place-items: center;
     overflow: hidden;
-    padding: clamp(110px, 14vw, 190px) 0 clamp(80px, 11vw, 150px);
-    border-top: 1px solid var(--rule);
-    text-align: center;
+    padding: 80px 16px;
     background:
-      radial-gradient(ellipse at 50% 40%, transparent 30%, rgba(0,0,0,.75) 100%),
+      radial-gradient(ellipse at 50% 45%, transparent 25%, rgba(0,0,0,.8) 100%),
       url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='60'><rect width='120' height='60' fill='%230a0809'/><g fill='%23161113'><rect x='1' y='1' width='57' height='27'/><rect x='61' y='1' width='57' height='27'/><rect x='-29' y='31' width='57' height='27'/><rect x='31' y='31' width='57' height='27'/><rect x='91' y='31' width='57' height='27'/></g></svg>");
   }
-  .after .wrap { position: relative; }
-
-  /* pink light spilling onto the wall behind the sign */
-  .wall-glow {
+  /* pink light thrown onto the bricks once the sign is on */
+  .glow {
     position: absolute;
-    left: 50%; top: clamp(40px, 7vw, 110px);
-    width: min(1100px, 140vw); height: clamp(320px, 40vw, 560px);
-    transform: translateX(-50%);
-    background: radial-gradient(ellipse at center, rgba(241,102,139,.34), rgba(241,102,139,.08) 45%, transparent 70%);
+    left: 50%; top: 50%;
+    width: min(1300px, 170vw); height: min(800px, 110vw);
+    transform: translate(-50%, -50%);
+    background: radial-gradient(ellipse at center, rgba(241,102,139,.36), rgba(241,102,139,.09) 45%, transparent 70%);
     pointer-events: none;
   }
 
-  /* the clear acrylic backing plate, hung on two wires */
-  .neon-sign {
+  /* ————— the sign: clear acrylic plate on two wires ————— */
+  .plate {
     position: relative;
-    display: inline-block;
-    margin: 0 0 clamp(28px, 4vw, 44px);
-    padding: .12em .32em .18em;
-    border-radius: 22px;
+    width: min(880px, 92vw);
+    padding: clamp(18px, 3vw, 36px) clamp(22px, 4vw, 52px);
+    border-radius: clamp(14px, 2vw, 24px);
     border: 1px solid rgba(255,255,255,.08);
     background: linear-gradient(160deg, rgba(255,255,255,.05), rgba(255,255,255,.012));
-    box-shadow: 0 1px 0 rgba(255,255,255,.06) inset, 18px 28px 34px rgba(0,0,0,.6);
-    font-family: var(--serif);
-    font-style: italic;
-    font-weight: 400;
-    font-size: clamp(60px, 12vw, 180px);
-    line-height: 1;
-    white-space: nowrap;
+    box-shadow: 0 1px 0 rgba(255,255,255,.06) inset, 22px 34px 40px rgba(0,0,0,.65);
   }
-  .neon-sign::before, .neon-sign::after {
+  .plate::before, .plate::after {
     content: "";
     position: absolute;
-    bottom: 100%;
+    bottom: calc(100% - 14px);
     height: 100vh;
     border-left: 1px solid #3a3436;
   }
-  .neon-sign::before { left: 14%; }
-  .neon-sign::after { right: 14%; }
-  /* little metal stand-offs holding the plate */
-  .standoff { position: absolute; width: 9px; height: 9px; border-radius: 50%; background: radial-gradient(circle at 35% 35%, #8a8381, #2a2627); }
-  .standoff.tl { left: 14%; top: 10px; margin-left: -4px; }
-  .standoff.tr { right: 14%; top: 10px; margin-right: -5px; }
+  .plate::before { left: 12%; }
+  .plate::after { right: 12%; }
+  .standoff { position: absolute; top: 10px; width: 9px; height: 9px; border-radius: 50%; background: radial-gradient(circle at 35% 35%, #8a8381, #2a2627); }
+  .standoff.l { left: calc(12% - 4px); }
+  .standoff.r { right: calc(12% - 5px); }
 
-  .word { position: relative; display: inline-block; z-index: 0; }
-  /* the shadow the tubes cast on the plate and wall */
-  .word::before {
-    content: attr(data-t);
-    position: absolute; left: 0; top: 0;
-    z-index: -1;
-    color: rgba(0,0,0,.85);
-    transform: translate(.035em, .07em);
-    filter: blur(4px);
-  }
-  /* unlit glass tube */
-  .word .off { color: #2e2628; text-shadow: 0 1px 0 rgba(255,255,255,.07), 0 -1px 0 rgba(0,0,0,.6); }
-  /* lit tube, stacked exactly on top */
-  .word .on { position: absolute; left: 0; top: 0; }
-  .w1 .on {
-    color: #ffd3df;
-    text-shadow: 0 0 2px #fff, 0 0 8px var(--pink), 0 0 20px var(--pink), 0 0 44px var(--pink), 0 0 90px rgba(241,102,139,.7);
-  }
-  .w2 .on {
-    color: #fff7f2;
-    text-shadow: 0 0 2px #fff, 0 0 8px #ffe8dd, 0 0 20px #ffb8c9, 0 0 44px rgba(241,102,139,.75), 0 0 90px rgba(241,102,139,.45);
-  }
+  .plate svg { display: block; width: 100%; height: auto; overflow: visible; }
+  .tube { fill: none; stroke-linecap: round; stroke-linejoin: round; }
+  .shadow .tube { stroke: rgba(0,0,0,.85); stroke-width: 9; }
+  .off .tube { stroke: #3a3134; stroke-width: 8; }
+  .off .hi { stroke: rgba(255,255,255,.07); stroke-width: 2; transform: translate(-1.5px, -1.5px); }
+  .on .tube { stroke: #ffc4d4; stroke-width: 6; }
+  .on.white .tube { stroke: #fff7f2; }
 
-  /* off until the sign scrolls into view (only when JS runs; otherwise it's just lit) */
-  .js .after .word .on, .js .after .wall-glow { opacity: 0; }
-  .js .after.lit .w1 .on   { animation: ignite1 1.4s steps(1, end) .1s both; }
-  .js .after.lit .wall-glow { animation: ignite1 1.4s steps(1, end) .1s both; }
-  .js .after.lit .w2 .on   { animation: ignite2 1.9s steps(1, end) .7s both, buzz 7s steps(1, end) 4s infinite; }
-  @keyframes ignite1 {
-    0% { opacity: 0 } 6% { opacity: .9 } 10% { opacity: 0 } 18% { opacity: 1 } 22% { opacity: .15 }
-    32% { opacity: 1 } 36% { opacity: .35 } 50% { opacity: 1 } 100% { opacity: 1 }
+  /* each letter lights on its own, with its own stutter */
+  .js .on, .js .glow { opacity: 0; }
+  .js .lit .on { animation: flick 1.1s steps(1, end) both; }
+  .js .lit .l1 { animation-delay: .2s; }
+  .js .lit .l2 { animation-delay: .65s; animation-name: flick2; }
+  .js .lit .l3 { animation-delay: 1.05s; }
+  .js .lit .l4 { animation: flick2 1.5s steps(1, end) 1.4s both, buzz 6s steps(1, end) 4s infinite; }
+  .js .lit .l5 { animation-delay: 2.1s; animation-name: flick2; }
+  .js .lit .l6 { animation-delay: 2.7s; }
+  .js .lit .glow { animation: warm 3s steps(1, end) .2s both; }
+  @keyframes flick {
+    0% { opacity: 0 } 10% { opacity: .9 } 16% { opacity: 0 } 30% { opacity: 1 } 36% { opacity: .2 } 50% { opacity: 1 } 100% { opacity: 1 }
   }
-  @keyframes ignite2 {
-    0% { opacity: 0 } 8% { opacity: .7 } 11% { opacity: 0 } 30% { opacity: 0 } 33% { opacity: 1 }
-    37% { opacity: 0 } 45% { opacity: .6 } 48% { opacity: 0 } 62% { opacity: 1 } 66% { opacity: .3 } 72% { opacity: 1 } 100% { opacity: 1 }
+  @keyframes flick2 {
+    0% { opacity: 0 } 8% { opacity: .6 } 12% { opacity: 0 } 34% { opacity: 0 } 38% { opacity: 1 } 44% { opacity: 0 } 60% { opacity: 1 } 100% { opacity: 1 }
   }
   @keyframes buzz {
-    0% { opacity: 1 } 90% { opacity: .25 } 91.5% { opacity: 1 } 93% { opacity: .45 } 94% { opacity: 1 } 100% { opacity: 1 }
+    0% { opacity: 1 } 90% { opacity: .3 } 91.5% { opacity: 1 } 93% { opacity: .5 } 94% { opacity: 1 } 100% { opacity: 1 }
+  }
+  @keyframes warm {
+    0% { opacity: 0 } 8% { opacity: .25 } 14% { opacity: 0 } 25% { opacity: .3 } 40% { opacity: .45 } 52% { opacity: .55 }
+    66% { opacity: .7 } 80% { opacity: .85 } 92% { opacity: 1 } 100% { opacity: 1 }
   }
 
-  /* the rest of the section comes up once the sign is on */
-  .js .after .sub, .js .after .signs, .js .after .more { opacity: 0; transform: translateY(16px); transition: opacity .9s var(--ease), transform .9s var(--ease); }
-  .js .after.lit .sub { opacity: 1; transform: none; transition-delay: 1.6s; }
-  .js .after.lit .signs { opacity: 1; transform: none; transition-delay: 1.9s; }
-  .js .after.lit .more { opacity: 1; transform: none; transition-delay: 2.1s; }
-  .after .sub { font-family: var(--serif); font-size: clamp(19px, 1.8vw, 24px); color: var(--ink-dim); margin: 0 auto clamp(40px, 6vw, 64px); max-width: 36ch; }
-  .signs { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; text-align: left; }
-  .sign {
-    display: flex; flex-direction: column; justify-content: space-between; gap: 30px;
-    min-height: 150px;
-    padding: 18px;
-    border: 1px solid rgba(241,102,139,.35);
-    border-radius: 10px;
-    text-decoration: none;
-    transition: border-color .3s, box-shadow .3s;
+  .caption {
+    position: absolute;
+    left: 0; right: 0; bottom: 28px;
+    text-align: center;
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: .16em;
+    text-transform: uppercase;
+    color: var(--ink-dim);
   }
-  .sign .t { font-size: 28px; letter-spacing: -0.01em; line-height: 1; transition: color .3s, text-shadow .3s; }
-  .sign .mono { color: var(--ink-dim); line-height: 1.6; }
-  .sign:hover, .sign:focus-visible { border-color: var(--pink); box-shadow: 0 0 24px rgba(241,102,139,.35), 0 0 0 1px var(--pink) inset; outline: none; }
-  .sign:hover .t, .sign:focus-visible .t { color: #ffd6e1; text-shadow: 0 0 10px var(--pink), 0 0 24px var(--pink); }
-  .after .more { display: inline-block; margin-top: clamp(36px, 5vw, 56px); text-decoration: none; color: var(--pink); border-bottom: 1px solid currentColor; padding-bottom: 3px; }
 
-  /* ————— contact ————— */
-  .contact { background: var(--pink); color: #0d0b0c; padding: clamp(72px, 10vw, 140px) 0 28px; }
-  .contact .label { color: rgba(13,11,12,.6); border-color: rgba(13,11,12,.25); }
-  .contact .label b { color: #0d0b0c; }
-  .contact h2 { margin: 0; font-size: clamp(56px, 10.5vw, 168px); font-weight: 400; line-height: .86; letter-spacing: -0.045em; }
-  .contact h2 em { color: var(--paper); }
-  .ctas { display: flex; flex-wrap: wrap; gap: 12px; margin-top: clamp(36px, 5vw, 60px); }
-  .btn { display: inline-flex; align-items: center; gap: 10px; padding: 15px 22px; border: 1px solid #0d0b0c; text-decoration: none; transition: background .25s, color .25s, border-color .25s; }
-  .btn.solid { background: #0d0b0c; color: var(--pink); }
-  .btn:hover, .btn:focus-visible { background: var(--paper); color: #0d0b0c; border-color: var(--paper); }
-  .foot { display: flex; justify-content: space-between; margin-top: clamp(64px, 9vw, 120px); padding-top: 18px; border-top: 1px solid rgba(13,11,12,.25); color: rgba(13,11,12,.6); }
-
-  /* ————— scroll reveal (only when JS runs) ————— */
-  .js .rv { opacity: 0; transform: translateY(24px); transition: opacity .9s var(--ease), transform .9s var(--ease); }
-  .js .rv.in { opacity: 1; transform: none; }
-
-  /* ————— tablets ————— */
-  @media (max-width: 960px) {
-    .hero-foot { grid-template-columns: 1fr; }
-    .skill-grid { grid-template-columns: 1fr 1fr; }
-    .skill:nth-child(2n) { border-right: 0; margin-right: 0; }
-    .skill { border-bottom: 1px solid var(--rule); }
-    .case { grid-template-columns: 80px 1fr; }
-    .case .steps { grid-column: 2; }
-    .signs { grid-template-columns: 1fr 1fr; }
+  /* ————— overview ————— */
+  .about {
+    width: min(640px, 100%);
+    margin: 0 auto;
+    padding: clamp(72px, 12vw, 140px) 16px clamp(56px, 8vw, 96px);
   }
-  /* ————— phones ————— */
-  @media (max-width: 640px) {
-    .bar nav { gap: 14px; }
-    .bar .icons { padding-left: 14px; gap: 12px; }
-    .bar .logo { font-size: 18px; }
-    .skill-grid { grid-template-columns: 1fr; }
-    .skill { border-right: 0; margin-right: 0; padding-right: 0; }
-    .case { grid-template-columns: 1fr; }
-    .case .steps { grid-column: 1; }
-    .step { grid-template-columns: 1fr; gap: 4px; }
-    .job { grid-template-columns: 1fr; }
-    .signs { grid-template-columns: 1fr; }
-    .sign { min-height: 0; flex-direction: row; align-items: baseline; }
+  .about p {
+    margin: 0 0 1.1em;
+    font-family: var(--serif);
+    font-size: clamp(21px, 2.3vw, 27px);
+    line-height: 1.45;
   }
-  @media (max-width: 400px) { .bar .icons { display: none; } }
+  .about p:first-child { font-family: var(--sans); font-size: clamp(34px, 4.6vw, 52px); line-height: 1.05; letter-spacing: -0.02em; }
+  .about a { color: var(--pink); text-decoration: none; border-bottom: 1px solid rgba(241,102,139,.4); }
+  .about a:hover, .about a:focus-visible { border-bottom-color: var(--pink); }
+
+  footer {
+    width: min(640px, 100%);
+    margin: 0 auto;
+    padding: 0 16px 40px;
+    display: flex; flex-wrap: wrap; gap: 12px 28px;
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: .16em;
+    text-transform: uppercase;
+    color: var(--ink-dim);
+  }
+  footer a { text-decoration: none; }
+  footer a:hover, footer a:focus-visible { color: var(--pink); }
 
   @media (prefers-reduced-motion: reduce) {
-    html { scroll-behavior: auto; }
-    *, *::before, *::after { animation: none !important; transition: none !important; }
-    .js .rv { opacity: 1; transform: none; }
-    .js .after .word .on, .js .after .wall-glow, .js .after .sub, .js .after .signs, .js .after .more { opacity: 1; transform: none; }
+    .js .on, .js .glow { opacity: 1; animation: none !important; }
   }
 </style>
 </head>
 <body>
 
-  <!-- ✏️ LINKS: replace each href="#" for LinkedIn / Instagram (here and in
-       the contact section) and YOUR-EMAIL-HERE with your real details. -->
-  <header class="bar">
-    <div class="wrap">
-      <a class="logo" href="/">Paul Davidson<b>.</b></a>
-      <nav class="mono" aria-label="Main">
-        <a href="#work">work</a>
-        <a href="/fun">fun</a>
-        <a href="#contact">contact</a>
-        <span class="icons">
-          <a href="#" aria-label="LinkedIn"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.94v5.67H9.36V9h3.41v1.56h.05c.47-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z"/></svg></a>
-          <a href="#" aria-label="Instagram"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.16c3.2 0 3.58.01 4.85.07 1.17.05 1.8.25 2.23.41.56.22.96.48 1.38.9.42.42.68.82.9 1.38.16.42.36 1.06.41 2.23.06 1.27.07 1.65.07 4.85s-.01 3.58-.07 4.85c-.05 1.17-.25 1.8-.41 2.23-.22.56-.48.96-.9 1.38-.42.42-.82.68-1.38.9-.42.16-1.06.36-2.23.41-1.27.06-1.65.07-4.85.07s-3.58-.01-4.85-.07c-1.17-.05-1.8-.25-2.23-.41a3.72 3.72 0 0 1-1.38-.9 3.72 3.72 0 0 1-.9-1.38c-.16-.42-.36-1.06-.41-2.23C2.17 15.58 2.16 15.2 2.16 12s.01-3.58.07-4.85c.05-1.17.25-1.8.41-2.23.22-.56.48-.96.9-1.38.42-.42.82-.68 1.38-.9.42-.16 1.06-.36 2.23-.41C8.42 2.17 8.8 2.16 12 2.16zM12 0C8.74 0 8.33.01 7.05.07 5.78.13 4.9.33 4.14.63c-.79.3-1.46.72-2.13 1.38A5.88 5.88 0 0 0 .63 4.14C.33 4.9.13 5.78.07 7.05.01 8.33 0 8.74 0 12s.01 3.67.07 4.95c.06 1.27.26 2.15.56 2.91.3.79.72 1.46 1.38 2.13a5.88 5.88 0 0 0 2.13 1.38c.76.3 1.64.5 2.91.56C8.33 23.99 8.74 24 12 24s3.67-.01 4.95-.07c1.27-.06 2.15-.26 2.91-.56a5.88 5.88 0 0 0 2.13-1.38 5.88 5.88 0 0 0 1.38-2.13c.3-.76.5-1.64.56-2.91.06-1.28.07-1.69.07-4.95s-.01-3.67-.07-4.95c-.06-1.27-.26-2.15-.56-2.91a5.88 5.88 0 0 0-1.38-2.13A5.88 5.88 0 0 0 19.86.63C19.1.33 18.22.13 16.95.07 15.67.01 15.26 0 12 0zm0 5.84a6.16 6.16 0 1 0 0 12.32 6.16 6.16 0 0 0 0-12.32zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.4-11.85a1.44 1.44 0 1 0 0 2.88 1.44 1.44 0 0 0 0-2.88z"/></svg></a>
-        </span>
-      </nav>
-    </div>
-  </header>
+  <section class="wall" id="sign">
+    <div class="glow" aria-hidden="true"></div>
+    <div class="plate">
+      <span class="standoff l" aria-hidden="true"></span><span class="standoff r" aria-hidden="true"></span>
+      <!-- Each letter is one bent glass tube. Three copies are stacked:
+           the shadow it casts, the unlit glass, and the lit tube with its glow. -->
+      <svg viewBox="-20 -20 490 200" role="img" aria-label="pdvsn">
+        <defs>
+          <filter id="cast" x="-20%" y="-20%" width="140%" height="160%"><feGaussianBlur stdDeviation="4"/></filter>
+          <filter id="neon" x="-50%" y="-50%" width="200%" height="200%">
+            <feGaussianBlur in="SourceGraphic" stdDeviation="2" result="b1"/>
+            <feGaussianBlur in="SourceGraphic" stdDeviation="7" result="b2"/>
+            <feGaussianBlur in="SourceGraphic" stdDeviation="16" result="b3"/>
+            <feFlood flood-color="#F1668B" result="pink"/>
+            <feComposite in="pink" in2="b3" operator="in" result="wide"/>
+            <feComposite in="pink" in2="b2" operator="in" result="mid"/>
+            <feMerge><feMergeNode in="wide"/><feMergeNode in="wide"/><feMergeNode in="mid"/><feMergeNode in="mid"/><feMergeNode in="b1"/><feMergeNode in="SourceGraphic"/></feMerge>
+          </filter>
+          <!-- letter shapes, drawn once and reused -->
+          <path id="g-p" d="M0 40 V150 M0 72 A32 32 0 1 1 0 108"/>
+          <path id="g-d" d="M64 0 V100 M64 72 A32 32 0 1 0 64 108"/>
+          <path id="g-v" d="M0 40 L32 100 L64 40"/>
+          <path id="g-s" d="M56 50 C48 38 12 36 10 56 C8 72 54 66 56 84 C58 102 16 106 4 92"/>
+          <path id="g-n" d="M0 100 V40 M0 72 C0 50 14 40 32 40 C50 40 64 50 64 72 V100"/>
+        </defs>
 
-  <!-- ————————————————— HERO ————————————————— -->
-  <section class="hero" id="top">
-    <div class="wrap">
-      <div class="kicker mono rv"><span class="dot"></span>Paul Davidson · Delivery &amp; product ops · Edinburgh</div>
-      <h1 class="rv">Making shit <em>happen.</em></h1>
-      <div class="hero-foot">
-        <p class="pitch rv">I take messy, real-world processes and turn them into <b>things that just work</b> — for the customers going through them and the teams running them.</p>
-        <ul class="person rv" aria-label="The short version">
-          <li><span class="mono">01</span>Designs journeys end to end</li>
-          <li><span class="mono">02</span>Speaks fluent data <em>and</em> people</li>
-          <li><span class="mono">03</span>Ships it, then tells the story well</li>
-        </ul>
-      </div>
+        <g class="shadow" filter="url(#cast)" transform="translate(9 13)">
+          <use href="#g-p" class="tube" x="0"/><use href="#g-d" class="tube" x="88"/><use href="#g-v" class="tube" x="178"/><use href="#g-s" class="tube" x="270"/><use href="#g-n" class="tube" x="356"/>
+          <circle cx="446" cy="100" r="5" fill="rgba(0,0,0,.85)"/>
+        </g>
+        <g class="off">
+          <use href="#g-p" class="tube" x="0"/><use href="#g-d" class="tube" x="88"/><use href="#g-v" class="tube" x="178"/><use href="#g-s" class="tube" x="270"/><use href="#g-n" class="tube" x="356"/>
+          <use href="#g-p" class="tube hi" x="0"/><use href="#g-d" class="tube hi" x="88"/><use href="#g-v" class="tube hi" x="178"/><use href="#g-s" class="tube hi" x="270"/><use href="#g-n" class="tube hi" x="356"/>
+          <circle cx="446" cy="100" r="5" fill="#3a3134"/>
+        </g>
+        <g filter="url(#neon)">
+          <g class="on l1"><use href="#g-p" class="tube" x="0"/></g>
+          <g class="on l2"><use href="#g-d" class="tube" x="88"/></g>
+          <g class="on l3"><use href="#g-v" class="tube" x="178"/></g>
+          <g class="on l4"><use href="#g-s" class="tube" x="270"/></g>
+          <g class="on l5"><use href="#g-n" class="tube" x="356"/></g>
+          <g class="on white l6"><circle cx="446" cy="100" r="5" fill="#fff7f2"/></g>
+        </g>
+      </svg>
     </div>
+    <div class="caption" aria-hidden="true">Paul Davidson · Edinburgh</div>
   </section>
 
-  <!-- ————————————————— WHAT I'M GOOD AT ————————————————— -->
-  <section class="skills" id="skills">
-    <div class="wrap">
-      <div class="label mono"><span><b>01</b> — What I'm good at</span><span>the transferable bit</span></div>
-      <div class="skill-grid">
-        <div class="skill rv">
-          <span class="n mono">A</span>
-          <h3>Delivery</h3>
-          <p>Taking a fuzzy problem with lots of moving parts and getting it shipped — then making sure it keeps working.</p>
-          <span class="proof mono">Building the Connections journey</span>
-        </div>
-        <div class="skill rv">
-          <span class="n mono">B</span>
-          <h3>Process &amp; product ops</h3>
-          <p>Designing how things should flow, end to end, so customers get a smooth ride and teams aren't firefighting.</p>
-          <span class="proof mono">Who's on What, a rota app I built</span>
-        </div>
-        <div class="skill rv">
-          <span class="n mono">C</span>
-          <h3>Data</h3>
-          <p>Using SQL and analysis to find out what's actually broken, rather than guessing — and to prove when it's fixed.</p>
-          <span class="proof mono">Emergency Data Lead</span>
-        </div>
-        <div class="skill rv">
-          <span class="n mono">D</span>
-          <h3>Storytelling</h3>
-          <p>Three years producing video taught me how to get people bought in, explain the why, and keep everyone on side.</p>
-          <span class="proof mono">Freelance content producer</span>
-        </div>
-      </div>
-    </div>
+  <!-- ✏️ ABOUT: these are just draft words. Rewrite them so they sound like you. -->
+  <section class="about">
+    <p>Hi, I'm Paul.</p>
+    <p>I'm a Delivery Lead in Edinburgh. Most of my work comes down to finding the bit of a process that's a pain for everyone and fixing it. Lately that's meant building the way new gas and electricity connections get set up at Octopus Energy.</p>
+    <p>Before that I spent three years making videos, which turns out to be good practice for getting a lot of people pulling in the same direction.</p>
+    <p>Outside work I run <a href="https://carbclub.pdvsn.com">a supper club</a>, I'm opening <a href="https://dessertdock.com">a dessert shop</a>, I make <a href="https://films.pdvsn.com">short films</a>, and I built <a href="https://whosonwhat.com">a rota app</a> so ops teams can ditch the spreadsheet. I also keep <a href="https://visits.pdvsn.com">a list</a> of where to eat in Edinburgh.</p>
   </section>
 
-  <!-- ————————————————— SELECTED WORK ————————————————— -->
-  <!-- ✏️ CASE STUDIES: replace each pink dashed "todo" note with your own words.
-       Delete the whole <span class="todo">…</span> and type a normal sentence.
-       Numbers make these land: time saved, customers helped, people using it. -->
-  <section class="work" id="work">
-    <div class="wrap">
-      <div class="label mono"><span><b>02</b> — Selected work</span><span>problem → fix → result</span></div>
-      <h2 class="h2 rv">Things I've <em>made happen.</em></h2>
-
-      <article class="case rv">
-        <div class="num">01</div>
-        <div>
-          <h3>Building a customer journey from scratch</h3>
-          <div class="ctx mono">Connections · Octopus Energy · 2025—26</div>
-        </div>
-        <dl class="steps">
-          <div class="step"><dt class="mono">The problem</dt><dd>Getting a new electricity or gas supply, moving a meter or upgrading a supply is slow and confusing for customers. <span class="todo">✏️ What specifically was broken before?</span></dd></div>
-          <div class="step"><dt class="mono">What I did</dt><dd>Built the end-to-end Connections process. <span class="todo">✏️ How? Mapping the journey, tooling, working with which teams?</span></dd></div>
-          <div class="step result"><dt class="mono">Result</dt><dd><span class="todo">✏️ What changed? A number is gold here.</span></dd></div>
-        </dl>
-      </article>
-
-      <article class="case rv">
-        <div class="num">02</div>
-        <div>
-          <h3>Who's on What</h3>
-          <div class="ctx mono">Side project · product I built<br><a href="https://whosonwhat.com">whosonwhat.com ↗</a></div>
-        </div>
-        <dl class="steps">
-          <div class="step"><dt class="mono">The problem</dt><dd>Office and customer ops teams run their rota on a spreadsheet that nobody quite trusts.</dd></div>
-          <div class="step"><dt class="mono">What I did</dt><dd>Designed and built a rota app made for how ops teams actually work. <span class="todo">✏️ Anything about how you built it?</span></dd></div>
-          <div class="step result"><dt class="mono">Result</dt><dd><span class="todo">✏️ Who uses it? How many teams or people?</span></dd></div>
-        </dl>
-      </article>
-
-      <article class="case rv">
-        <div class="num">03</div>
-        <div>
-          <h3>Bringing data into emergency response</h3>
-          <div class="ctx mono">Emergency metering · Octopus Energy · 2023—25</div>
-        </div>
-        <dl class="steps">
-          <div class="step"><dt class="mono">The problem</dt><dd>When a customer's gas or electricity goes off, every minute counts — and the team needs to know where to look first.</dd></div>
-          <div class="step"><dt class="mono">What I did</dt><dd>Went from handling emergencies on the front line to leading the team's data work. <span class="todo">✏️ What did you build or analyse with SQL?</span></dd></div>
-          <div class="step result"><dt class="mono">Result</dt><dd><span class="todo">✏️ Faster responses? Fewer repeat issues? A number here.</span></dd></div>
-        </dl>
-      </article>
-    </div>
-  </section>
-
-  <!-- ————————————————— EXPERIENCE ————————————————— -->
-  <section class="exp" id="experience">
-    <div class="wrap">
-      <div class="label mono"><span><b>03</b> — Experience</span><span>2020 — now</span></div>
-
-      <div class="job current rv">
-        <h3>Delivery Lead <span>· Octopus Energy</span></h3>
-        <span class="when mono">Oct 2026 — now</span>
-      </div>
-      <div class="job rv">
-        <h3>Smart Experience <span>· Octopus Energy</span></h3>
-        <span class="when mono">2025 — 2026</span>
-        <p>Refined and developed the Connections journey for a smoother, more consistent customer experience.</p>
-      </div>
-      <div class="job rv">
-        <h3>Emergency Data Lead <span>· Octopus Energy</span></h3>
-        <span class="when mono">2025</span>
-        <p>Led data and analysis for the Emergency Metering team, helping them respond fast when supplies were disrupted.</p>
-      </div>
-      <div class="job rv">
-        <h3>Emergency Specialist <span>· Octopus Energy</span></h3>
-        <span class="when mono">2023 — 2025</span>
-        <p>Triaged emergencies and solved complex problems for customers with no gas or electricity.</p>
-      </div>
-      <div class="job rv">
-        <h3>Content Producer <span>· PD Creative (freelance)</span></h3>
-        <span class="when mono">2020 — 2023</span>
-        <p>Found and produced video that told good stories and reached new audiences. Also ran on-set COVID safety, from risk assessment to supervision.</p>
-      </div>
-
-      <div class="tools mono rv">
-        <span>Toolkit</span>
-        <span class="chip">SQL &amp; data</span>
-        <span class="chip">Customer ops</span>
-        <span class="chip">Process design</span>
-        <span class="chip">Video production</span>
-      </div>
-    </div>
-  </section>
-
-  <!-- ————————————————— AFTER HOURS ————————————————— -->
-  <section class="after" id="fun">
-    <div class="wrap">
-      <div class="wall-glow" aria-hidden="true"></div>
-      <h2 class="neon-sign" aria-label="After hours">
-        <span class="standoff tl" aria-hidden="true"></span><span class="standoff tr" aria-hidden="true"></span>
-        <span class="word w1" data-t="after" aria-hidden="true"><span class="off">after</span><span class="on">after</span></span>
-        <span class="word w2" data-t="hours" aria-hidden="true"><span class="off">hours</span><span class="on">hours</span></span>
-      </h2>
-      <p class="sub">When the laptop closes, the oven comes on.</p>
-      <div class="signs">
-        <a class="sign" href="/fun#carbclub"><span class="t">carb club</span><span class="mono">monthly supper club</span></a>
-        <a class="sign" href="/fun#dessertdock"><span class="t">dessert dock</span><span class="mono">launching soon</span></a>
-        <a class="sign" href="/fun#films"><span class="t">films</span><span class="mono">short films</span></a>
-        <a class="sign" href="/fun#visits"><span class="t">visits</span><span class="mono">edinburgh recs</span></a>
-      </div>
-      <a class="more mono" href="/fun">see all of it →</a>
-    </div>
-  </section>
-
-  <!-- ————————————————— CONTACT ————————————————— -->
-  <section class="contact" id="contact">
-    <div class="wrap">
-      <div class="label mono"><span><b>04</b> — Contact</span><span>say hi</span></div>
-      <h2>Got something that needs <em>making happen?</em></h2>
-      <div class="ctas mono">
-        <a class="btn solid" href="mailto:YOUR-EMAIL-HERE">email me →</a>
-        <a class="btn" href="#">linkedin</a>
-      </div>
-      <div class="foot mono"><span>pdvsn.com</span><span>© mmxxvi</span></div>
-    </div>
-  </section>
+  <!-- ✏️ LINKS: replace YOUR-EMAIL-HERE and the LinkedIn # with your real details. -->
+  <footer>
+    <a href="mailto:YOUR-EMAIL-HERE">Email</a>
+    <a href="#">LinkedIn</a>
+    <a href="/fun">Side projects</a>
+  </footer>
 
 <script>
   document.documentElement.classList.add("js");
-
-  // fade things in as they scroll into view
-  const io = new IntersectionObserver((entries) => {
-    entries.forEach((e) => { if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); } });
-  }, { rootMargin: "0px 0px -10% 0px" });
-  document.querySelectorAll(".rv").forEach((el) => io.observe(el));
-
-  // switch the neon sign on once it's properly on screen
-  const after = document.getElementById("fun");
-  const neonIO = new IntersectionObserver(([e]) => {
-    if (e.isIntersecting) { after.classList.add("lit"); neonIO.disconnect(); }
-  }, { rootMargin: "0px 0px -35% 0px" });
-  neonIO.observe(after);
+  // switch the sign on shortly after the page loads
+  setTimeout(() => document.getElementById("sign").classList.add("lit"), 500);
 </script>
 </body>
 </html>
