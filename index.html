@@ -177,26 +177,107 @@
   .chip { padding: 8px 14px; border: 1px solid var(--rule); border-radius: 999px; }
 
   /* ============================================================
-     AFTER HOURS — neon
+     AFTER HOURS — a neon sign hung on a brick wall.
+     Unlit until it scrolls into view, then it flickers on.
      ============================================================ */
   .after {
-    padding: clamp(80px, 11vw, 150px) 0;
-    background: radial-gradient(ellipse at 50% 0%, rgba(241,102,139,.10), transparent 60%), #080607;
+    position: relative;
+    overflow: hidden;
+    padding: clamp(110px, 14vw, 190px) 0 clamp(80px, 11vw, 150px);
     border-top: 1px solid var(--rule);
     text-align: center;
+    background:
+      radial-gradient(ellipse at 50% 40%, transparent 30%, rgba(0,0,0,.75) 100%),
+      url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='60'><rect width='120' height='60' fill='%230a0809'/><g fill='%23161113'><rect x='1' y='1' width='57' height='27'/><rect x='61' y='1' width='57' height='27'/><rect x='-29' y='31' width='57' height='27'/><rect x='31' y='31' width='57' height='27'/><rect x='91' y='31' width='57' height='27'/></g></svg>");
   }
-  .neon {
-    margin: 0 0 18px;
+  .after .wrap { position: relative; }
+
+  /* pink light spilling onto the wall behind the sign */
+  .wall-glow {
+    position: absolute;
+    left: 50%; top: clamp(40px, 7vw, 110px);
+    width: min(1100px, 140vw); height: clamp(320px, 40vw, 560px);
+    transform: translateX(-50%);
+    background: radial-gradient(ellipse at center, rgba(241,102,139,.34), rgba(241,102,139,.08) 45%, transparent 70%);
+    pointer-events: none;
+  }
+
+  /* the clear acrylic backing plate, hung on two wires */
+  .neon-sign {
+    position: relative;
+    display: inline-block;
+    margin: 0 0 clamp(28px, 4vw, 44px);
+    padding: .12em .32em .18em;
+    border-radius: 22px;
+    border: 1px solid rgba(255,255,255,.08);
+    background: linear-gradient(160deg, rgba(255,255,255,.05), rgba(255,255,255,.012));
+    box-shadow: 0 1px 0 rgba(255,255,255,.06) inset, 18px 28px 34px rgba(0,0,0,.6);
     font-family: var(--serif);
     font-style: italic;
     font-weight: 400;
-    font-size: clamp(64px, 12vw, 180px);
-    line-height: .9;
-    color: #ffd6e1;
-    text-shadow: 0 0 4px #fff, 0 0 12px var(--pink), 0 0 28px var(--pink), 0 0 60px var(--pink);
-    animation: buzz 6s infinite;
+    font-size: clamp(60px, 12vw, 180px);
+    line-height: 1;
+    white-space: nowrap;
   }
-  @keyframes buzz { 0%, 92%, 96%, 100% { opacity: 1 } 93%, 95% { opacity: .35 } }
+  .neon-sign::before, .neon-sign::after {
+    content: "";
+    position: absolute;
+    bottom: 100%;
+    height: 100vh;
+    border-left: 1px solid #3a3436;
+  }
+  .neon-sign::before { left: 14%; }
+  .neon-sign::after { right: 14%; }
+  /* little metal stand-offs holding the plate */
+  .standoff { position: absolute; width: 9px; height: 9px; border-radius: 50%; background: radial-gradient(circle at 35% 35%, #8a8381, #2a2627); }
+  .standoff.tl { left: 14%; top: 10px; margin-left: -4px; }
+  .standoff.tr { right: 14%; top: 10px; margin-right: -5px; }
+
+  .word { position: relative; display: inline-block; z-index: 0; }
+  /* the shadow the tubes cast on the plate and wall */
+  .word::before {
+    content: attr(data-t);
+    position: absolute; left: 0; top: 0;
+    z-index: -1;
+    color: rgba(0,0,0,.85);
+    transform: translate(.035em, .07em);
+    filter: blur(4px);
+  }
+  /* unlit glass tube */
+  .word .off { color: #2e2628; text-shadow: 0 1px 0 rgba(255,255,255,.07), 0 -1px 0 rgba(0,0,0,.6); }
+  /* lit tube, stacked exactly on top */
+  .word .on { position: absolute; left: 0; top: 0; }
+  .w1 .on {
+    color: #ffd3df;
+    text-shadow: 0 0 2px #fff, 0 0 8px var(--pink), 0 0 20px var(--pink), 0 0 44px var(--pink), 0 0 90px rgba(241,102,139,.7);
+  }
+  .w2 .on {
+    color: #fff7f2;
+    text-shadow: 0 0 2px #fff, 0 0 8px #ffe8dd, 0 0 20px #ffb8c9, 0 0 44px rgba(241,102,139,.75), 0 0 90px rgba(241,102,139,.45);
+  }
+
+  /* off until the sign scrolls into view (only when JS runs; otherwise it's just lit) */
+  .js .after .word .on, .js .after .wall-glow { opacity: 0; }
+  .js .after.lit .w1 .on   { animation: ignite1 1.4s steps(1, end) .1s both; }
+  .js .after.lit .wall-glow { animation: ignite1 1.4s steps(1, end) .1s both; }
+  .js .after.lit .w2 .on   { animation: ignite2 1.9s steps(1, end) .7s both, buzz 7s steps(1, end) 4s infinite; }
+  @keyframes ignite1 {
+    0% { opacity: 0 } 6% { opacity: .9 } 10% { opacity: 0 } 18% { opacity: 1 } 22% { opacity: .15 }
+    32% { opacity: 1 } 36% { opacity: .35 } 50% { opacity: 1 } 100% { opacity: 1 }
+  }
+  @keyframes ignite2 {
+    0% { opacity: 0 } 8% { opacity: .7 } 11% { opacity: 0 } 30% { opacity: 0 } 33% { opacity: 1 }
+    37% { opacity: 0 } 45% { opacity: .6 } 48% { opacity: 0 } 62% { opacity: 1 } 66% { opacity: .3 } 72% { opacity: 1 } 100% { opacity: 1 }
+  }
+  @keyframes buzz {
+    0% { opacity: 1 } 90% { opacity: .25 } 91.5% { opacity: 1 } 93% { opacity: .45 } 94% { opacity: 1 } 100% { opacity: 1 }
+  }
+
+  /* the rest of the section comes up once the sign is on */
+  .js .after .sub, .js .after .signs, .js .after .more { opacity: 0; transform: translateY(16px); transition: opacity .9s var(--ease), transform .9s var(--ease); }
+  .js .after.lit .sub { opacity: 1; transform: none; transition-delay: 1.6s; }
+  .js .after.lit .signs { opacity: 1; transform: none; transition-delay: 1.9s; }
+  .js .after.lit .more { opacity: 1; transform: none; transition-delay: 2.1s; }
   .after .sub { font-family: var(--serif); font-size: clamp(19px, 1.8vw, 24px); color: var(--ink-dim); margin: 0 auto clamp(40px, 6vw, 64px); max-width: 36ch; }
   .signs { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; text-align: left; }
   .sign {
@@ -260,6 +341,7 @@
     html { scroll-behavior: auto; }
     *, *::before, *::after { animation: none !important; transition: none !important; }
     .js .rv { opacity: 1; transform: none; }
+    .js .after .word .on, .js .after .wall-glow, .js .after .sub, .js .after .signs, .js .after .more { opacity: 1; transform: none; }
   }
 </style>
 </head>
@@ -424,7 +506,12 @@
   <!-- ————————————————— AFTER HOURS ————————————————— -->
   <section class="after" id="fun">
     <div class="wrap">
-      <h2 class="neon">after hours</h2>
+      <div class="wall-glow" aria-hidden="true"></div>
+      <h2 class="neon-sign" aria-label="After hours">
+        <span class="standoff tl" aria-hidden="true"></span><span class="standoff tr" aria-hidden="true"></span>
+        <span class="word w1" data-t="after" aria-hidden="true"><span class="off">after</span><span class="on">after</span></span>
+        <span class="word w2" data-t="hours" aria-hidden="true"><span class="off">hours</span><span class="on">hours</span></span>
+      </h2>
       <p class="sub">When the laptop closes, the oven comes on.</p>
       <div class="signs">
         <a class="sign" href="/fun#carbclub"><span class="t">carb club</span><span class="mono">monthly supper club</span></a>
@@ -457,6 +544,13 @@
     entries.forEach((e) => { if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); } });
   }, { rootMargin: "0px 0px -10% 0px" });
   document.querySelectorAll(".rv").forEach((el) => io.observe(el));
+
+  // switch the neon sign on once it's properly on screen
+  const after = document.getElementById("fun");
+  const neonIO = new IntersectionObserver(([e]) => {
+    if (e.isIntersecting) { after.classList.add("lit"); neonIO.disconnect(); }
+  }, { rootMargin: "0px 0px -35% 0px" });
+  neonIO.observe(after);
 </script>
 </body>
 </html>
