@@ -18,6 +18,12 @@
     --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
   }
 
+  @font-face {
+    font-family: "Tilt Neon";
+    src: url("fonts/tilt-neon.woff2") format("woff2");
+    font-display: block;
+  }
+
   * { box-sizing: border-box; }
   body {
     margin: 0;
@@ -54,8 +60,7 @@
   /* ————— the sign: clear acrylic plate on two wires ————— */
   .plate {
     position: relative;
-    width: min(880px, 92vw);
-    padding: clamp(18px, 3vw, 36px) clamp(22px, 4vw, 52px);
+    padding: clamp(14px, 2.4vw, 30px) clamp(26px, 5vw, 64px) clamp(18px, 3vw, 38px);
     border-radius: clamp(14px, 2vw, 24px);
     border: 1px solid rgba(255,255,255,.08);
     background: linear-gradient(160deg, rgba(255,255,255,.05), rgba(255,255,255,.012));
@@ -74,13 +79,37 @@
   .standoff.l { left: calc(12% - 4px); }
   .standoff.r { right: calc(12% - 5px); }
 
-  .plate svg { display: block; width: 100%; height: auto; overflow: visible; }
-  .tube { fill: none; stroke-linecap: round; stroke-linejoin: round; }
-  .shadow .tube { stroke: rgba(0,0,0,.85); stroke-width: 9; }
-  .off .tube { stroke: #3a3134; stroke-width: 8; }
-  .off .hi { stroke: rgba(255,255,255,.07); stroke-width: 2; transform: translate(-1.5px, -1.5px); }
-  .on .tube { stroke: #ffc4d4; stroke-width: 6; }
-  .on.white .tube { stroke: #fff7f2; }
+  .neon {
+    display: flex;
+    margin: 0;
+    font-weight: 400;
+    font-family: "Tilt Neon", var(--sans);
+    font-size: clamp(76px, 17vw, 200px);
+    line-height: 1.15;
+    white-space: nowrap;
+  }
+  .ltr { position: relative; z-index: 0; }
+  /* the shadow each letter casts on the plate and wall */
+  .ltr::before {
+    content: attr(data-t);
+    position: absolute; left: 0; top: 0;
+    z-index: -1;
+    color: rgba(0,0,0,.85);
+    transform: translate(.04em, .07em);
+    filter: blur(5px);
+  }
+  /* unlit glass */
+  .ltr .off { color: #3a3134; text-shadow: 0 1px 0 rgba(255,255,255,.07), 0 -1px 0 rgba(0,0,0,.6); }
+  /* lit tube, stacked exactly on top */
+  .ltr .on {
+    position: absolute; left: 0; top: 0;
+    color: #ffd3df;
+    text-shadow: 0 0 2px #fff, 0 0 8px var(--pink), 0 0 18px var(--pink), 0 0 40px var(--pink), 0 0 80px rgba(241,102,139,.8);
+  }
+  .ltr .on.white {
+    color: #fff7f2;
+    text-shadow: 0 0 2px #fff, 0 0 8px #ffe8dd, 0 0 18px #ffb8c9, 0 0 40px rgba(241,102,139,.7);
+  }
 
   /* each letter lights on its own, with its own stutter */
   .js .on, .js .glow { opacity: 0; }
@@ -158,46 +187,16 @@
     <div class="glow" aria-hidden="true"></div>
     <div class="plate">
       <span class="standoff l" aria-hidden="true"></span><span class="standoff r" aria-hidden="true"></span>
-      <!-- Each letter is one bent glass tube. Three copies are stacked:
-           the shadow it casts, the unlit glass, and the lit tube with its glow. -->
-      <svg viewBox="-20 -20 490 200" role="img" aria-label="pdvsn">
-        <defs>
-          <filter id="cast" x="-20%" y="-20%" width="140%" height="160%"><feGaussianBlur stdDeviation="4"/></filter>
-          <filter id="neon" x="-50%" y="-50%" width="200%" height="200%">
-            <feGaussianBlur in="SourceGraphic" stdDeviation="2" result="b1"/>
-            <feGaussianBlur in="SourceGraphic" stdDeviation="7" result="b2"/>
-            <feGaussianBlur in="SourceGraphic" stdDeviation="16" result="b3"/>
-            <feFlood flood-color="#F1668B" result="pink"/>
-            <feComposite in="pink" in2="b3" operator="in" result="wide"/>
-            <feComposite in="pink" in2="b2" operator="in" result="mid"/>
-            <feMerge><feMergeNode in="wide"/><feMergeNode in="wide"/><feMergeNode in="mid"/><feMergeNode in="mid"/><feMergeNode in="b1"/><feMergeNode in="SourceGraphic"/></feMerge>
-          </filter>
-          <!-- letter shapes, drawn once and reused -->
-          <path id="g-p" d="M0 40 V150 M0 72 A32 32 0 1 1 0 108"/>
-          <path id="g-d" d="M64 0 V100 M64 72 A32 32 0 1 0 64 108"/>
-          <path id="g-v" d="M0 40 L32 100 L64 40"/>
-          <path id="g-s" d="M56 50 C48 38 12 36 10 56 C8 72 54 66 56 84 C58 102 16 106 4 92"/>
-          <path id="g-n" d="M0 100 V40 M0 72 C0 50 14 40 32 40 C50 40 64 50 64 72 V100"/>
-        </defs>
-
-        <g class="shadow" filter="url(#cast)" transform="translate(9 13)">
-          <use href="#g-p" class="tube" x="0"/><use href="#g-d" class="tube" x="88"/><use href="#g-v" class="tube" x="178"/><use href="#g-s" class="tube" x="270"/><use href="#g-n" class="tube" x="356"/>
-          <circle cx="446" cy="100" r="5" fill="rgba(0,0,0,.85)"/>
-        </g>
-        <g class="off">
-          <use href="#g-p" class="tube" x="0"/><use href="#g-d" class="tube" x="88"/><use href="#g-v" class="tube" x="178"/><use href="#g-s" class="tube" x="270"/><use href="#g-n" class="tube" x="356"/>
-          <use href="#g-p" class="tube hi" x="0"/><use href="#g-d" class="tube hi" x="88"/><use href="#g-v" class="tube hi" x="178"/><use href="#g-s" class="tube hi" x="270"/><use href="#g-n" class="tube hi" x="356"/>
-          <circle cx="446" cy="100" r="5" fill="#3a3134"/>
-        </g>
-        <g filter="url(#neon)">
-          <g class="on l1"><use href="#g-p" class="tube" x="0"/></g>
-          <g class="on l2"><use href="#g-d" class="tube" x="88"/></g>
-          <g class="on l3"><use href="#g-v" class="tube" x="178"/></g>
-          <g class="on l4"><use href="#g-s" class="tube" x="270"/></g>
-          <g class="on l5"><use href="#g-n" class="tube" x="356"/></g>
-          <g class="on white l6"><circle cx="446" cy="100" r="5" fill="#fff7f2"/></g>
-        </g>
-      </svg>
+      <!-- Each letter is stacked three times: the shadow it casts, the unlit glass,
+           and the lit tube on top, which flickers on by itself. -->
+      <h1 class="neon" aria-label="pdvsn">
+        <span class="ltr" data-t="p"><span class="off">p</span><span class="on l1">p</span></span>
+        <span class="ltr" data-t="d"><span class="off">d</span><span class="on l2">d</span></span>
+        <span class="ltr" data-t="v"><span class="off">v</span><span class="on l3">v</span></span>
+        <span class="ltr" data-t="s"><span class="off">s</span><span class="on l4">s</span></span>
+        <span class="ltr" data-t="n"><span class="off">n</span><span class="on l5">n</span></span>
+        <span class="ltr" data-t="."><span class="off">.</span><span class="on white l6">.</span></span>
+      </h1>
     </div>
     <div class="caption" aria-hidden="true">Paul Davidson · Edinburgh</div>
   </section>
@@ -219,8 +218,9 @@
 
 <script>
   document.documentElement.classList.add("js");
-  // switch the sign on shortly after the page loads
-  setTimeout(() => document.getElementById("sign").classList.add("lit"), 500);
+  // switch the sign on shortly after the font has loaded
+  document.fonts.ready.then(() =>
+    setTimeout(() => document.getElementById("sign").classList.add("lit"), 400));
 </script>
 </body>
 </html>
