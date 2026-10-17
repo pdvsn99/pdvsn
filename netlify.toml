@@ -14,3 +14,13 @@
   from = "/"
   to = "/index.html"
   status = 200
+
+[[redirects]]
+  from = "/fun"
+  to = "/#fun"
+  status = 301
+
+[[redirects]]
+  from = "/contact"
+  to = "/"
+  status = 301
