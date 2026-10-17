@@ -100,10 +100,49 @@
     66% { opacity: .7 } 80% { opacity: .85 } 92% { opacity: 1 } 100% { opacity: 1 }
   }
 
-  /* ————— films ————— */
-  .films { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(20px, 3vw, 36px); margin-top: clamp(24px, 3vw, 36px); }
-  .film h3 { margin: 16px 0 6px; font-family: var(--display); font-weight: 400; font-size: clamp(30px, 3.4vw, 40px); line-height: .95; letter-spacing: .01em; }
-  .film p { margin: 0; font-size: 17px; line-height: 1.5; }
+  /* ————— films: one at a time on desktop, stacked on phones ————— */
+  .reel {
+    display: flex;
+    gap: 24px;
+    margin-top: clamp(24px, 3vw, 36px);
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    scrollbar-width: none;
+    overscroll-behavior-x: contain;
+  }
+  .reel::-webkit-scrollbar { display: none; }
+  .reel:focus-visible { outline: 1px dashed var(--pink); outline-offset: 6px; }
+  .film {
+    flex: 0 0 100%;
+    scroll-snap-align: start;
+    display: grid;
+    grid-template-columns: 1.75fr 1fr;
+    gap: clamp(24px, 3vw, 44px);
+    align-items: end;
+  }
+  .film h3 { margin: 0 0 10px; font-family: var(--display); font-weight: 400; font-size: clamp(40px, 4.4vw, 60px); line-height: .92; letter-spacing: .01em; }
+  .film p { margin: 0; font-size: 17px; line-height: 1.55; }
+  .credits { list-style: none; margin: 0 0 16px; padding: 0; }
+  .credits li { font-family: var(--mono); font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--ink-dim); line-height: 1.9; }
+  .credits b { font-weight: 400; color: var(--ink); }
+
+  .reel-nav { display: flex; align-items: center; gap: 14px; margin-top: 22px; }
+  .reel-nav button {
+    width: 44px; height: 44px;
+    border-radius: 50%;
+    border: 1px solid var(--rule);
+    background: rgba(10,8,9,.6);
+    color: var(--ink);
+    font-size: 20px; line-height: 1;
+    cursor: pointer;
+    transition: border-color .2s, color .2s, opacity .2s;
+  }
+  .reel-nav button:hover, .reel-nav button:focus-visible { border-color: var(--pink); color: var(--pink); outline: none; }
+  .reel-nav button:disabled { opacity: .3; cursor: default; border-color: var(--rule); color: var(--ink); }
+  .reel-nav .count { min-width: 4ch; color: var(--ink-dim); }
+  .reel-nav .more { margin: 0 0 0 auto; }
+
   .still {
     position: relative;
     display: block;
@@ -140,7 +179,7 @@
     transition: background .2s, color .2s;
   }
   .still:hover .play, .still:focus-visible .play { background: var(--pink); color: var(--bg); }
-  .more { display: inline-block; margin-top: clamp(28px, 4vw, 40px); color: var(--pink); text-decoration: none; }
+  .more { display: inline-block; color: var(--pink); text-decoration: none; }
   .more:hover, .more:focus-visible { text-decoration: underline; }
 
   /* ————— use the width on laptops ————— */
@@ -151,11 +190,11 @@
   @media (max-width: 860px) {
     .wide, footer { width: min(760px, 100%); }
   }
-  @media (max-width: 900px) {
-    .films { grid-template-columns: 1fr 1fr; }
-  }
-  @media (max-width: 600px) {
-    .films { grid-template-columns: 1fr; }
+  @media (max-width: 700px) {
+    .reel { flex-direction: column; gap: clamp(40px, 8vw, 56px); overflow: visible; scroll-snap-type: none; }
+    .film { grid-template-columns: 1fr; gap: 16px; }
+    .reel-nav button, .reel-nav .count { display: none; }
+    .reel-nav .more { margin: 8px 0 0; }
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -198,49 +237,55 @@
     <section class="part" id="films">
       <h2>films<span>.</span></h2>
       <p>Short films, made properly.</p>
-      <div class="films">
+      <div class="reel" id="reel" tabindex="0" aria-label="Films, scroll sideways for more">
         <article class="film">
           <a class="still" href="https://www.youtube.com/watch?v=3D2MKY4uDA4">
             <img src="images/sloansy.jpg" alt="Still from Sloansy" width="1400" height="788" loading="lazy">
             <span class="play">▶ Watch on YouTube</span>
           </a>
-          <h3>“Sloansy”</h3>
-          <p>A young mum on a Scottish council estate in 1999, and the stranger who offers her a way out.</p>
+          <div>
+            <h3>“Sloansy”</h3>
+            <p>On a Scottish council estate in 1999, Jeanie struggles to raise her infant son alone. When concerned neighbours alert the authorities, she faces the grim reality of losing everything. Just as hope fades, a mysterious man steps in with an offer that could save her or lead her down a dangerous path.</p>
+          </div>
         </article>
         <article class="film">
           <a class="still" href="https://www.youtube.com/watch?v=1Ty29yOT98E">
             <img src="images/swimming.jpg" alt="Still from Swimming With You" width="1400" height="700" loading="lazy">
             <span class="play">▶ Watch on YouTube</span>
           </a>
-          <h3>Swimming With You</h3>
-          <p>Two guys locked out of their car after a hookup goes wrong, and the recovery worker who turns up.</p>
+          <div>
+            <h3>Swimming With You</h3>
+            <p>After a hookup goes wrong, Rhys and Lucas find themselves locked out of their car, stuck in awkward silence. As they talk, frustration turns to unexpected connection. When a sharp-witted recovery worker arrives, she sizes them up with a knowing smile, turning their night into something neither of them expected.</p>
+          </div>
         </article>
-        <!-- ✏️ FILM 3: add the title and a one-line description, and save a still as images/film-3.jpg -->
+        <!-- ✏️ save a still for this film as images/bad-investment.jpg -->
         <article class="film">
-          <a class="still ph" href="https://vimeo.com/270186488" data-file="images/film-3.jpg" style="--img: url('images/film-3.jpg')">
+          <a class="still ph" href="https://vimeo.com/270186488" data-file="images/bad-investment.jpg" style="--img: url('images/bad-investment.jpg')">
             <span class="play">▶ Watch on Vimeo</span>
           </a>
-          <h3>Film title</h3>
-          <p>One line about the film.</p>
+          <div>
+            <h3>Bad Investment</h3>
+            <ul class="credits"><li>Producer / Director <b>Paul Davidson</b></li></ul>
+          </div>
         </article>
-        <!-- ✏️ FILM 4: add the title and a one-line description, and save a still as images/film-4.jpg -->
+        <!-- ✏️ save a still for this film as images/ange-the-ganj.jpg -->
         <article class="film">
-          <a class="still ph" href="https://vimeo.com/378201220" data-file="images/film-4.jpg" style="--img: url('images/film-4.jpg')">
+          <a class="still ph" href="https://vimeo.com/378201220" data-file="images/ange-the-ganj.jpg" style="--img: url('images/ange-the-ganj.jpg')">
             <span class="play">▶ Watch on Vimeo</span>
           </a>
-          <h3>Film title</h3>
-          <p>One line about the film.</p>
-        </article>
-        <!-- ✏️ FILM 5: add the title and a one-line description, and save a still as images/film-5.jpg -->
-        <article class="film">
-          <a class="still ph" href="https://www.youtube.com/watch?v=Io-QnoO5Oyw" data-file="images/film-5.jpg" style="--img: url('images/film-5.jpg')">
-            <span class="play">▶ Watch on YouTube</span>
-          </a>
-          <h3>Film title</h3>
-          <p>One line about the film.</p>
+          <div>
+            <h3>Ange the Ganj</h3>
+            <ul class="credits"><li>Writer / Director <b>Elías Nader</b></li><li>Producer <b>Paul Davidson</b></li></ul>
+            <p>An unlikely encounter.</p>
+          </div>
         </article>
       </div>
-      <a class="more mono" href="https://films.pdvsn.com">More at films.pdvsn.com ↗</a>
+      <div class="reel-nav">
+        <button type="button" id="prev" aria-label="Previous film">‹</button>
+        <span class="count mono" id="count" aria-live="polite">1 / 4</span>
+        <button type="button" id="next" aria-label="Next film">›</button>
+        <a class="more mono" href="https://films.pdvsn.com">More at films.pdvsn.com ↗</a>
+      </div>
     </section>
 
   </div>
@@ -252,6 +297,24 @@
 
 <script>
   document.documentElement.classList.add("js");
+  // ——— film reel: arrows, counter and keyboard ———
+  const reel = document.getElementById("reel");
+  const slides = reel.querySelectorAll(".film");
+  const prev = document.getElementById("prev"), next = document.getElementById("next"), count = document.getElementById("count");
+  const step = () => reel.clientWidth + 24; // slide width plus the gap
+  const current = () => Math.round(reel.scrollLeft / step());
+  function update() {
+    const i = current();
+    count.textContent = (i + 1) + " / " + slides.length;
+    prev.disabled = i === 0;
+    next.disabled = i === slides.length - 1;
+  }
+  const go = (d) => reel.scrollTo({ left: (current() + d) * step() });
+  prev.addEventListener("click", () => go(-1));
+  next.addEventListener("click", () => go(1));
+  reel.addEventListener("scroll", () => requestAnimationFrame(update), { passive: true });
+  update();
+
   // switch the sign on shortly after the font has loaded
   document.fonts.ready.then(() =>
     setTimeout(() => document.getElementById("top").classList.add("lit"), 400));
