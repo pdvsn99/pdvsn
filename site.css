@@ -64,6 +64,12 @@ a { color: inherit; }
 .menu a { color: var(--ink-dim); text-decoration: none; transition: color .2s; }
 .menu a:hover, .menu a:focus-visible, .menu a[aria-current] { color: var(--pink); }
 .menu .home { color: var(--ink); }
+.icons { display: inline-flex; align-items: center; gap: 16px; }
+.menu .icons { padding-left: 22px; border-left: 1px solid var(--rule); }
+.icons a { display: block; color: var(--ink-dim); transition: color .2s; }
+.icons a:hover, .icons a:focus-visible { color: var(--pink); }
+.icons svg { display: block; width: 17px; height: 17px; fill: currentColor; }
+footer .reach { display: inline-flex; align-items: center; gap: 22px; }
 
 /* ————— sections ————— */
 .part {

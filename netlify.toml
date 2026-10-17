@@ -22,5 +22,5 @@
 
 [[redirects]]
   from = "/contact"
-  to = "/contact.html"
-  status = 200
+  to = "/"
+  status = 301

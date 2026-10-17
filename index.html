@@ -101,7 +101,7 @@
   }
 
   /* ————— films ————— */
-  .films { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(20px, 3vw, 36px); margin-top: clamp(24px, 3vw, 36px); }
+  .films { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(20px, 3vw, 36px); margin-top: clamp(24px, 3vw, 36px); }
   .film h3 { margin: 16px 0 6px; font-family: var(--display); font-weight: 400; font-size: clamp(30px, 3.4vw, 40px); line-height: .95; letter-spacing: .01em; }
   .film p { margin: 0; font-size: 17px; line-height: 1.5; }
   .still {
@@ -110,6 +110,21 @@
     overflow: hidden;
     border-radius: 4px;
     box-shadow: 0 24px 40px rgba(0,0,0,.6);
+  }
+  /* empty still: stripes and the filename to add, until that image exists */
+  .still.ph {
+    aspect-ratio: 16 / 9;
+    background:
+      var(--img) center / cover no-repeat,
+      linear-gradient(135deg, rgba(241,102,139,.16), rgba(241,102,139,.03)),
+      repeating-linear-gradient(135deg, rgba(255,255,255,.05) 0 2px, transparent 2px 9px),
+      #151113;
+  }
+  .still.ph::before {
+    content: attr(data-file);
+    position: absolute; left: 14px; top: 12px;
+    font: 10px/1 var(--mono); letter-spacing: .12em; text-transform: uppercase;
+    color: var(--ink-dim);
   }
   .still img { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; object-fit: cover; transition: transform .8s cubic-bezier(.2,.7,.2,1); }
   .still:hover img, .still:focus-visible img { transform: scale(1.03); }
@@ -131,12 +146,13 @@
   /* ————— use the width on laptops ————— */
   .wide, footer { width: min(1100px, 100%); margin: 0 auto; }
   .wide .part { width: auto; margin: 0; }
-  .duo { display: grid; grid-template-columns: 1.35fr 1fr; gap: clamp(40px, 6vw, 88px); align-items: start; }
-  .duo .part h2 { font-size: clamp(64px, 8vw, 104px); }
+  .wide .narrow { max-width: 760px; }
 
   @media (max-width: 860px) {
-    .duo { grid-template-columns: 1fr; gap: 0; }
     .wide, footer { width: min(760px, 100%); }
+  }
+  @media (max-width: 900px) {
+    .films { grid-template-columns: 1fr 1fr; }
   }
   @media (max-width: 600px) {
     .films { grid-template-columns: 1fr; }
@@ -152,7 +168,7 @@
 
   <header class="menu">
     <a class="home" href="#top">Paul Davidson</a>
-    <nav aria-label="Main"><a href="#work">work</a><a href="#fun">fun</a><a href="#films">films</a><a href="/contact">contact</a></nav>
+    <nav aria-label="Main"><a href="#work">work</a><a href="#films">films</a><span class="icons"><a href="https://www.linkedin.com/in/mrpauldavidson" aria-label="LinkedIn"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.94v5.67H9.36V9h3.41v1.56h.05c.47-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z"/></svg></a><a href="mailto:paul@pdvsn.com" aria-label="Email paul@pdvsn.com"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 5.5A1.5 1.5 0 0 1 3.5 4h17A1.5 1.5 0 0 1 22 5.5v13a1.5 1.5 0 0 1-1.5 1.5h-17A1.5 1.5 0 0 1 2 18.5v-13zm2.2.5 7.8 6.1L19.8 6H4.2zM20 7.9l-7.4 5.8a1 1 0 0 1-1.2 0L4 7.9V18h16V7.9z"/></svg></a></span></nav>
   </header>
 
   <section class="wall" id="top">
@@ -172,24 +188,13 @@
   </section>
 
   <div class="wide">
-    <div class="duo">
-      <section class="part" id="work">
-        <h2>work<span>.</span></h2>
-        <p class="lede">I'm Paul. I like working out why things don't work, and then making them work.</p>
-        <p>I'm based in Edinburgh and spend most of my time untangling complicated problems and finding better ways of doing things. At the moment that's at Octopus Energy, where I've been making it easier for people to get their gas and electricity connected.</p>
-        <p>Before that, I spent three years making videos. Different work, same approach: figure out what needs doing, get the right people together, and get it done.</p>
-      </section>
+    <section class="part narrow" id="work">
+      <h2>work<span>.</span></h2>
+      <p class="lede">I'm Paul. I like working out why things don't work, and then making them work.</p>
+      <p>I'm based in Edinburgh and spend most of my time untangling complicated problems and finding better ways of doing things. At the moment that's at Octopus Energy, where I've been making it easier for people to get their gas and electricity connected.</p>
+      <p>Before that, I spent three years making videos. Different work, same approach: figure out what needs doing, get the right people together, and get it done.</p>
+    </section>
 
-      <section class="part" id="fun">
-        <h2>fun<span>.</span></h2>
-        <p>The things I get up to when I'm not at work.</p>
-        <ul class="rows">
-          <li><a href="https://carbclub.pdvsn.com"><span class="name">Carb Club</span><span class="side">carbclub.pdvsn.com ↗</span><span class="desc">My monthly supper club for lovers of carbs.</span></a></li>
-          <li><a href="https://visits.pdvsn.com"><span class="name">Visits</span><span class="side">visits.pdvsn.com ↗</span><span class="desc">Where I'd send you to eat, drink and do things in Edinburgh.</span></a></li>
-        </ul>
-      </section>
-
-    </div>
     <section class="part" id="films">
       <h2>films<span>.</span></h2>
       <p>Short films, made properly.</p>
@@ -197,7 +202,7 @@
         <article class="film">
           <a class="still" href="https://www.youtube.com/watch?v=3D2MKY4uDA4">
             <img src="images/sloansy.jpg" alt="Still from Sloansy" width="1400" height="788" loading="lazy">
-            <span class="play">▶ Watch</span>
+            <span class="play">▶ Watch on YouTube</span>
           </a>
           <h3>“Sloansy”</h3>
           <p>A young mum on a Scottish council estate in 1999, and the stranger who offers her a way out.</p>
@@ -205,10 +210,34 @@
         <article class="film">
           <a class="still" href="https://www.youtube.com/watch?v=1Ty29yOT98E">
             <img src="images/swimming.jpg" alt="Still from Swimming With You" width="1400" height="700" loading="lazy">
-            <span class="play">▶ Watch</span>
+            <span class="play">▶ Watch on YouTube</span>
           </a>
           <h3>Swimming With You</h3>
           <p>Two guys locked out of their car after a hookup goes wrong, and the recovery worker who turns up.</p>
+        </article>
+        <!-- ✏️ FILM 3: add the title and a one-line description, and save a still as images/film-3.jpg -->
+        <article class="film">
+          <a class="still ph" href="https://vimeo.com/270186488" data-file="images/film-3.jpg" style="--img: url('images/film-3.jpg')">
+            <span class="play">▶ Watch on Vimeo</span>
+          </a>
+          <h3>Film title</h3>
+          <p>One line about the film.</p>
+        </article>
+        <!-- ✏️ FILM 4: add the title and a one-line description, and save a still as images/film-4.jpg -->
+        <article class="film">
+          <a class="still ph" href="https://vimeo.com/378201220" data-file="images/film-4.jpg" style="--img: url('images/film-4.jpg')">
+            <span class="play">▶ Watch on Vimeo</span>
+          </a>
+          <h3>Film title</h3>
+          <p>One line about the film.</p>
+        </article>
+        <!-- ✏️ FILM 5: add the title and a one-line description, and save a still as images/film-5.jpg -->
+        <article class="film">
+          <a class="still ph" href="https://www.youtube.com/watch?v=Io-QnoO5Oyw" data-file="images/film-5.jpg" style="--img: url('images/film-5.jpg')">
+            <span class="play">▶ Watch on YouTube</span>
+          </a>
+          <h3>Film title</h3>
+          <p>One line about the film.</p>
         </article>
       </div>
       <a class="more mono" href="https://films.pdvsn.com">More at films.pdvsn.com ↗</a>
@@ -218,7 +247,7 @@
 
   <footer class="mono">
     <span>pdvsn.com</span>
-    <a href="/contact">Get in touch →</a>
+    <span class="reach"><a href="mailto:paul@pdvsn.com">paul@pdvsn.com</a><span class="icons"><a href="https://www.linkedin.com/in/mrpauldavidson" aria-label="LinkedIn"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.94v5.67H9.36V9h3.41v1.56h.05c.47-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z"/></svg></a><a href="mailto:paul@pdvsn.com" aria-label="Email paul@pdvsn.com"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 5.5A1.5 1.5 0 0 1 3.5 4h17A1.5 1.5 0 0 1 22 5.5v13a1.5 1.5 0 0 1-1.5 1.5h-17A1.5 1.5 0 0 1 2 18.5v-13zm2.2.5 7.8 6.1L19.8 6H4.2zM20 7.9l-7.4 5.8a1 1 0 0 1-1.2 0L4 7.9V18h16V7.9z"/></svg></a></span></span>
   </footer>
 
 <script>
