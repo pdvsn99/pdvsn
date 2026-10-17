@@ -16,8 +16,18 @@
   status = 200
 
 [[redirects]]
+  from = "/other"
+  to = "/other.html"
+  status = 200
+
+[[redirects]]
   from = "/fun"
-  to = "/#fun"
+  to = "/other"
+  status = 301
+
+[[redirects]]
+  from = "/films"
+  to = "/#films"
   status = 301
 
 [[redirects]]

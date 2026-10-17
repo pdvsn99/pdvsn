@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>other things | pdvsn</title>
+<meta name="description" content="What Paul Davidson gets up to when he isn't making films.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><rect width='16' height='16' fill='%23F1668B'/></svg>">
+<link rel="stylesheet" href="site.css">
+<style>
+  .page {
+    width: min(1140px, 100%);
+    margin: 0 auto;
+    padding: clamp(104px, 12vw, 140px) var(--gutter) 0;
+  }
+  .page h1 {
+    margin: 0 0 12px;
+    font-family: var(--serif);
+    font-weight: 300;
+    font-size: clamp(40px, 5.5vw, 72px);
+    line-height: .98;
+    letter-spacing: -.02em;
+  }
+  .page h1 em { color: #fff; }
+  .page .sub { margin: 0; max-width: 44ch; font-size: 16px; line-height: 1.75; color: rgba(221,216,210,.65); }
+
+  /* one row per thing */
+  .things { list-style: none; margin: clamp(32px, 4vw, 48px) 0 0; padding: 0; border-top: 1px solid var(--rule); }
+  .things li { border-bottom: 1px solid var(--rule); }
+  .things a {
+    display: grid;
+    grid-template-columns: 3ch 1fr auto;
+    gap: 4px 24px;
+    align-items: baseline;
+    padding: clamp(16px, 2vw, 22px) 0;
+    text-decoration: none;
+  }
+  .things .name {
+    font-family: var(--serif);
+    font-style: italic;
+    font-weight: 300;
+    font-size: clamp(28px, 3.2vw, 40px);
+    line-height: 1;
+    transition: color .25s;
+  }
+  .things .where { color: var(--ink-dim); font-size: 13px; letter-spacing: .08em; white-space: nowrap; transition: color .25s; }
+  .things .desc { grid-column: 2 / -1; margin: 0; font-size: 15px; line-height: 1.7; color: #a39d98; }
+  .things a:hover .name, .things a:focus-visible .name { color: var(--pink); }
+  .things a:hover .where, .things a:focus-visible .where { color: var(--pink); }
+  .things a:focus-visible { outline: none; }
+  footer { margin-top: clamp(56px, 8vw, 96px); }
+
+  @media (max-width: 560px) {
+    .things a { grid-template-columns: 3ch 1fr; }
+    .things .where { grid-column: 2; grid-row: 2; }
+    .things .desc { grid-column: 2; }
+  }
+</style>
+</head>
+<body>
+
+  <header class="menu">
+    <a class="home" href="/">paul davidson</a>
+    <nav aria-label="Main"><a href="/#films">films</a><a href="/other" aria-current="page">other things</a><span class="icons"><a href="https://www.instagram.com/mrpauldavidson" aria-label="Instagram"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.2c3.2 0 3.6 0 4.8.1 3.3.1 4.8 1.7 4.9 4.9.1 1.3.1 1.6.1 4.8s0 3.6-.1 4.8c-.1 3.2-1.7 4.8-4.9 4.9-1.3.1-1.6.1-4.8.1s-3.6 0-4.8-.1c-3.3-.1-4.8-1.7-4.9-4.9C2.2 15.6 2.2 15.2 2.2 12s0-3.6.1-4.8C2.4 3.9 3.9 2.4 7.2 2.3 8.4 2.2 8.8 2.2 12 2.2zM12 0C8.7 0 8.3 0 7.1.1 2.7.3.3 2.7.1 7.1 0 8.3 0 8.7 0 12s0 3.7.1 4.9c.2 4.4 2.6 6.8 7 7 1.2.1 1.6.1 4.9.1s3.7 0 4.9-.1c4.4-.2 6.8-2.6 7-7 .1-1.2.1-1.6.1-4.9s0-3.7-.1-4.9c-.2-4.4-2.6-6.8-7-7C15.7 0 15.3 0 12 0zm0 5.8a6.2 6.2 0 1 0 0 12.4 6.2 6.2 0 0 0 0-12.4zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.4-11.8a1.4 1.4 0 1 0 0 2.9 1.4 1.4 0 0 0 0-2.9z"/></svg></a><a href="https://www.linkedin.com/in/mrpauldavidson" aria-label="LinkedIn"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.94v5.67H9.36V9h3.41v1.56h.05c.47-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z"/></svg></a><a href="mailto:paul@pdvsn.com" aria-label="Email paul@pdvsn.com"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 5.5A1.5 1.5 0 0 1 3.5 4h17A1.5 1.5 0 0 1 22 5.5v13a1.5 1.5 0 0 1-1.5 1.5h-17A1.5 1.5 0 0 1 2 18.5v-13zm2.2.5 7.8 6.1L19.8 6H4.2zM20 7.9l-7.4 5.8a1 1 0 0 1-1.2 0L4 7.9V18h16V7.9z"/></svg></a></span></nav>
+  </header>
+
+  <main class="page">
+    <h1>Other things</h1>
+    <p class="sub">The other things I've been up to.</p>
+
+    <!-- ✏️ To add a thing, copy one <li> … </li> line and change the link, name, address and description. -->
+    <ul class="things">
+      <li><a href="https://carbclub.pdvsn.com"><span class="label">01</span><span class="name">Carb Club</span><span class="where">carbclub.pdvsn.com ↗</span><p class="desc">My monthly supper club for lovers of carbs.</p></a></li>
+      <li><a href="https://visits.pdvsn.com"><span class="label">02</span><span class="name">Visits</span><span class="where">visits.pdvsn.com ↗</span><p class="desc">Where I'd send you to eat, drink and do things in Edinburgh.</p></a></li>
+      <li><a href="https://www.linkedin.com/in/mrpauldavidson"><span class="label">03</span><span class="name">The day job</span><span class="where">linkedin ↗</span><p class="desc">At Octopus Energy, making it easier for people to get their gas and electricity connected.</p></a></li>
+    </ul>
+  </main>
+
+  <footer>
+    <span>pdvsn.com</span>
+    <span class="reach"><a href="/#films">films</a><a href="mailto:paul@pdvsn.com">paul@pdvsn.com</a></span>
+  </footer>
+
+</body>
+</html>

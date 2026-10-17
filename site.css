@@ -1,131 +1,112 @@
-/* Shared styles for every page: fonts, colours, the brick wall and the sticky header. */
+/* Shared styles for every page: fonts, colours, film grain, the header and the footer. */
 
-@font-face { font-family: "Bebas Neue"; src: url("fonts/bebas-neue.woff2") format("woff2"); font-display: block; }
-@font-face { font-family: "Outfit"; src: url("fonts/outfit-300.woff2") format("woff2"); font-weight: 300; font-display: swap; }
-@font-face { font-family: "Outfit"; src: url("fonts/outfit-400.woff2") format("woff2"); font-weight: 400; font-display: swap; }
-@font-face { font-family: "Outfit"; src: url("fonts/outfit-500.woff2") format("woff2"); font-weight: 500; font-display: swap; }
-@font-face { font-family: "Space Mono"; src: url("fonts/space-mono.woff2") format("woff2"); font-display: swap; }
+@font-face { font-family: "Cormorant Garamond"; src: url("fonts/cormorant-300.woff2") format("woff2"); font-weight: 300; font-display: swap; }
+@font-face { font-family: "Cormorant Garamond"; src: url("fonts/cormorant-300-italic.woff2") format("woff2"); font-weight: 300; font-style: italic; font-display: swap; }
+@font-face { font-family: "Cormorant Garamond"; src: url("fonts/cormorant-500-italic.woff2") format("woff2"); font-weight: 500; font-style: italic; font-display: swap; }
+@font-face { font-family: "Jost"; src: url("fonts/jost-300.woff2") format("woff2"); font-weight: 300; font-display: swap; }
+@font-face { font-family: "Jost"; src: url("fonts/jost-400.woff2") format("woff2"); font-weight: 400; font-display: swap; }
 
 :root {
-  --bg: #0a0809;
-  --ink: #f3eee9;
-  --ink-dim: #9a928f;
-  --rule: rgba(255,255,255,.1);
+  --bg: #101010;
+  --ink: #ddd8d2;
+  --ink-dim: #807a76;
+  --rule: #1e1e1e;
   --pink: #F1668B;
-  --display: "Bebas Neue", "Arial Narrow", sans-serif;
-  --body: "Outfit", "Helvetica Neue", Arial, sans-serif;
-  --mono: "Space Mono", ui-monospace, Menlo, monospace;
+  --serif: "Cormorant Garamond", Georgia, serif;
+  --body: "Jost", "Helvetica Neue", Arial, sans-serif;
+  --gutter: clamp(16px, 5vw, 48px);
 }
 
-* { box-sizing: border-box; }
+*, *::before, *::after { box-sizing: border-box; }
 html { scroll-behavior: smooth; }
 body {
   margin: 0;
+  min-height: 100vh;
+  background: var(--bg);
   color: var(--ink);
   font-family: var(--body);
   font-weight: 300;
   -webkit-font-smoothing: antialiased;
   overflow-x: hidden;
-  /* one brick wall, all the way down */
-  background:
-    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='60'><rect width='120' height='60' fill='%230a0809'/><g fill='%23161113'><rect x='1' y='1' width='57' height='27'/><rect x='61' y='1' width='57' height='27'/><rect x='-29' y='31' width='57' height='27'/><rect x='31' y='31' width='57' height='27'/><rect x='91' y='31' width='57' height='27'/></g></svg>")
-    var(--bg);
 }
-/* darken the edges of the wall so the middle feels lit */
-body::before {
+/* film grain over everything */
+body::after {
   content: "";
   position: fixed; inset: 0;
-  background: linear-gradient(90deg, rgba(0,0,0,.7), transparent 25%, transparent 75%, rgba(0,0,0,.7));
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)'/%3E%3C/svg%3E");
+  opacity: .04;
   pointer-events: none;
-  z-index: 0;
+  z-index: 9000;
 }
-body > * { position: relative; z-index: 1; }
 a { color: inherit; }
-.mono { font-family: var(--mono); font-size: 11px; letter-spacing: .14em; text-transform: uppercase; }
 
-/* ————— sticky header ————— */
-.menu {
-  position: sticky; top: 0;
-  z-index: 20;
-  display: flex; justify-content: space-between; align-items: center;
-  padding: 16px clamp(16px, 4vw, 40px);
-  background: rgba(10, 8, 9, .72);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  border-bottom: 1px solid var(--rule);
-  font-family: var(--mono);
-  font-size: 11px;
-  letter-spacing: .14em;
-  text-transform: uppercase;
+/* small lowercase labels, used all over */
+.label {
+  font-family: var(--body);
+  font-weight: 400;
+  font-size: 12px;
+  letter-spacing: .3em;
+  text-transform: lowercase;
+  color: var(--pink);
 }
-.menu nav { display: flex; gap: 24px; }
-.menu a { color: var(--ink-dim); text-decoration: none; transition: color .2s; }
+
+/* ————— header ————— */
+.menu {
+  position: fixed; top: 0; left: 0; right: 0;
+  z-index: 500;
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 22px var(--gutter);
+  background: linear-gradient(to bottom, rgba(16,16,16,.96) 0%, rgba(16,16,16,.85) 55%, transparent 100%);
+  font-weight: 400;
+  font-size: 12px;
+  letter-spacing: .22em;
+  text-transform: lowercase;
+}
+.menu nav { display: flex; align-items: center; gap: clamp(16px, 3vw, 28px); }
+.menu a { color: var(--ink); text-decoration: none; transition: color .2s; }
 .menu a:hover, .menu a:focus-visible, .menu a[aria-current] { color: var(--pink); }
-.menu .home { color: var(--ink); }
+.menu .home { color: var(--pink); }
 .icons { display: inline-flex; align-items: center; gap: 16px; }
-.menu .icons { padding-left: 22px; border-left: 1px solid var(--rule); }
+.menu .icons { padding-left: clamp(16px, 3vw, 24px); border-left: 1px solid rgba(255,255,255,.15); }
 .icons a { display: block; color: var(--ink-dim); transition: color .2s; }
 .icons a:hover, .icons a:focus-visible { color: var(--pink); }
-.icons svg { display: block; width: 17px; height: 17px; fill: currentColor; }
-footer .reach { display: inline-flex; align-items: center; gap: 22px; }
+.icons svg { display: block; width: 16px; height: 16px; fill: currentColor; }
 
-/* ————— sections ————— */
-.part {
-  width: min(760px, 100%);
-  margin: 0 auto;
-  padding: clamp(72px, 11vw, 130px) 16px 0;
-  scroll-margin-top: 30px;
-}
-.part h2, .page-title {
-  margin: 0 0 clamp(20px, 3vw, 32px);
-  font-family: var(--display);
+/* ————— outlined pink button ————— */
+.btn {
+  display: inline-block;
+  padding: 12px 28px;
+  border: 1px solid rgba(241,102,139,.55);
+  color: var(--pink);
   font-weight: 400;
-  font-size: clamp(64px, 11vw, 120px);
-  line-height: .85;
-  letter-spacing: .01em;
-}
-.part h2 span, .page-title span { color: var(--pink); }
-.part .lede {
-  margin: 0 0 1em;
-  font-size: clamp(24px, 3vw, 34px);
-  font-weight: 400;
-  line-height: 1.2;
-}
-.part p {
-  margin: 0 0 1em;
-  font-size: clamp(18px, 1.9vw, 21px);
-  line-height: 1.6;
-  color: #ddd5d0;
-}
-
-/* ————— simple list rows ————— */
-.rows { list-style: none; margin: clamp(24px, 4vw, 40px) 0 0; padding: 0; border-top: 1px solid var(--rule); }
-.rows li { border-bottom: 1px solid var(--rule); }
-.rows a {
-  display: grid;
-  grid-template-columns: 1fr auto;
-  gap: 4px 20px;
-  align-items: baseline;
-  padding: 18px 0;
+  font-size: 12px;
+  letter-spacing: .18em;
+  text-transform: lowercase;
   text-decoration: none;
+  white-space: nowrap;
+  transition: background .25s, color .25s, border-color .25s;
 }
-.rows .name { font-family: var(--display); font-size: clamp(32px, 4vw, 42px); line-height: 1; letter-spacing: .01em; transition: color .2s; }
-.rows .side { font-family: var(--mono); font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--pink); white-space: nowrap; }
-.rows .desc { grid-column: 1 / -1; color: var(--ink-dim); font-size: 17px; line-height: 1.5; }
-.rows a:hover .name, .rows a:focus-visible .name { color: var(--pink); }
+.btn:hover, .btn:focus-visible { background: var(--pink); border-color: var(--pink); color: #fff; outline: none; }
 
+/* ————— a section label with a line running off to the right ————— */
+.rule-label { display: flex; align-items: center; gap: 16px; margin: 0 0 clamp(40px, 6vw, 64px); }
+.rule-label::after { content: ""; flex: 1; height: 1px; background: var(--rule); }
+
+/* ————— footer ————— */
 footer {
-  width: min(760px, 100%);
-  margin: 0 auto;
-  padding: clamp(80px, 12vw, 140px) 16px 40px;
-  display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px 28px;
+  width: min(calc(1140px - 2 * var(--gutter)), calc(100% - 2 * var(--gutter)));
+  margin: clamp(80px, 12vw, 140px) auto 0;
+  padding: 28px 0 40px;
+  display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 14px 28px;
+  border-top: 1px solid var(--rule);
   color: var(--ink-dim);
+  font-size: 13px;
+  letter-spacing: .08em;
 }
+footer .reach { display: inline-flex; align-items: center; gap: 22px; }
 footer a { text-decoration: none; color: var(--pink); }
 footer a:hover, footer a:focus-visible { text-decoration: underline; }
 
 @media (max-width: 560px) {
-  .menu .home { display: none; }
-  .menu { justify-content: center; }
-  .rows a { grid-template-columns: 1fr; }
+  .menu .icons { display: none; }
 }
